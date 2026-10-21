@@ -99,8 +99,8 @@
   document.querySelector(".area-label span").textContent = String(
     departments.length,
   ).padStart(2, "0");
-  document.getElementById("overview-nav").href = `#/${departments[0].id}`;
-  document.querySelector(".brand").href = `#/${departments[0].id}`;
+  document.getElementById("overview-nav").href = "#/overview";
+  document.querySelector(".brand").href = "#/overview";
   const sourceDepartments = (source) =>
     source.departmentIds || [source.departmentId];
   const belongsToDepartment = (source, departmentId) =>
@@ -122,7 +122,7 @@
     return '<span class="badge pending"><i></i>API por confirmar</span>';
   }
   function crumbs(d, service, source) {
-    return `<nav class="breadcrumbs" aria-label="Ruta de navegación"><a href="#/${esc(d.id)}">Catálogo</a>${icon("chevron")}<a href="#/${esc(d.id)}">${esc(d.name)}</a>${service ? `${icon("chevron")}<span>${esc(service.name)}</span>` : ""}${source ? `${icon("chevron")}<span>${esc(source.name)}</span>` : ""}</nav>`;
+    return `<nav class="breadcrumbs" aria-label="Ruta de navegación"><a href="#/overview">Catálogo</a>${icon("chevron")}<a href="#/${esc(d.id)}">${esc(d.name)}</a>${service ? `${icon("chevron")}<span>${esc(service.name)}</span>` : ""}${source ? `${icon("chevron")}<span>${esc(source.name)}</span>` : ""}</nav>`;
   }
   function sourceLogo(source, large = false) {
     const size = large ? " large" : "";
@@ -331,6 +331,35 @@
       0,
     );
   }
+  function renderOverview() {
+    const endpointCount = apiLibrary.reduce(
+      (total, api) => total + apiEndpointCount(api),
+      0,
+    );
+    document.querySelectorAll("[data-route]").forEach((el) => {
+      el.classList.remove("active");
+      el.removeAttribute("aria-current");
+    });
+    document.getElementById("api-nav").classList.remove("active");
+    document.getElementById("api-nav").removeAttribute("aria-current");
+    document.getElementById("overview-nav").classList.add("active");
+    document
+      .getElementById("overview-nav")
+      .setAttribute("aria-current", "page");
+    document.title = "Vista general · Atlas";
+    main.innerHTML = `<nav class="breadcrumbs" aria-label="Ruta de navegación"><span>Catálogo</span>${icon("chevron")}<span>Vista general</span></nav>
+      <div class="page-heading overview-heading"><div><div class="eyebrow">DIRECTORIO CORPORATIVO</div><h1>Explora el catálogo<span class="heading-dot">.</span></h1><p>Accede a los datos de cada departamento y consulta la documentación técnica de las APIs de la organización.</p></div><span class="department-chip">${icon("grid")}Vista general</span></div>
+      <div class="stats overview-stats"><div class="stat"><span class="stat-icon blue">${icon("layers")}</span><div><strong>${String(departments.length).padStart(2, "0")}</strong><span>Departamentos</span></div></div><div class="stat"><span class="stat-icon green">${icon("database")}</span><div><strong>${String(sources.length).padStart(2, "0")}</strong><span>Fuentes registradas</span></div></div><div class="stat"><span class="stat-icon orange">${icon("code")}</span><div><strong>${String(apiLibrary.length).padStart(2, "0")}</strong><span>API documentadas</span></div></div><div class="stat"><span class="stat-icon yellow">${icon("link")}</span><div><strong>${String(endpointCount).padStart(2, "0")}</strong><span>Endpoints definidos</span></div></div></div>
+      <section class="directory-section"><div class="section-heading"><div><h2>Departamentos <span class="count-pill">${departments.length}</span></h2><p>Selecciona un área para consultar sus fuentes, servicios y accesos.</p></div><span class="section-kicker">EXPLORAR POR ÁREA</span></div><div class="directory-grid">${departments
+        .map((department) => {
+          const departmentSources = sources.filter((source) =>
+            belongsToDepartment(source, department.id),
+          );
+          return `<a class="directory-card" href="#/${esc(department.id)}"><div class="directory-card-head"><span class="directory-icon">${icon("layers")}</span><span class="card-open">${icon("arrow")}</span></div><div><span class="eyebrow">DEPARTAMENTO</span><h2>${esc(department.name)}</h2><p>${esc(department.description)}</p></div><div class="directory-card-meta"><span>${icon("database")}${departmentSources.length} ${departmentSources.length === 1 ? "fuente" : "fuentes"}</span><span>${icon("layers")}${department.services.length} ${department.services.length === 1 ? "subtipo" : "subtipos"}</span><strong>Entrar ${icon("arrow")}</strong></div></a>`;
+        })
+        .join("")}</div></section>
+      <section class="api-access-section"><div class="section-heading"><div><h2>Documentación técnica</h2><p>Contratos, esquemas, campos y requisitos de integración.</p></div></div><a class="library-access-card" href="#/apis"><span class="library-access-icon">${icon("code")}</span><div><span class="eyebrow">BIBLIOTECA DE APIs</span><h2>Consulta todas las APIs</h2><p>${apiLibrary.length} ${apiLibrary.length === 1 ? "API documentada" : "APIs documentadas"} · ${endpointCount} endpoints definidos</p></div><span class="library-access-action">Abrir biblioteca ${icon("arrow")}</span></a></section>`;
+  }
   function renderApiLibrary() {
     const endpointCount = apiLibrary.reduce(
       (total, api) => total + apiEndpointCount(api),
@@ -341,7 +370,7 @@
         api.groups.map((group) => group.departmentId),
       ),
     ).size;
-    main.innerHTML = `<nav class="breadcrumbs" aria-label="Ruta de navegación"><a href="#/${esc(departments[0].id)}">Catálogo</a>${icon("chevron")}<span>Biblioteca de APIs</span></nav>
+    main.innerHTML = `<nav class="breadcrumbs" aria-label="Ruta de navegación"><a href="#/overview">Catálogo</a>${icon("chevron")}<span>Biblioteca de APIs</span></nav>
       <div class="page-heading"><div><div class="eyebrow">DOCUMENTACIÓN TÉCNICA</div><h1>Biblioteca de APIs<span class="heading-dot">.</span></h1><p>Contratos, esquemas y requisitos de las APIs que conectan los datos de la organización.</p></div><span class="department-chip">${icon("code")}Biblioteca</span></div>
       <div class="stats api-stats"><div class="stat"><span class="stat-icon blue">${icon("code")}</span><div><strong>${String(apiLibrary.length).padStart(2, "0")}</strong><span>API documentadas</span></div></div><div class="stat"><span class="stat-icon green">${icon("database")}</span><div><strong>${String(endpointCount).padStart(2, "0")}</strong><span>Endpoints definidos</span></div></div><div class="stat"><span class="stat-icon orange">${icon("layers")}</span><div><strong>${String(departmentCount).padStart(2, "0")}</strong><span>Departamentos conectados</span></div></div></div>
       <section><div class="section-heading"><div><h2>APIs disponibles <span class="count-pill">${apiLibrary.length}</span></h2><p>Selecciona una API para consultar su documentación.</p></div></div><div class="api-library-grid">${apiLibrary
@@ -353,7 +382,7 @@
   }
   function renderApiDocumentation(api) {
     const endpointCount = apiEndpointCount(api);
-    main.innerHTML = `<nav class="breadcrumbs" aria-label="Ruta de navegación"><a href="#/${esc(departments[0].id)}">Catálogo</a>${icon("chevron")}<a href="#/apis">Biblioteca de APIs</a>${icon("chevron")}<span>${esc(api.name)}</span></nav>
+    main.innerHTML = `<nav class="breadcrumbs" aria-label="Ruta de navegación"><a href="#/overview">Catálogo</a>${icon("chevron")}<a href="#/apis">Biblioteca de APIs</a>${icon("chevron")}<span>${esc(api.name)}</span></nav>
       <a class="back-link" href="#/apis">← Volver a la biblioteca</a>
       <div class="detail-heading api-detail-heading">${apiLogo(api, true)}<div><div class="eyebrow">API REST · ${esc(api.provider.toUpperCase())}</div><h1>${esc(api.name)}<span class="heading-dot">.</span></h1><p>${esc(api.description)}</p></div><span class="badge available"><i></i>Especificación disponible</span></div>
       <div class="api-summary-grid"><section class="panel api-overview"><h2>Resumen técnico</h2><dl><div><dt>Desarrollador</dt><dd>${esc(api.provider)}</dd></div><div><dt>URL base</dt><dd><span class="badge pending"><i></i>Por documentar</span></dd></div><div><dt>Autenticación</dt><dd><span class="badge pending"><i></i>Por documentar</span></dd></div><div><dt>Versionado</dt><dd>${esc(api.versioning)}</dd></div><div><dt>Frecuencia prevista</dt><dd>${esc(api.refreshFrequency)}</dd></div><div><dt>Endpoints</dt><dd>${endpointCount}</dd></div></dl></section><section class="panel api-document"><span class="stat-icon blue">${icon("folder")}</span><h2>Documento original</h2><p>Especificación recibida de ${esc(api.document.pages)} páginas. Se conserva junto al código para que la documentación no dependa de enlaces externos.</p><a class="document-link" href="${esc(api.document.url)}" target="_blank" rel="noopener">${icon("external")}Abrir ${esc(api.document.name)}</a></section></div>
@@ -378,6 +407,14 @@
   }
   function render() {
     route = location.hash.replace(/^#\/?/, "").split("/");
+    if (!route[0] || route[0] === "overview") {
+      if (route.length > 1) {
+        main.innerHTML = `<div class="empty"><h1>Página no encontrada</h1><p>Esta ruta no pertenece al catálogo.</p><a href="#/overview" class="text-button">Volver a la vista general</a></div>`;
+        return;
+      }
+      renderOverview();
+      return;
+    }
     if (route[0] === "apis") {
       const api = route[1]
         ? apiLibrary.find((item) => item.id === route[1])
@@ -397,9 +434,7 @@
       api ? renderApiDocumentation(api) : renderApiLibrary();
       return;
     }
-    const d =
-      departments.find((x) => x.id === route[0]) ||
-      (!route[0] ? departments[0] : null);
+    const d = departments.find((x) => x.id === route[0]);
     const source =
       d && route[1] === "fuente"
         ? sources.find((s) => s.id === route[2] && belongsToDepartment(s, d.id))
@@ -410,7 +445,7 @@
       (route[1] && !service && !source) ||
       route.length > (source ? 3 : service ? 2 : 1)
     ) {
-      main.innerHTML = `<div class="empty"><h1>Página no encontrada</h1><p>Esta ruta no pertenece al catálogo.</p><a href="#/${esc(departments[0].id)}" class="text-button">Volver al catálogo</a></div>`;
+      main.innerHTML = `<div class="empty"><h1>Página no encontrada</h1><p>Esta ruta no pertenece al catálogo.</p><a href="#/overview" class="text-button">Volver a la vista general</a></div>`;
       return;
     }
     document.querySelectorAll("[data-route]").forEach((el) => {
@@ -421,9 +456,8 @@
     });
     document.getElementById("api-nav").classList.remove("active");
     document.getElementById("api-nav").removeAttribute("aria-current");
-    document
-      .getElementById("overview-nav")
-      .classList.toggle("active", !service && !source);
+    document.getElementById("overview-nav").classList.remove("active");
+    document.getElementById("overview-nav").removeAttribute("aria-current");
     document.title = `${source?.name || service?.name || d.name} · Atlas`;
     source ? detail(d, source) : listing(d, service);
   }

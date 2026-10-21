@@ -1290,6 +1290,131 @@ footer {
   margin-top: 22px;
   padding: 32px 20px;
 }
+.directory-section {
+  margin-bottom: 38px;
+}
+.directory-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 18px;
+}
+.directory-card {
+  min-height: 285px;
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #fff;
+  transition:
+    transform 0.18s,
+    box-shadow 0.18s,
+    border-color 0.18s;
+}
+.directory-card:hover {
+  transform: translateY(-3px);
+  border-color: #cbdde7;
+  box-shadow: 0 8px 22px #17374b0b;
+}
+.directory-card-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 27px;
+}
+.directory-icon,
+.library-access-icon {
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  background: #edf4f8;
+  color: var(--primary);
+}
+.directory-icon svg,
+.library-access-icon svg {
+  width: 23px;
+  height: 23px;
+}
+.directory-card h2 {
+  margin-top: 3px;
+  font-size: 22px;
+}
+.directory-card p {
+  margin-top: 11px;
+  color: #7f909b;
+  font-size: 11px;
+  line-height: 1.8;
+}
+.directory-card-meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 13px;
+  margin-top: auto;
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+  color: #758b98;
+  font-size: 9px;
+}
+.directory-card-meta > span,
+.directory-card-meta strong {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+.directory-card-meta svg {
+  width: 13px;
+  height: 13px;
+}
+.directory-card-meta strong {
+  margin-left: auto;
+  color: var(--primary);
+  font-weight: 650;
+}
+.api-access-section {
+  margin-bottom: 15px;
+}
+.library-access-card {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 23px 25px;
+  border: 1px solid #d9e5eb;
+  border-radius: 10px;
+  background: linear-gradient(110deg, #fff 45%, #eef5f8);
+  transition:
+    transform 0.18s,
+    box-shadow 0.18s;
+}
+.library-access-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px #17374b0b;
+}
+.library-access-card h2 {
+  margin-top: 3px;
+  font-size: 18px;
+}
+.library-access-card p {
+  margin-top: 7px;
+  color: #7f909b;
+  font-size: 10px;
+}
+.library-access-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+  color: var(--primary);
+  font-size: 11px;
+  font-weight: 650;
+  white-space: nowrap;
+}
+.library-access-action svg {
+  width: 15px;
+  height: 15px;
+}
 .api-stats {
   grid-template-columns: repeat(3, 1fr);
 }
@@ -1597,6 +1722,7 @@ footer {
 :root[data-theme="dark"] .source-card,
 :root[data-theme="dark"] .empty,
 :root[data-theme="dark"] .panel,
+:root[data-theme="dark"] .directory-card,
 :root[data-theme="dark"] .api-library-card,
 :root[data-theme="dark"] .endpoint-card,
 :root[data-theme="dark"] .skip {
@@ -1617,9 +1743,18 @@ footer {
 :root[data-theme="dark"] .document-link,
 :root[data-theme="dark"] .convention-grid > div,
 :root[data-theme="dark"] .endpoint-icon,
+:root[data-theme="dark"] .directory-icon,
+:root[data-theme="dark"] .library-access-icon,
 :root[data-theme="dark"] .schema-table th,
 :root[data-theme="dark"] .logo-fallback {
   background: #19313e;
+}
+:root[data-theme="dark"] .library-access-card {
+  border-color: var(--line);
+  background: linear-gradient(110deg, #122631 45%, #17303d);
+}
+:root[data-theme="dark"] .directory-card:hover {
+  border-color: #3b5c6d;
 }
 :root[data-theme="dark"] .theme-toggle:hover,
 :root[data-theme="dark"] .nav-item:hover,
@@ -1694,6 +1829,8 @@ footer {
 :root[data-theme="dark"] .panel dt,
 :root[data-theme="dark"] .pending-panel li,
 :root[data-theme="dark"] .api-library-card p,
+:root[data-theme="dark"] .directory-card p,
+:root[data-theme="dark"] .library-access-card p,
 :root[data-theme="dark"] .convention-grid > div,
 :root[data-theme="dark"] .endpoint-body > p,
 :root[data-theme="dark"] .schema-table td,
@@ -2240,8 +2377,25 @@ footer {
 }
 @media (max-width: 600px) {
   .api-library-grid,
+  .directory-grid,
   .convention-grid {
     grid-template-columns: 1fr;
+  }
+  .directory-card {
+    min-height: 250px;
+    padding: 20px;
+  }
+  .library-access-card {
+    align-items: flex-start;
+    flex-wrap: wrap;
+    padding: 20px;
+  }
+  .library-access-card > div {
+    flex: 1;
+  }
+  .library-access-action {
+    width: calc(100% - 66px);
+    margin-left: 66px;
   }
   .api-library-card {
     min-height: 240px;

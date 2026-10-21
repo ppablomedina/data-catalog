@@ -33,7 +33,7 @@ Las tipografías se solicitan a Google Fonts; si no hay conexión se usan las fu
 3. Usa `serviceIds` para asociar una fuente a uno o varios servicios del departamento. Un array vacío indica que aún no hay asignación confirmada.
 4. Documenta sus `datasets`, el estado de la API (`available` o `pending`), responsable, tareas pendientes y enlaces. Los campos `api.url`, `website`, `repository` y `storage` admiten URLs HTTP/HTTPS o `null` para información pendiente.
 
-El menú y las fichas se generan desde los datos. Las rutas siguen `#/departamento`, `#/departamento/servicio` y `#/departamento/fuente/id`. La búsqueda abarca nombres, categorías, descripciones y conjuntos de datos, sin distinguir mayúsculas o acentos.
+El menú, la vista general y las fichas se generan desde los datos. La portada `#/overview` ofrece acceso directo a todos los departamentos y a la biblioteca de APIs. Las rutas de contenido siguen `#/departamento`, `#/departamento/servicio` y `#/departamento/fuente/id`. La búsqueda abarca nombres, categorías, descripciones y conjuntos de datos, sin distinguir mayúsculas o acentos.
 
 ## Información inicial
 
