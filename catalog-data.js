@@ -9,19 +9,27 @@ window.CATALOG = {
         "Un punto de encuentro para los datos que mueven Moxsi. Explora los servicios, descubre sus fuentes y encuentra la información que necesitas.",
       services: [
         {
-          id: "sitycleta",
-          name: "Sítycleta",
+          id: "sitycleta-mecanica",
+          name: "Sítycleta Mecánica",
           icon: "bike",
           description:
-            "Explora la información y las fuentes de datos de Sítycleta.",
+            "Fuentes de datos vinculadas a las bicicletas mecánicas de Sítycleta.",
           color: "green",
+        },
+        {
+          id: "sitycleta-electrica",
+          name: "Sítycleta Eléctrica",
+          icon: "ebike",
+          description:
+            "Fuentes de datos vinculadas a las bicicletas eléctricas de Sítycleta.",
+          color: "electric",
         },
         {
           id: "sityneta",
           name: "Sítyneta",
-          icon: "vehicle",
+          icon: "scooter",
           description:
-            "Explora la información y las fuentes de datos de Sítyneta.",
+            "Fuentes de datos vinculadas a los patinetes eléctricos de Sítyneta.",
           color: "orange",
         },
       ],
@@ -31,7 +39,7 @@ window.CATALOG = {
     {
       id: "4gflota",
       departmentId: "moxsi",
-      serviceIds: [],
+      serviceIds: ["sitycleta-mecanica", "sitycleta-electrica", "sityneta"],
       name: "4gflota",
       logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWODonxayRRN55aa2_UCCcodlZbYcS_clekJ_Ak-iyPA&s=10",
       initials: "4g",
@@ -64,14 +72,13 @@ window.CATALOG = {
       owner: null,
       pending: [
         "Consultar con Javi la disponibilidad de la API.",
-        "Confirmar la relación con Sítycleta y Sítyneta.",
         "Documentar ubicaciones, responsable y enlaces de acceso.",
       ],
     },
     {
       id: "qucit",
       departmentId: "moxsi",
-      serviceIds: [],
+      serviceIds: ["sitycleta-mecanica", "sitycleta-electrica", "sityneta"],
       name: "qucit",
       logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRg8My9gR1_uqj_toj6dd4gunB-DRkrNgrCF2_LPCD-Vw&s=10",
       initials: "q",
@@ -105,14 +112,13 @@ window.CATALOG = {
       owner: null,
       pending: [
         "Añadir la documentación y la URL de la API.",
-        "Confirmar la relación con Sítycleta y Sítyneta.",
         "Documentar ubicaciones, responsable y enlaces de acceso.",
       ],
     },
     {
       id: "nextbike",
       departmentId: "moxsi",
-      serviceIds: ["sitycleta"],
+      serviceIds: ["sitycleta-mecanica", "sitycleta-electrica", "sityneta"],
       name: "Nextbike",
       logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRFuylFKHT4KfRZiCLQR3IywJ48OncuGjps8swfhNkP4w&s=10",
       initials: "nb",
@@ -120,7 +126,7 @@ window.CATALOG = {
       category: "Bicicleta compartida",
       icon: "bike",
       description:
-        "Consultas operativas de estaciones, bicicletas, alquileres, clientes, membresías y transacciones de Sítycleta.",
+        "Consultas operativas de estaciones, vehículos, alquileres, clientes, membresías y transacciones para los tres subtipos de Moxsi.",
       itemLabel: "consultas",
       contentTitle: "Consultas disponibles",
       contentDescription:
@@ -234,8 +240,8 @@ window.CATALOG = {
     {
       id: "moxsi-vmp-revisar",
       departmentId: "moxsi",
-      serviceIds: ["sitycleta"],
-      name: "Moxsi - VMP para revisar",
+      serviceIds: ["sitycleta-mecanica", "sitycleta-electrica", "sityneta"],
+      name: "VMP para revisar",
       logoIcon: "sheet",
       initials: "VR",
       color: "green",
@@ -249,7 +255,7 @@ window.CATALOG = {
         "Hoja de Google Sheets utilizada por el personal de taller para registrar y seguir las revisiones de los VMP.",
       datasets: [
         {
-          name: "Moxsi - VMP para revisar",
+          name: "VMP para revisar",
           description:
             "Registro operativo de matrículas, fechas, operarios y estado de las revisiones de los VMP.",
           icon: "sheet",
@@ -287,8 +293,8 @@ window.CATALOG = {
     {
       id: "moxsi-control-almacen",
       departmentId: "moxsi",
-      serviceIds: ["sitycleta"],
-      name: "Moxsi - Control de almacén",
+      serviceIds: ["sitycleta-mecanica", "sitycleta-electrica", "sityneta"],
+      name: "Control de almacén",
       logoIcon: "sheet",
       initials: "CA",
       color: "green",
@@ -302,7 +308,7 @@ window.CATALOG = {
         "Hoja de Google Sheets mantenida actualmente por el Jefe de Servicio de Moxsi y cuyo traspaso a SOS está previsto.",
       datasets: [
         {
-          name: "Moxsi - Control de almacén",
+          name: "Control de almacén",
           description:
             "Control de referencias, descripción, unidades, compras, utilización y stock del almacén.",
           icon: "sheet",
@@ -347,8 +353,8 @@ window.CATALOG = {
     {
       id: "moxsi-inventario-vmp-historico",
       departmentId: "moxsi",
-      serviceIds: ["sitycleta"],
-      name: "Moxsi - Inventario VMP histórico",
+      serviceIds: ["sitycleta-mecanica", "sitycleta-electrica", "sityneta"],
+      name: "Inventario VMP histórico",
       logoIcon: "sheet",
       initials: "IH",
       color: "green",
@@ -362,7 +368,7 @@ window.CATALOG = {
         "La hoja conserva el inventario histórico y la consulta de Nextbike documenta su fuente de origen.",
       datasets: [
         {
-          name: "Moxsi - Inventario VMP histórico",
+          name: "Inventario VMP histórico",
           description:
             "Hoja histórica con información de inventario de los VMP de Moxsi.",
           icon: "sheet",
@@ -401,8 +407,8 @@ window.CATALOG = {
     {
       id: "moxsi-incidencias",
       departmentId: "moxsi",
-      serviceIds: ["sitycleta"],
-      name: "Moxsi - Incidencias",
+      serviceIds: ["sitycleta-mecanica", "sitycleta-electrica", "sityneta"],
+      name: "Incidencias",
       logoIcon: "sheet",
       initials: "MI",
       color: "green",
@@ -416,7 +422,7 @@ window.CATALOG = {
         "Se crea una hoja de Google Sheets por año para registrar las incidencias y su actividad asociada.",
       datasets: [
         {
-          name: "2025 - Moxsi incidencias",
+          name: "Incidencias 2025",
           description:
             "Registro de incidencias de 2025, incluidos datos operativos, correos y llamadas.",
           icon: "sheet",
@@ -424,7 +430,7 @@ window.CATALOG = {
           linkLabel: "Abrir hoja 2025",
         },
         {
-          name: "2026 - Moxsi incidencias",
+          name: "Incidencias 2026",
           description:
             "Registro de incidencias de 2026 mantenido como continuación anual del histórico.",
           icon: "sheet",

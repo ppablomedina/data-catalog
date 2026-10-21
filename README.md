@@ -1,6 +1,6 @@
 # Atlas · Catálogo de datos
 
-Portal estático en español para consultar los datos utilizados y generados por la empresa. Primera área: **Moxsi**, con los servicios **Sítycleta** y **Sítyneta**.
+Portal estático en español para consultar los datos utilizados y generados por la empresa. Primera área: **Moxsi**, organizada en los subtipos **Sítycleta Mecánica**, **Sítycleta Eléctrica** y **Sítyneta — Patinetes Eléctricos**.
 
 ## Abrir el portal
 
