@@ -68,8 +68,15 @@
   function crumbs(d, service, source) {
     return `<nav class="breadcrumbs" aria-label="Ruta de navegación"><a href="#/${esc(d.id)}">Catálogo</a>${icon("chevron")}<a href="#/${esc(d.id)}">${esc(d.name)}</a>${service ? `${icon("chevron")}<span>${esc(service.name)}</span>` : ""}${source ? `${icon("chevron")}<span>${esc(source.name)}</span>` : ""}</nav>`;
   }
+  function sourceLogo(source, large = false) {
+    const size = large ? " large" : "";
+    if (source.logo && source.logo.startsWith("assets/")) {
+      return `<span class="source-logo image-logo${size}"><img src="${esc(source.logo)}" alt="Logotipo de ${esc(source.name)}"></span>`;
+    }
+    return `<span class="source-logo ${esc(source.color)}${size}">${esc(source.initials)}</span>`;
+  }
   function sourceCard(s) {
-    return `<a class="source-card" href="#/${esc(s.departmentId)}/fuente/${esc(s.id)}"><div class="source-card-top"><span class="source-logo ${esc(s.color)}">${esc(s.initials)}</span><span class="card-open">${icon("arrow")}</span></div><div class="source-name">${esc(s.name)}<span class="category">${esc(s.category)}</span></div><p>${esc(s.description)}</p><div class="data-labels">${s.datasets.map((x) => `<span>${icon(x.icon)}${esc(x.name)}</span>`).join("")}</div><div class="source-card-bottom">${badge(s)}<span>${s.datasets.length} conjuntos de datos</span></div></a>`;
+    return `<a class="source-card" href="#/${esc(s.departmentId)}/fuente/${esc(s.id)}"><div class="source-card-top">${sourceLogo(s)}<span class="card-open">${icon("arrow")}</span></div><div class="source-name">${esc(s.name)}<span class="category">${esc(s.category)}</span></div><p>${esc(s.description)}</p><div class="data-labels">${s.datasets.map((x) => `<span>${icon(x.icon)}${esc(x.name)}</span>`).join("")}</div><div class="source-card-bottom">${badge(s)}<span>${s.datasets.length} conjuntos de datos</span></div></a>`;
   }
   function listing(d, service) {
     const scoped = sources.filter(
@@ -150,7 +157,7 @@
     return `<div class="access-row"><span class="access-icon">${icon(ico)}</span><div><h3>${esc(label)}</h3><p>${esc(note)}</p></div>${safe ? `<a class="access-link" href="${esc(url)}" target="_blank" rel="noopener noreferrer">Abrir ${icon("external")}</a>` : '<span class="badge neutral">Enlace pendiente</span>'}</div>`;
   }
   function detail(d, s) {
-    main.innerHTML = `${crumbs(d, null, s)}<a class="back-link" href="#/${esc(d.id)}">← Volver a las fuentes</a><div class="detail-heading"><span class="source-logo large ${esc(s.color)}">${esc(s.initials)}</span><div><div class="eyebrow">FUENTE DE DATOS · ${esc(d.name.toUpperCase())}</div><h1>${esc(s.name)}<span class="heading-dot">.</span></h1><p>${esc(s.description)}</p></div>${badge(s)}</div><div class="tabs" role="tablist" aria-label="Información de la fuente">${[
+    main.innerHTML = `${crumbs(d, null, s)}<a class="back-link" href="#/${esc(d.id)}">← Volver a las fuentes</a><div class="detail-heading">${sourceLogo(s, true)}<div><div class="eyebrow">FUENTE DE DATOS · ${esc(d.name.toUpperCase())}</div><h1>${esc(s.name)}<span class="heading-dot">.</span></h1><p>${esc(s.description)}</p></div>${badge(s)}</div><div class="tabs" role="tablist" aria-label="Información de la fuente">${[
       ["overview", "Información general"],
       ["data", "Conjuntos de datos"],
       ["access", "API y accesos"],

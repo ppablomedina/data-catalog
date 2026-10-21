@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="qucit">
+  <rect width="200" height="200" rx="28" fill="#fff"/>
+  <g fill="none" stroke="#5b91e8" stroke-width="19" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M100 26 173 68v71l-28 16"/>
+    <path d="m145 171-45 26-73-42V69l73-43 45 26"/>
+  </g>
+  <path d="m100 73 25 15v29l-25 15-25-15V88z" fill="#5b91e8"/>
+</svg>

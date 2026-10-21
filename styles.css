@@ -671,6 +671,18 @@ h2 {
   font-size: 33px;
   padding-bottom: 5px;
 }
+.source-logo.image-logo {
+  background: #fff;
+  overflow: hidden;
+  padding: 0;
+  border: 1px solid #edf0f2;
+}
+.source-logo.image-logo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 .card-open {
   color: #9cabb4;
 }
