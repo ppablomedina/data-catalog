@@ -48,7 +48,8 @@
           "'": "&#39;",
         })[c],
     );
-  const { departments, sources } = window.CATALOG;
+  const { departments, sources: catalogSources } = window.CATALOG;
+  const sources = [...catalogSources, ...(window.DATA_INVENTORY || [])];
   const apiLibrary = window.API_LIBRARY || [];
   const main = document.getElementById("main");
   const themeToggle = document.getElementById("theme-toggle");
@@ -192,6 +193,7 @@
               s.category,
               s.description,
               ...s.datasets.map((x) => x.name),
+              ...Object.values(s.governance || {}),
             ].join(" "),
           ).includes(normalize(query.trim())),
       );
@@ -227,12 +229,14 @@
     const applicableServices = s.serviceIds
       .map((id) => d.services.find((service) => service.id === id))
       .filter(Boolean);
-    main.innerHTML = `${crumbs(d, null, s)}<a class="back-link" href="#/${esc(d.id)}">← Volver a las fuentes</a><div class="detail-heading">${sourceLogo(s, true)}<div><div class="eyebrow">FUENTE DE DATOS · ${esc(d.name.toUpperCase())}</div><h1>${esc(s.name)}<span class="heading-dot">.</span></h1><p>${esc(s.description)}</p></div>${badge(s)}</div><div class="tabs" role="tablist" aria-label="Información de la fuente">${[
+    const detailTabs = [
       ["overview", "Información general"],
       ["data", s.contentTitle || "Conjuntos de datos"],
       ["access", "API y accesos"],
+      ...(s.governance ? [["governance", "Gobierno y calidad"]] : []),
       ["responsibilities", "Responsabilidades"],
-    ]
+    ];
+    main.innerHTML = `${crumbs(d, null, s)}<a class="back-link" href="#/${esc(d.id)}">← Volver a las fuentes</a><div class="detail-heading">${sourceLogo(s, true)}<div><div class="eyebrow">FUENTE DE DATOS · ${esc(d.name.toUpperCase())}</div><h1>${esc(s.name)}<span class="heading-dot">.</span></h1><p>${esc(s.description)}</p></div>${badge(s)}</div><div class="tabs" role="tablist" aria-label="Información de la fuente">${detailTabs
       .map(
         ([id, label]) =>
           `<button role="tab" id="tab-${id}" aria-controls="detail-panel" aria-selected="${tab === id}" tabindex="${tab === id ? "0" : "-1"}" data-tab="${id}">${label}${id === "data" ? `<span>${s.datasets.length}</span>` : id === "responsibilities" && s.responsibilityHistory?.length ? `<span>${s.responsibilityHistory.length}</span>` : ""}</button>`,
@@ -258,6 +262,21 @@
           .join("")}</section>`;
       if (tab === "access")
         el.innerHTML = `<section class="panel"><h2>API y puntos de acceso</h2><p>Accesos directos a la documentación, repositorios y ubicación de los datos.</p>${s.apiLibraryId ? `<div class="access-row"><span class="access-icon">${icon("code")}</span><div><h3>Documentación técnica</h3><p>Esquemas, campos, convenciones y documento original de la API.</p></div><a class="access-link" href="#/apis/${esc(s.apiLibraryId)}">Abrir biblioteca ${icon("arrow")}</a></div>` : ""}${s.api.status === "direct" ? "" : accessItem("API", s.api.url, s.api.note, "code")}${accessItem(s.accessLabel || "Portal del proveedor", s.website, s.websiteNote || "Dirección del portal pendiente de documentar.", "external")}${accessItem("Repositorio", s.repository, "Repositorio y permisos pendientes de documentar.", "folder")}${accessItem("Ubicación de los datos", s.storage, "Almacenamiento y condiciones de acceso pendientes de documentar.", "database")}</section><div class="notice">${icon("info")}<div><strong>Acceso seguro</strong><p>Documenta el procedimiento para solicitar permisos. No guardes contraseñas, tokens ni claves en el catálogo.</p></div></div>`;
+      if (tab === "governance" && s.governance) {
+        const governance = s.governance;
+        const fields = [
+          ["ID del inventario", governance.inventoryId],
+          ["Área propietaria", governance.ownerArea],
+          ["Frecuencia", governance.frequency],
+          ["Histórico", governance.history],
+          ["Calidad", governance.quality],
+          ["Datos personales", governance.personalData],
+          ["Categoría RGPD", governance.rgpdCategory],
+          ["Clasificación", governance.classification],
+          ["Criticidad", governance.criticality],
+        ];
+        el.innerHTML = `<section class="panel governance-panel"><div class="governance-heading"><div><span class="eyebrow">REGISTRO ${esc(governance.inventoryId)}</span><h2>Gobierno, calidad y sensibilidad</h2><p>Información extraída del inventario de fuentes para los casos de uso priorizados.</p></div><span class="criticality-badge ${esc(governance.criticality.toLowerCase().replaceAll(" ", "-"))}">${esc(governance.criticality)}</span></div><div class="governance-grid">${fields.map(([label, value]) => `<div class="governance-field"><span>${esc(label)}</span><strong>${esc(value)}</strong></div>`).join("")}<div class="governance-field wide"><span>Datos que aporta</span><strong>${esc(governance.data)}</strong></div><div class="governance-field wide"><span>Casos de uso que alimenta</span><strong>${esc(governance.useCases)}</strong></div><div class="governance-field wide"><span>Formato y vía de acceso</span><strong>${esc(governance.access)}</strong></div><div class="governance-field wide blocker"><span>Bloqueos y pendientes</span><strong>${esc(governance.blocker)}</strong></div></div></section>`;
+      }
       if (tab === "responsibilities") {
         const history = s.responsibilityHistory || [];
         el.innerHTML = `<section class="panel"><h2>Histórico de responsabilidades</h2><p>Personas o equipos responsables de mantener esta fuente. Las fechas pendientes se completarán cuando estén confirmadas.</p>${

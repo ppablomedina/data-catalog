@@ -22,6 +22,7 @@ Las tipografías se solicitan a Google Fonts; si no hay conexión se usan las fu
 - `index.html`: estructura y navegación principal.
 - `styles.css`: diseño adaptable y colores corporativos.
 - `catalog-data.js`: departamentos, servicios y fuentes; punto de entrada para ampliar el catálogo.
+- `inventory-data.js`: registros de gobierno, calidad, sensibilidad y criticidad de las fuentes.
 - `api-library.js`: documentación estructurada de APIs, endpoints y esquemas.
 - `app.js`: navegación por rutas hash, búsqueda, filtros y fichas con pestañas.
 - `docs/`: documentos técnicos originales enlazados desde la biblioteca.
@@ -44,6 +45,8 @@ El menú, la vista general y las fichas se generan desde los datos. La portada `
 **Nextbike:** once consultas operativas de Sítycleta traducidas al español, con acceso directo a cada consulta del portal de Nextbike.
 
 **Google Sheets de Moxsi:** VMP para revisar, control de almacén, inventario VMP histórico e incidencias anuales. Cada ficha incluye accesos directos y un histórico de responsabilidades con periodos confirmados o pendientes.
+
+**Inventario de fuentes de Moxsi:** once registros procedentes de las entrevistas por área, con datos aportados, casos de uso, acceso, frecuencia, histórico, calidad, datos personales, categoría RGPD, clasificación, criticidad y bloqueos pendientes.
 
 **API SAGULPA:** API desarrollada por Kubo y compartida por Moxsi, Aparcamientos y S.E.R. La biblioteca documenta sus once endpoints, campos, tipos, convenciones y asuntos pendientes. El PDF original se conserva en `docs/API Sagulpa.pdf`.
 

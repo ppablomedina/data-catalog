@@ -1290,6 +1290,80 @@ footer {
   margin-top: 22px;
   padding: 32px 20px;
 }
+.governance-panel {
+  padding: 28px;
+}
+.governance-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+.governance-heading p {
+  margin-top: 9px;
+  color: #82929c;
+  font-size: 11px;
+  line-height: 1.7;
+}
+.criticality-badge {
+  min-width: 70px;
+  padding: 7px 9px;
+  border-radius: 5px;
+  background: #f0f3f5;
+  color: #6d7f8b;
+  font-size: 9px;
+  font-weight: 700;
+  text-align: center;
+  white-space: nowrap;
+}
+.criticality-badge.alta,
+.criticality-badge.muy-alta {
+  background: #fff0e4;
+  color: #b35418;
+}
+.criticality-badge.media {
+  background: #fff8df;
+  color: #8f7110;
+}
+.governance-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+.governance-field {
+  min-height: 88px;
+  padding: 15px;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  background: #f8fafb;
+}
+.governance-field > span {
+  display: block;
+  margin-bottom: 8px;
+  color: #8a99a3;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.7px;
+  text-transform: uppercase;
+}
+.governance-field > strong {
+  color: var(--ink);
+  font-size: 11px;
+  font-weight: 550;
+  line-height: 1.7;
+}
+.governance-field.wide {
+  grid-column: 1 / -1;
+  min-height: 0;
+}
+.governance-field.blocker {
+  border-color: #eee1a9;
+  background: #fffdf4;
+}
+.governance-field.blocker > span {
+  color: #9a7a23;
+}
 .directory-section {
   margin-bottom: 38px;
 }
@@ -1749,6 +1823,22 @@ footer {
 :root[data-theme="dark"] .logo-fallback {
   background: #19313e;
 }
+:root[data-theme="dark"] .governance-field {
+  background: #162c38;
+}
+:root[data-theme="dark"] .governance-field.blocker {
+  border-color: #625727;
+  background: #29291e;
+}
+:root[data-theme="dark"] .criticality-badge.alta,
+:root[data-theme="dark"] .criticality-badge.muy-alta {
+  background: #462b1c;
+  color: #f3aa72;
+}
+:root[data-theme="dark"] .criticality-badge.media {
+  background: #403719;
+  color: #f2ce68;
+}
 :root[data-theme="dark"] .library-access-card {
   border-color: var(--line);
   background: linear-gradient(110deg, #122631 45%, #17303d);
@@ -1836,6 +1926,10 @@ footer {
 :root[data-theme="dark"] .schema-table td,
 :root[data-theme="dark"] .plain-notes {
   color: #a4b6c0;
+}
+:root[data-theme="dark"] .governance-heading p,
+:root[data-theme="dark"] .governance-field > span {
+  color: #9eb0ba;
 }
 :root[data-theme="dark"] .notice strong,
 :root[data-theme="dark"] .notice p,
@@ -2374,12 +2468,25 @@ footer {
   .api-notes-grid {
     grid-template-columns: 1fr;
   }
+  .governance-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 @media (max-width: 600px) {
   .api-library-grid,
   .directory-grid,
+  .governance-grid,
   .convention-grid {
     grid-template-columns: 1fr;
+  }
+  .governance-panel {
+    padding: 20px;
+  }
+  .governance-heading {
+    flex-direction: column;
+  }
+  .governance-field.wide {
+    grid-column: auto;
   }
   .directory-card {
     min-height: 250px;
