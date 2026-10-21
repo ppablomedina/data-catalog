@@ -231,5 +231,241 @@ window.CATALOG = {
         "Revisar cuándo vuelve a estar disponible la consulta de transacciones.",
       ],
     },
+    {
+      id: "moxsi-vmp-revisar",
+      departmentId: "moxsi",
+      serviceIds: ["sitycleta"],
+      name: "Moxsi - VMP para revisar",
+      logoIcon: "sheet",
+      initials: "VR",
+      color: "green",
+      category: "Mantenimiento",
+      icon: "sheet",
+      description:
+        "Hoja de seguimiento de los VMP que debe revisar el personal de taller.",
+      itemLabel: "documento",
+      contentTitle: "Documento de trabajo",
+      contentDescription:
+        "Hoja de Google Sheets utilizada por el personal de taller para registrar y seguir las revisiones de los VMP.",
+      datasets: [
+        {
+          name: "Moxsi - VMP para revisar",
+          description:
+            "Registro operativo de matrículas, fechas, operarios y estado de las revisiones de los VMP.",
+          icon: "sheet",
+          url: "https://docs.google.com/spreadsheets/d/1vR6_0pA_3rbWeWCxtM-ohkNpxzoVW0i0rqwuQbxhDJQ/edit?gid=0#gid=0",
+          linkLabel: "Abrir hoja",
+        },
+      ],
+      api: {
+        status: "direct",
+        url: null,
+        note: "El acceso se realiza directamente mediante Google Sheets.",
+      },
+      accessLabel: "Hoja de Google Sheets",
+      website:
+        "https://docs.google.com/spreadsheets/d/1vR6_0pA_3rbWeWCxtM-ohkNpxzoVW0i0rqwuQbxhDJQ/edit?gid=0#gid=0",
+      websiteNote:
+        "Documento operativo de seguimiento de VMP pendientes de revisión.",
+      repository: null,
+      storage: null,
+      owner: "Personal de taller",
+      responsibilityHistory: [
+        {
+          role: "Personal de taller",
+          from: null,
+          to: null,
+          status: "current",
+          note: "Responsable actual de completar la hoja. La fecha de inicio está pendiente de confirmar.",
+        },
+      ],
+      pending: [
+        "Confirmar la fecha de inicio de la responsabilidad del personal de taller.",
+        "Documentar la frecuencia de actualización y los permisos de acceso.",
+      ],
+    },
+    {
+      id: "moxsi-control-almacen",
+      departmentId: "moxsi",
+      serviceIds: ["sitycleta"],
+      name: "Moxsi - Control de almacén",
+      logoIcon: "sheet",
+      initials: "CA",
+      color: "green",
+      category: "Inventario",
+      icon: "sheet",
+      description:
+        "Hoja de control del almacén de Moxsi, con referencias, compras, consumos y existencias.",
+      itemLabel: "documento",
+      contentTitle: "Documento de trabajo",
+      contentDescription:
+        "Hoja de Google Sheets mantenida actualmente por el Jefe de Servicio de Moxsi y cuyo traspaso a SOS está previsto.",
+      datasets: [
+        {
+          name: "Moxsi - Control de almacén",
+          description:
+            "Control de referencias, descripción, unidades, compras, utilización y stock del almacén.",
+          icon: "sheet",
+          url: "https://docs.google.com/spreadsheets/d/1l3I5eWfOWsOfYdnaXwOhyI6ii4QAs572Q-c8B0zk_No/edit?gid=908360502#gid=908360502",
+          linkLabel: "Abrir hoja",
+        },
+      ],
+      api: {
+        status: "direct",
+        url: null,
+        note: "El acceso se realiza directamente mediante Google Sheets.",
+      },
+      accessLabel: "Hoja de Google Sheets",
+      website:
+        "https://docs.google.com/spreadsheets/d/1l3I5eWfOWsOfYdnaXwOhyI6ii4QAs572Q-c8B0zk_No/edit?gid=908360502#gid=908360502",
+      websiteNote: "Documento operativo para el control del almacén de Moxsi.",
+      repository: null,
+      storage: null,
+      owner: "Jefe de Servicio de Moxsi",
+      responsibilityHistory: [
+        {
+          role: "Jefe de Servicio de Moxsi",
+          from: null,
+          to: null,
+          status: "current",
+          note: "Responsable actual de completar la hoja. Las fechas de inicio y finalización están pendientes de confirmar.",
+        },
+        {
+          role: "Soporte operativo de servicios (SOS)",
+          from: null,
+          to: null,
+          status: "planned",
+          note: "Traspaso de responsabilidad previsto. La fecha de inicio está pendiente de confirmar.",
+        },
+      ],
+      pending: [
+        "Confirmar desde qué fecha mantiene la hoja el Jefe de Servicio de Moxsi.",
+        "Registrar la fecha efectiva del traspaso a SOS cuando se produzca.",
+        "Documentar la frecuencia de actualización y los permisos de acceso.",
+      ],
+    },
+    {
+      id: "moxsi-inventario-vmp-historico",
+      departmentId: "moxsi",
+      serviceIds: ["sitycleta"],
+      name: "Moxsi - Inventario VMP histórico",
+      logoIcon: "sheet",
+      initials: "IH",
+      color: "green",
+      category: "Inventario histórico",
+      icon: "sheet",
+      description:
+        "Inventario histórico de VMP generado a partir de la consulta 305 de Nextbike.",
+      itemLabel: "recursos",
+      contentTitle: "Documento y origen",
+      contentDescription:
+        "La hoja conserva el inventario histórico y la consulta de Nextbike documenta su fuente de origen.",
+      datasets: [
+        {
+          name: "Moxsi - Inventario VMP histórico",
+          description:
+            "Hoja histórica con información de inventario de los VMP de Moxsi.",
+          icon: "sheet",
+          url: "https://docs.google.com/spreadsheets/d/1-8FirPp5tr0Coiwe3BgR0f_5i0ypjiQp9C9KwCY_zpM/edit?gid=1473311831#gid=1473311831",
+          linkLabel: "Abrir hoja",
+        },
+        {
+          name: "Consulta Nextbike 305",
+          description:
+            "Consulta de Nextbike utilizada como origen para generar el inventario histórico.",
+          icon: "database",
+          url: "https://my.nextbike.net/office/queries/view/305",
+          linkLabel: "Abrir consulta",
+        },
+      ],
+      api: {
+        status: "direct",
+        url: null,
+        note: "El acceso se realiza mediante Google Sheets y la consulta 305 de Nextbike.",
+      },
+      accessLabel: "Hoja de Google Sheets",
+      website:
+        "https://docs.google.com/spreadsheets/d/1-8FirPp5tr0Coiwe3BgR0f_5i0ypjiQp9C9KwCY_zpM/edit?gid=1473311831#gid=1473311831",
+      websiteNote:
+        "Documento histórico generado a partir de datos consultados en Nextbike.",
+      repository: null,
+      storage: null,
+      owner: null,
+      responsibilityHistory: [],
+      pending: [
+        "Documentar quién genera y mantiene el inventario histórico.",
+        "Confirmar la periodicidad de generación desde Nextbike.",
+        "Registrar las fechas de responsabilidad cuando se identifique al equipo responsable.",
+      ],
+    },
+    {
+      id: "moxsi-incidencias",
+      departmentId: "moxsi",
+      serviceIds: ["sitycleta"],
+      name: "Moxsi - Incidencias",
+      logoIcon: "sheet",
+      initials: "MI",
+      color: "green",
+      category: "Incidencias operativas",
+      icon: "sheet",
+      description:
+        "Registro anual de incidencias gestionado por los equipos SIO y SOS.",
+      itemLabel: "archivos anuales",
+      contentTitle: "Archivos por año",
+      contentDescription:
+        "Se crea una hoja de Google Sheets por año para registrar las incidencias y su actividad asociada.",
+      datasets: [
+        {
+          name: "2025 - Moxsi incidencias",
+          description:
+            "Registro de incidencias de 2025, incluidos datos operativos, correos y llamadas.",
+          icon: "sheet",
+          url: "https://docs.google.com/spreadsheets/d/1Z6C4g_Ke8pejjSDZHw9ENkBV5ho6JaRY7yhKvDaGOkw/edit?gid=868944632#gid=868944632",
+          linkLabel: "Abrir hoja 2025",
+        },
+        {
+          name: "2026 - Moxsi incidencias",
+          description:
+            "Registro de incidencias de 2026 mantenido como continuación anual del histórico.",
+          icon: "sheet",
+          url: "https://docs.google.com/spreadsheets/d/1JDEAfGl4danYesLPRm2bogu-REnbpD3tbg7Ccn54nvI/edit?gid=1074201808#gid=1074201808",
+          linkLabel: "Abrir hoja 2026",
+        },
+      ],
+      api: {
+        status: "direct",
+        url: null,
+        note: "El acceso se realiza directamente mediante las hojas anuales de Google Sheets.",
+      },
+      accessLabel: "Hoja del año actual",
+      website:
+        "https://docs.google.com/spreadsheets/d/1JDEAfGl4danYesLPRm2bogu-REnbpD3tbg7Ccn54nvI/edit?gid=1074201808#gid=1074201808",
+      websiteNote:
+        "Acceso directo al archivo de incidencias de 2026. Los años anteriores están disponibles en la pestaña de archivos.",
+      repository: null,
+      storage: null,
+      owner: "SIO y SOS",
+      responsibilityHistory: [
+        {
+          role: "Soporte de Incidencias Operativas (SIO)",
+          from: null,
+          to: null,
+          status: "current",
+          note: "Equipo responsable de completar los archivos anuales. La fecha de inicio está pendiente de confirmar.",
+        },
+        {
+          role: "Soporte operativo de servicios (SOS)",
+          from: null,
+          to: null,
+          status: "current",
+          note: "Equipo responsable de completar los archivos anuales. La fecha de inicio está pendiente de confirmar.",
+        },
+      ],
+      pending: [
+        "Confirmar desde qué fecha participan SIO y SOS en el mantenimiento de los archivos.",
+        "Documentar el proceso de creación de cada archivo anual.",
+        "Registrar los cambios de responsabilidad futuros con sus fechas efectivas.",
+      ],
+    },
   ],
 };

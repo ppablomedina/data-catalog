@@ -39,6 +39,8 @@ El menú y las fichas se generan desde los datos. Las rutas siguen `#/departamen
 
 **Nextbike:** once consultas operativas de Sítycleta traducidas al español, con acceso directo a cada consulta del portal de Nextbike.
 
+**Google Sheets de Moxsi:** VMP para revisar, control de almacén, inventario VMP histórico e incidencias anuales. Cada ficha incluye accesos directos y un histórico de responsabilidades con periodos confirmados o pendientes.
+
 Las dos fuentes pertenecen a Moxsi. No se presupone su relación con Sítycleta o Sítyneta. No se han inventado URLs, responsables, repositorios, esquemas ni ubicaciones.
 
 ## Alcance

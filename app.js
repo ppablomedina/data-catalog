@@ -25,6 +25,8 @@
     check: '<path d="m5 12 4 4L19 6"/>',
     external: '<path d="M14 3h7v7m0-7L10 14m0-10H3v17h17v-7"/>',
     clock: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+    sheet:
+      '<path d="M6 2h9l5 5v15H6z"/><path d="M15 2v6h5M9 12h8M9 16h8M12 9v10"/>',
   };
   const icon = (name) =>
     `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${paths[name] || paths.folder}</svg>`;
@@ -61,9 +63,11 @@
     )
     .join("");
   function badge(s) {
-    return s.api.status === "available"
-      ? '<span class="badge available"><i></i>API disponible</span>'
-      : '<span class="badge pending"><i></i>API por confirmar</span>';
+    if (s.api.status === "available")
+      return '<span class="badge available"><i></i>API disponible</span>';
+    if (s.api.status === "direct")
+      return '<span class="badge direct"><i></i>Acceso directo</span>';
+    return '<span class="badge pending"><i></i>API por confirmar</span>';
   }
   function crumbs(d, service, source) {
     return `<nav class="breadcrumbs" aria-label="Ruta de navegación"><a href="#/${esc(d.id)}">Catálogo</a>${icon("chevron")}<a href="#/${esc(d.id)}">${esc(d.name)}</a>${service ? `${icon("chevron")}<span>${esc(service.name)}</span>` : ""}${source ? `${icon("chevron")}<span>${esc(source.name)}</span>` : ""}</nav>`;
@@ -72,6 +76,9 @@
     const size = large ? " large" : "";
     if (source.logo && /^(assets\/|https:\/\/)/.test(source.logo)) {
       return `<span class="source-logo image-logo${size}"><img src="${esc(source.logo)}" alt="Logotipo de ${esc(source.name)}"><span class="logo-fallback" aria-hidden="true">${esc(source.initials)}</span></span>`;
+    }
+    if (source.logoIcon) {
+      return `<span class="source-logo icon-logo ${esc(source.color)}${size}" aria-hidden="true">${icon(source.logoIcon)}</span>`;
     }
     return `<span class="source-logo ${esc(source.color)}${size}">${esc(source.initials)}</span>`;
   }
@@ -110,7 +117,7 @@
           "0",
         )}</strong><span>API por confirmar</span></div></div></div>
       ${!service ? `<section class="services-section"><div class="section-heading"><div><h2>Explora por servicio</h2><p>Cada servicio, su información en un mismo lugar.</p></div><span class="section-count">${d.services.length} servicios</span></div><div class="services">${d.services.map((s) => `<a class="service-card ${esc(s.color)}" href="#/${esc(d.id)}/${esc(s.id)}"><span class="service-art">${icon(s.icon)}</span><div><h3>${esc(s.name)}</h3><p>${sources.filter((x) => x.departmentId === d.id && x.serviceIds.includes(s.id)).length} fuentes asignadas</p></div><span class="service-arrow">${icon("arrow")}</span></a>`).join("")}</div></section>` : ""}
-      <section class="sources-section"><div class="section-heading"><div><h2>${service ? "Fuentes del servicio" : "Fuentes de datos"} <span class="count-pill">${scoped.length}</span></h2><p>${service ? "Información vinculada específicamente a este servicio." : `Proveedores, integraciones y datos que forman parte de ${esc(d.name)}.`}</p></div><span class="section-kicker">EXPLORAR EL CATÁLOGO</span></div><div class="search-toolbar"><label class="search">${icon("search")}<input id="search" type="search" placeholder="Buscar fuente, dato o proveedor…" aria-label="Buscar fuentes de datos" value="${esc(query)}"><kbd>/</kbd></label><label class="filter">${icon("code")}<select id="api-filter" aria-label="Filtrar por disponibilidad de API"><option value="all">Todas las fuentes</option><option value="available">API disponible</option><option value="pending">API por confirmar</option></select></label></div><div id="source-results" class="source-grid" aria-live="polite"></div><div class="results-footer"><span id="result-count"></span><span>${icon("info")}Información en construcción</span></div></section>
+      <section class="sources-section"><div class="section-heading"><div><h2>${service ? "Fuentes del servicio" : "Fuentes de datos"} <span class="count-pill">${scoped.length}</span></h2><p>${service ? "Información vinculada específicamente a este servicio." : `Proveedores, integraciones y datos que forman parte de ${esc(d.name)}.`}</p></div><span class="section-kicker">EXPLORAR EL CATÁLOGO</span></div><div class="search-toolbar"><label class="search">${icon("search")}<input id="search" type="search" placeholder="Buscar fuente, dato o proveedor…" aria-label="Buscar fuentes de datos" value="${esc(query)}"><kbd>/</kbd></label><label class="filter">${icon("code")}<select id="api-filter" aria-label="Filtrar por tipo de acceso"><option value="all">Todas las fuentes</option><option value="available">API disponible</option><option value="direct">Acceso directo</option><option value="pending">API por confirmar</option></select></label></div><div id="source-results" class="source-grid" aria-live="polite"></div><div class="results-footer"><span id="result-count"></span><span>${icon("info")}Información en construcción</span></div></section>
       <div class="notice">${icon("info")}<div><strong>Un catálogo que crece contigo</strong><p>${service ? (scoped.length ? `Esta vista reúne las fuentes vinculadas a ${esc(service.name)}. Se añadirán más a medida que se confirme su relación con el servicio.` : `Todavía no hay fuentes asignadas a ${esc(service.name)}. Consulta el departamento para ver la información disponible.`) : `Algunas fuentes están vinculadas a un servicio y otras permanecen a nivel de ${esc(d.name)} hasta confirmar su relación.`}</p></div>${service ? `<a href="#/${esc(d.id)}">Ver ${esc(d.name)} ${icon("arrow")}</a>` : '<span class="notice-tag">PRIMERA VERSIÓN</span>'}</div>`;
     const input = document.getElementById("search");
     const select = document.getElementById("api-filter");
@@ -166,10 +173,11 @@
       ["overview", "Información general"],
       ["data", s.contentTitle || "Conjuntos de datos"],
       ["access", "API y accesos"],
+      ["responsibilities", "Responsabilidades"],
     ]
       .map(
         ([id, label]) =>
-          `<button role="tab" id="tab-${id}" aria-controls="detail-panel" aria-selected="${tab === id}" tabindex="${tab === id ? "0" : "-1"}" data-tab="${id}">${label}${id === "data" ? `<span>${s.datasets.length}</span>` : ""}</button>`,
+          `<button role="tab" id="tab-${id}" aria-controls="detail-panel" aria-selected="${tab === id}" tabindex="${tab === id ? "0" : "-1"}" data-tab="${id}">${label}${id === "data" ? `<span>${s.datasets.length}</span>` : id === "responsibilities" && s.responsibilityHistory?.length ? `<span>${s.responsibilityHistory.length}</span>` : ""}</button>`,
       )
       .join(
         "",
@@ -182,16 +190,46 @@
       const el = document.getElementById("detail-panel");
       el.setAttribute("aria-labelledby", `tab-${tab}`);
       if (tab === "overview")
-        el.innerHTML = `<div class="detail-columns"><section class="panel"><h2>Acerca de esta fuente</h2><p>${esc(s.description)}</p><dl><div><dt>Departamento</dt><dd>${esc(d.name)}</dd></div><div><dt>Servicio</dt><dd>${s.serviceIds.length ? esc(s.serviceIds.map((id) => d.services.find((v) => v.id === id)?.name || id).join(", ")) : "Pendiente de asignar"}</dd></div><div><dt>Tipo de información</dt><dd>${esc(s.category)}</dd></div><div><dt>Responsable</dt><dd>${esc(s.owner || "Por documentar")}</dd></div><div><dt>Disponibilidad de API</dt><dd>${badge(s)}</dd></div></dl></section><section class="panel pending-panel"><span class="stat-icon yellow">${icon("tasks")}</span><h2>Por completar</h2><p>Próximos pasos para conectar esta fuente.</p><ul>${s.pending.map((p) => `<li>${icon("clock")}<span>${esc(p)}</span></li>`).join("")}</ul><div class="small-note">La información pendiente no implica que el recurso no exista.</div></section></div>`;
+        el.innerHTML = `<div class="detail-columns"><section class="panel"><h2>Acerca de esta fuente</h2><p>${esc(s.description)}</p><dl><div><dt>Departamento</dt><dd>${esc(d.name)}</dd></div><div><dt>Servicio</dt><dd>${s.serviceIds.length ? esc(s.serviceIds.map((id) => d.services.find((v) => v.id === id)?.name || id).join(", ")) : "Pendiente de asignar"}</dd></div><div><dt>Tipo de información</dt><dd>${esc(s.category)}</dd></div><div><dt>Responsable</dt><dd>${esc(s.owner || "Por documentar")}</dd></div><div><dt>Tipo de acceso</dt><dd>${badge(s)}</dd></div></dl></section><section class="panel pending-panel"><span class="stat-icon yellow">${icon("tasks")}</span><h2>Por completar</h2><p>Próximos pasos para conectar esta fuente.</p><ul>${s.pending.map((p) => `<li>${icon("clock")}<span>${esc(p)}</span></li>`).join("")}</ul><div class="small-note">La información pendiente no implica que el recurso no exista.</div></section></div>`;
       if (tab === "data")
         el.innerHTML = `<section class="panel"><h2>${esc(s.contentTitle || "Conjuntos de datos")}</h2><p>${esc(s.contentDescription || "Información identificada en esta fuente. El esquema, formato y frecuencia de actualización están pendientes de documentar.")}</p>${s.datasets
           .map((x) => {
             const safeUrl = x.url && /^https?:\/\//i.test(x.url);
-            return `<div class="dataset-row"><span class="stat-icon blue">${icon(x.icon)}</span><div>${x.queryNumber ? `<span class="query-number">Consulta ${esc(x.queryNumber)}</span>` : ""}<h3>${esc(x.name)}</h3><p>${esc(x.description)}</p></div><div class="dataset-actions">${x.status ? `<span class="badge pending"><i></i>${esc(x.status)}</span>` : ""}${safeUrl ? `<a class="access-link" href="${esc(x.url)}" target="_blank" rel="noopener noreferrer">Abrir consulta ${icon("external")}</a>` : '<span class="badge neutral">Esquema pendiente</span>'}</div></div>`;
+            return `<div class="dataset-row"><span class="stat-icon blue">${icon(x.icon)}</span><div>${x.queryNumber ? `<span class="query-number">Consulta ${esc(x.queryNumber)}</span>` : ""}<h3>${esc(x.name)}</h3><p>${esc(x.description)}</p></div><div class="dataset-actions">${x.status ? `<span class="badge pending"><i></i>${esc(x.status)}</span>` : ""}${safeUrl ? `<a class="access-link" href="${esc(x.url)}" target="_blank" rel="noopener noreferrer">${esc(x.linkLabel || "Abrir consulta")} ${icon("external")}</a>` : '<span class="badge neutral">Esquema pendiente</span>'}</div></div>`;
           })
           .join("")}</section>`;
       if (tab === "access")
-        el.innerHTML = `<section class="panel"><h2>API y puntos de acceso</h2><p>Accesos directos a la documentación, repositorios y ubicación de los datos.</p>${accessItem("API", s.api.url, s.api.note, "code")}${accessItem("Portal del proveedor", s.website, "Dirección del portal pendiente de documentar.", "external")}${accessItem("Repositorio", s.repository, "Repositorio y permisos pendientes de documentar.", "folder")}${accessItem("Ubicación de los datos", s.storage, "Almacenamiento y condiciones de acceso pendientes de documentar.", "database")}</section><div class="notice">${icon("info")}<div><strong>Acceso seguro</strong><p>Documenta el procedimiento para solicitar permisos. No guardes contraseñas, tokens ni claves en el catálogo.</p></div></div>`;
+        el.innerHTML = `<section class="panel"><h2>API y puntos de acceso</h2><p>Accesos directos a la documentación, repositorios y ubicación de los datos.</p>${s.api.status === "direct" ? "" : accessItem("API", s.api.url, s.api.note, "code")}${accessItem(s.accessLabel || "Portal del proveedor", s.website, s.websiteNote || "Dirección del portal pendiente de documentar.", "external")}${accessItem("Repositorio", s.repository, "Repositorio y permisos pendientes de documentar.", "folder")}${accessItem("Ubicación de los datos", s.storage, "Almacenamiento y condiciones de acceso pendientes de documentar.", "database")}</section><div class="notice">${icon("info")}<div><strong>Acceso seguro</strong><p>Documenta el procedimiento para solicitar permisos. No guardes contraseñas, tokens ni claves en el catálogo.</p></div></div>`;
+      if (tab === "responsibilities") {
+        const history = s.responsibilityHistory || [];
+        el.innerHTML = `<section class="panel"><h2>Histórico de responsabilidades</h2><p>Personas o equipos responsables de mantener esta fuente. Las fechas pendientes se completarán cuando estén confirmadas.</p>${
+          history.length
+            ? `<div class="responsibility-list">${history
+                .map((entry) => {
+                  const statusLabel =
+                    entry.status === "current"
+                      ? "Responsabilidad actual"
+                      : entry.status === "planned"
+                        ? "Traspaso previsto"
+                        : "Responsabilidad finalizada";
+                  const periodStart = entry.from || "Inicio pendiente";
+                  const periodEnd =
+                    entry.to ||
+                    (entry.status === "current"
+                      ? "Actualidad"
+                      : entry.status === "planned"
+                        ? "Inicio pendiente"
+                        : "Fin pendiente");
+                  const period =
+                    entry.status === "planned" && !entry.from
+                      ? "Fecha de inicio pendiente"
+                      : `${periodStart} → ${periodEnd}`;
+                  return `<article class="responsibility-item"><span class="responsibility-marker ${esc(entry.status || "ended")}"></span><div class="responsibility-content"><div class="responsibility-top"><div><span class="responsibility-status ${esc(entry.status || "ended")}">${esc(statusLabel)}</span><h3>${esc(entry.role)}</h3></div><span class="responsibility-period">${icon("clock")}${esc(period)}</span></div>${entry.note ? `<p>${esc(entry.note)}</p>` : ""}</div></article>`;
+                })
+                .join("")}</div>`
+            : '<div class="empty responsibility-empty"><h3>Histórico pendiente</h3><p>Aún no se han documentado responsables para esta fuente.</p></div>'
+        }</section>`;
+      }
     }
     document.querySelectorAll("[data-tab]").forEach((btn) => {
       btn.addEventListener("click", () => {
