@@ -76,7 +76,12 @@
     return `<span class="source-logo ${esc(source.color)}${size}">${esc(source.initials)}</span>`;
   }
   function sourceCard(s) {
-    return `<a class="source-card" href="#/${esc(s.departmentId)}/fuente/${esc(s.id)}"><div class="source-card-top">${sourceLogo(s)}<span class="card-open">${icon("arrow")}</span></div><div class="source-name">${esc(s.name)}<span class="category">${esc(s.category)}</span></div><p>${esc(s.description)}</p><div class="data-labels">${s.datasets.map((x) => `<span>${icon(x.icon)}${esc(x.name)}</span>`).join("")}</div><div class="source-card-bottom">${badge(s)}<span>${s.datasets.length} conjuntos de datos</span></div></a>`;
+    const preview = s.datasets
+      .slice(0, 2)
+      .map((x) => `<span>${icon(x.icon)}${esc(x.name)}</span>`)
+      .join("");
+    const remaining = s.datasets.length - 2;
+    return `<a class="source-card" href="#/${esc(s.departmentId)}/fuente/${esc(s.id)}"><div class="source-card-top">${sourceLogo(s)}<span class="card-open">${icon("arrow")}</span></div><div class="source-name">${esc(s.name)}<span class="category">${esc(s.category)}</span></div><p>${esc(s.description)}</p><div class="data-labels">${preview}${remaining > 0 ? `<span>+${remaining} ${esc(s.itemLabel || "conjuntos")}</span>` : ""}</div><div class="source-card-bottom">${badge(s)}<span>${s.datasets.length} ${esc(s.itemLabel || "conjuntos de datos")}</span></div></a>`;
   }
   function listing(d, service) {
     const scoped = sources.filter(
@@ -106,7 +111,7 @@
         )}</strong><span>API por confirmar</span></div></div></div>
       ${!service ? `<section class="services-section"><div class="section-heading"><div><h2>Explora por servicio</h2><p>Cada servicio, su información en un mismo lugar.</p></div><span class="section-count">${d.services.length} servicios</span></div><div class="services">${d.services.map((s) => `<a class="service-card ${esc(s.color)}" href="#/${esc(d.id)}/${esc(s.id)}"><span class="service-art">${icon(s.icon)}</span><div><h3>${esc(s.name)}</h3><p>${sources.filter((x) => x.departmentId === d.id && x.serviceIds.includes(s.id)).length} fuentes asignadas</p></div><span class="service-arrow">${icon("arrow")}</span></a>`).join("")}</div></section>` : ""}
       <section class="sources-section"><div class="section-heading"><div><h2>${service ? "Fuentes del servicio" : "Fuentes de datos"} <span class="count-pill">${scoped.length}</span></h2><p>${service ? "Información vinculada específicamente a este servicio." : `Proveedores, integraciones y datos que forman parte de ${esc(d.name)}.`}</p></div><span class="section-kicker">EXPLORAR EL CATÁLOGO</span></div><div class="search-toolbar"><label class="search">${icon("search")}<input id="search" type="search" placeholder="Buscar fuente, dato o proveedor…" aria-label="Buscar fuentes de datos" value="${esc(query)}"><kbd>/</kbd></label><label class="filter">${icon("code")}<select id="api-filter" aria-label="Filtrar por disponibilidad de API"><option value="all">Todas las fuentes</option><option value="available">API disponible</option><option value="pending">API por confirmar</option></select></label></div><div id="source-results" class="source-grid" aria-live="polite"></div><div class="results-footer"><span id="result-count"></span><span>${icon("info")}Información en construcción</span></div></section>
-      <div class="notice">${icon("info")}<div><strong>Un catálogo que crece contigo</strong><p>${service ? `Las fuentes de ${esc(d.name)} todavía no se han asignado a los servicios. Consulta el departamento para ver la información disponible.` : `Las fuentes están registradas a nivel de ${esc(d.name)}. Su relación con los servicios está pendiente de confirmar.`}</p></div>${service ? `<a href="#/${esc(d.id)}">Ver ${esc(d.name)} ${icon("arrow")}</a>` : '<span class="notice-tag">PRIMERA VERSIÓN</span>'}</div>`;
+      <div class="notice">${icon("info")}<div><strong>Un catálogo que crece contigo</strong><p>${service ? (scoped.length ? `Esta vista reúne las fuentes vinculadas a ${esc(service.name)}. Se añadirán más a medida que se confirme su relación con el servicio.` : `Todavía no hay fuentes asignadas a ${esc(service.name)}. Consulta el departamento para ver la información disponible.`) : `Algunas fuentes están vinculadas a un servicio y otras permanecen a nivel de ${esc(d.name)} hasta confirmar su relación.`}</p></div>${service ? `<a href="#/${esc(d.id)}">Ver ${esc(d.name)} ${icon("arrow")}</a>` : '<span class="notice-tag">PRIMERA VERSIÓN</span>'}</div>`;
     const input = document.getElementById("search");
     const select = document.getElementById("api-filter");
     select.value = filter;
@@ -159,7 +164,7 @@
   function detail(d, s) {
     main.innerHTML = `${crumbs(d, null, s)}<a class="back-link" href="#/${esc(d.id)}">← Volver a las fuentes</a><div class="detail-heading">${sourceLogo(s, true)}<div><div class="eyebrow">FUENTE DE DATOS · ${esc(d.name.toUpperCase())}</div><h1>${esc(s.name)}<span class="heading-dot">.</span></h1><p>${esc(s.description)}</p></div>${badge(s)}</div><div class="tabs" role="tablist" aria-label="Información de la fuente">${[
       ["overview", "Información general"],
-      ["data", "Conjuntos de datos"],
+      ["data", s.contentTitle || "Conjuntos de datos"],
       ["access", "API y accesos"],
     ]
       .map(
@@ -179,7 +184,12 @@
       if (tab === "overview")
         el.innerHTML = `<div class="detail-columns"><section class="panel"><h2>Acerca de esta fuente</h2><p>${esc(s.description)}</p><dl><div><dt>Departamento</dt><dd>${esc(d.name)}</dd></div><div><dt>Servicio</dt><dd>${s.serviceIds.length ? esc(s.serviceIds.map((id) => d.services.find((v) => v.id === id)?.name || id).join(", ")) : "Pendiente de asignar"}</dd></div><div><dt>Tipo de información</dt><dd>${esc(s.category)}</dd></div><div><dt>Responsable</dt><dd>${esc(s.owner || "Por documentar")}</dd></div><div><dt>Disponibilidad de API</dt><dd>${badge(s)}</dd></div></dl></section><section class="panel pending-panel"><span class="stat-icon yellow">${icon("tasks")}</span><h2>Por completar</h2><p>Próximos pasos para conectar esta fuente.</p><ul>${s.pending.map((p) => `<li>${icon("clock")}<span>${esc(p)}</span></li>`).join("")}</ul><div class="small-note">La información pendiente no implica que el recurso no exista.</div></section></div>`;
       if (tab === "data")
-        el.innerHTML = `<section class="panel"><h2>Conjuntos de datos</h2><p>Información identificada en esta fuente. El esquema, formato y frecuencia de actualización están pendientes de documentar.</p>${s.datasets.map((x) => `<div class="dataset-row"><span class="stat-icon blue">${icon(x.icon)}</span><div><h3>${esc(x.name)}</h3><p>${esc(x.description)}</p></div><span class="badge neutral">Esquema pendiente</span></div>`).join("")}</section>`;
+        el.innerHTML = `<section class="panel"><h2>${esc(s.contentTitle || "Conjuntos de datos")}</h2><p>${esc(s.contentDescription || "Información identificada en esta fuente. El esquema, formato y frecuencia de actualización están pendientes de documentar.")}</p>${s.datasets
+          .map((x) => {
+            const safeUrl = x.url && /^https?:\/\//i.test(x.url);
+            return `<div class="dataset-row"><span class="stat-icon blue">${icon(x.icon)}</span><div>${x.queryNumber ? `<span class="query-number">Consulta ${esc(x.queryNumber)}</span>` : ""}<h3>${esc(x.name)}</h3><p>${esc(x.description)}</p></div><div class="dataset-actions">${x.status ? `<span class="badge pending"><i></i>${esc(x.status)}</span>` : ""}${safeUrl ? `<a class="access-link" href="${esc(x.url)}" target="_blank" rel="noopener noreferrer">Abrir consulta ${icon("external")}</a>` : '<span class="badge neutral">Esquema pendiente</span>'}</div></div>`;
+          })
+          .join("")}</section>`;
       if (tab === "access")
         el.innerHTML = `<section class="panel"><h2>API y puntos de acceso</h2><p>Accesos directos a la documentación, repositorios y ubicación de los datos.</p>${accessItem("API", s.api.url, s.api.note, "code")}${accessItem("Portal del proveedor", s.website, "Dirección del portal pendiente de documentar.", "external")}${accessItem("Repositorio", s.repository, "Repositorio y permisos pendientes de documentar.", "folder")}${accessItem("Ubicación de los datos", s.storage, "Almacenamiento y condiciones de acceso pendientes de documentar.", "database")}</section><div class="notice">${icon("info")}<div><strong>Acceso seguro</strong><p>Documenta el procedimiento para solicitar permisos. No guardes contraseñas, tokens ni claves en el catálogo.</p></div></div>`;
     }

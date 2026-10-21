@@ -37,6 +37,8 @@ El menú y las fichas se generan desde los datos. Las rutas siguen `#/departamen
 
 **qucit:** evaluación del desempeño y tareas del equipo de logística en calle. Tiene API; URL y autenticación pendientes de documentar.
 
+**Nextbike:** once consultas operativas de Sítycleta traducidas al español, con acceso directo a cada consulta del portal de Nextbike.
+
 Las dos fuentes pertenecen a Moxsi. No se presupone su relación con Sítycleta o Sítyneta. No se han inventado URLs, responsables, repositorios, esquemas ni ubicaciones.
 
 ## Alcance

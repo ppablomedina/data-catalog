@@ -1072,6 +1072,29 @@ footer {
   margin-left: auto;
   flex-shrink: 0;
 }
+.query-number {
+  display: block;
+  margin-bottom: 5px;
+  color: var(--primary);
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.dataset-actions {
+  display: flex;
+  flex-shrink: 0;
+  align-items: flex-end;
+  gap: 10px;
+  margin-left: auto;
+}
+.dataset-actions .access-link {
+  margin-left: 0;
+  padding: 7px 9px;
+  border: 1px solid #dce6eb;
+  border-radius: 5px;
+  background: #f7fafb;
+}
 .access-row {
   margin: 0;
   padding: 24px 0;
@@ -1314,7 +1337,8 @@ footer {
   .dataset-row {
     flex-wrap: wrap;
   }
-  .dataset-row > .badge {
+  .dataset-row > .badge,
+  .dataset-actions {
     margin-left: 49px;
   }
   .tabs {
@@ -1584,6 +1608,11 @@ footer {
   }
   .dataset-row > .badge {
     font-size: 8px;
+  }
+  .dataset-actions {
+    width: calc(100% - 49px);
+    flex-wrap: wrap;
+    align-items: flex-start;
   }
   .empty {
     padding: 35px 15px;
