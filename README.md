@@ -2,6 +2,8 @@
 
 Portal estático en español para consultar los datos utilizados y generados por la empresa. Incluye los departamentos **Moxsi**, **Aparcamientos** y **S.E.R.**, además de una biblioteca de documentación de APIs. Moxsi se organiza en los subtipos **Sítycleta Mecánica**, **Sítycleta Eléctrica** y **Sítyneta — Patinetes Eléctricos**.
 
+La barra superior permite elegir entre modo claro y modo oscuro. La preferencia se conserva en el navegador; en la primera visita se respeta la configuración del sistema.
+
 ## Abrir el portal
 
 Abre `index.html` directamente en el navegador. No necesita instalación, compilación, base de datos ni credenciales.

@@ -1,6 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;450;500;550;600;650;700&family=Manrope:wght@400;500;600;650;700;750;800&display=swap");
 
 :root {
+  color-scheme: light;
   --primary: #0b537f;
   --orange: #e9761f;
   --yellow: #fec735;
@@ -283,6 +284,38 @@ svg {
   display: flex;
   align-items: center;
   gap: 25px;
+}
+.theme-toggle {
+  display: inline-flex;
+  height: 34px;
+  align-items: center;
+  gap: 7px;
+  padding: 0 10px;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  background: #f7f9fa;
+  color: #627988;
+  transition:
+    color 0.15s,
+    background 0.15s,
+    border-color 0.15s;
+}
+.theme-toggle:hover {
+  background: #edf3f6;
+  color: var(--primary);
+}
+.theme-toggle-icon {
+  display: grid;
+  place-items: center;
+}
+.theme-toggle-icon svg {
+  width: 15px;
+  height: 15px;
+}
+.theme-toggle-label {
+  font-size: 9px;
+  font-weight: 650;
+  white-space: nowrap;
 }
 .internal {
   font-size: 10px;
@@ -1531,6 +1564,139 @@ footer {
   font-size: 11px;
   line-height: 1.8;
 }
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --primary: #72b6dd;
+  --orange: #f39a57;
+  --yellow: #f9d563;
+  --green: #8bc65f;
+  --ink: #e7f0f5;
+  --muted: #9aadb8;
+  --line: #29414f;
+  --background: #0c1922;
+}
+:root[data-theme="dark"] .sidebar {
+  background: #10212c;
+}
+:root[data-theme="dark"] .topbar,
+:root[data-theme="dark"] .stats,
+:root[data-theme="dark"] .source-card,
+:root[data-theme="dark"] .empty,
+:root[data-theme="dark"] .panel,
+:root[data-theme="dark"] .api-library-card,
+:root[data-theme="dark"] .endpoint-card,
+:root[data-theme="dark"] .skip {
+  background: #122631;
+}
+:root[data-theme="dark"] .brand-icon {
+  background: #0b537f;
+  color: #fff;
+}
+:root[data-theme="dark"] .workspace-icon,
+:root[data-theme="dark"] .avatar,
+:root[data-theme="dark"] .theme-toggle,
+:root[data-theme="dark"] .search,
+:root[data-theme="dark"] .filter,
+:root[data-theme="dark"] .data-labels > span,
+:root[data-theme="dark"] .neutral,
+:root[data-theme="dark"] .tabs button span,
+:root[data-theme="dark"] .document-link,
+:root[data-theme="dark"] .convention-grid > div,
+:root[data-theme="dark"] .endpoint-icon,
+:root[data-theme="dark"] .schema-table th,
+:root[data-theme="dark"] .logo-fallback {
+  background: #19313e;
+}
+:root[data-theme="dark"] .theme-toggle:hover,
+:root[data-theme="dark"] .nav-item:hover,
+:root[data-theme="dark"] .endpoint-card[open] summary {
+  background: #1c3745;
+}
+:root[data-theme="dark"] .nav-item.active,
+:root[data-theme="dark"] .direct,
+:root[data-theme="dark"] .department-chip,
+:root[data-theme="dark"] .stat-icon.blue {
+  background: #173a4d;
+}
+:root[data-theme="dark"] .stat-icon.green,
+:root[data-theme="dark"] .available,
+:root[data-theme="dark"] .service-art {
+  background: #203b2d;
+}
+:root[data-theme="dark"] .stat-icon.orange {
+  background: #462b1c;
+}
+:root[data-theme="dark"] .stat-icon.yellow,
+:root[data-theme="dark"] .pending,
+:root[data-theme="dark"] .endpoint-notes span {
+  background: #403719;
+}
+:root[data-theme="dark"] .stat-icon.purple {
+  background: #302b43;
+}
+:root[data-theme="dark"] .service-card {
+  background: #142b36;
+  border-color: var(--line);
+}
+:root[data-theme="dark"] .service-card.green,
+:root[data-theme="dark"] .service-card.orange,
+:root[data-theme="dark"] .service-card.electric {
+  background: #142b36;
+}
+:root[data-theme="dark"] .notice {
+  border-color: #294959;
+  background: #142d3a;
+  color: #9fc3d7;
+}
+:root[data-theme="dark"] .notice-tag {
+  background: #1e3b49;
+}
+:root[data-theme="dark"] .pending-panel {
+  background: #29291e;
+}
+:root[data-theme="dark"] .responsibility-content,
+:root[data-theme="dark"] .access-link {
+  background: #17303d;
+}
+:root[data-theme="dark"] .schema-table td {
+  border-color: var(--line);
+}
+:root[data-theme="dark"] .source-card-bottom {
+  border-color: var(--line);
+}
+:root[data-theme="dark"] .pending {
+  color: #f2ce68;
+}
+:root[data-theme="dark"] .available {
+  color: #a7d57f;
+}
+:root[data-theme="dark"] .neutral,
+:root[data-theme="dark"] .theme-toggle,
+:root[data-theme="dark"] .nav-item,
+:root[data-theme="dark"] .service-nav a,
+:root[data-theme="dark"] .category,
+:root[data-theme="dark"] .data-labels > span,
+:root[data-theme="dark"] .panel > p,
+:root[data-theme="dark"] .panel dt,
+:root[data-theme="dark"] .pending-panel li,
+:root[data-theme="dark"] .api-library-card p,
+:root[data-theme="dark"] .convention-grid > div,
+:root[data-theme="dark"] .endpoint-body > p,
+:root[data-theme="dark"] .schema-table td,
+:root[data-theme="dark"] .plain-notes {
+  color: #a4b6c0;
+}
+:root[data-theme="dark"] .notice strong,
+:root[data-theme="dark"] .notice p,
+:root[data-theme="dark"] .breadcrumbs > span:last-child,
+:root[data-theme="dark"] .breadcrumbs > a:last-child,
+:root[data-theme="dark"] .schema-table code {
+  color: #b7cedb;
+}
+:root[data-theme="dark"] .source-logo.image-logo {
+  background: #fff;
+}
 @media (min-width: 1500px) {
   main {
     padding-top: 40px;
@@ -1835,7 +2001,16 @@ footer {
     font-size: 9px;
   }
   .internal {
-    font-size: 9px;
+    display: none;
+  }
+  .theme-toggle {
+    width: 31px;
+    height: 31px;
+    justify-content: center;
+    padding: 0;
+  }
+  .theme-toggle-label {
+    display: none;
   }
   .avatar {
     width: 25px;

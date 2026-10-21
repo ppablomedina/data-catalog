@@ -31,6 +31,8 @@
     clock: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
     sheet:
       '<path d="M6 2h9l5 5v15H6z"/><path d="M15 2v6h5M9 12h8M9 16h8M12 9v10"/>',
+    sun: '<circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"/>',
+    moon: '<path d="M20.2 15.3A8.5 8.5 0 0 1 8.7 3.8 8.5 8.5 0 1 0 20.2 15.3Z"/>',
   };
   const icon = (name) =>
     `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${paths[name] || paths.folder}</svg>`;
@@ -49,10 +51,51 @@
   const { departments, sources } = window.CATALOG;
   const apiLibrary = window.API_LIBRARY || [];
   const main = document.getElementById("main");
+  const themeToggle = document.getElementById("theme-toggle");
+  const themeColor = document.getElementById("theme-color");
+  const themeStorageKey = "atlas-theme";
   let query = "",
     filter = "all",
     tab = "overview";
   let route;
+  const selectedTheme = () =>
+    document.documentElement.dataset.theme === "dark" ? "dark" : "light";
+  function updateThemeControl() {
+    const dark = selectedTheme() === "dark";
+    const action = dark ? "Activar modo claro" : "Activar modo oscuro";
+    themeToggle.setAttribute("aria-label", action);
+    themeToggle.title = action;
+    themeToggle.querySelector(".theme-toggle-icon").innerHTML = icon(
+      dark ? "sun" : "moon",
+    );
+    themeToggle.querySelector(".theme-toggle-label").textContent = dark
+      ? "Modo claro"
+      : "Modo oscuro";
+    themeColor.content = dark ? "#0c1922" : "#0B537F";
+  }
+  function setTheme(theme, persist = true) {
+    document.documentElement.dataset.theme = theme;
+    if (persist) {
+      try {
+        localStorage.setItem(themeStorageKey, theme);
+      } catch (_) {}
+    }
+    updateThemeControl();
+  }
+  themeToggle.addEventListener("click", () => {
+    setTheme(selectedTheme() === "dark" ? "light" : "dark");
+  });
+  const colorScheme = matchMedia("(prefers-color-scheme: dark)");
+  colorScheme.addEventListener?.("change", (event) => {
+    let hasSavedTheme = false;
+    try {
+      hasSavedTheme = ["light", "dark"].includes(
+        localStorage.getItem(themeStorageKey),
+      );
+    } catch (_) {}
+    if (!hasSavedTheme) setTheme(event.matches ? "dark" : "light", false);
+  });
+  updateThemeControl();
   document.querySelector(".area-label span").textContent = String(
     departments.length,
   ).padStart(2, "0");
