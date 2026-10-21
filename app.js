@@ -70,8 +70,8 @@
   }
   function sourceLogo(source, large = false) {
     const size = large ? " large" : "";
-    if (source.logo && source.logo.startsWith("assets/")) {
-      return `<span class="source-logo image-logo${size}"><img src="${esc(source.logo)}" alt="Logotipo de ${esc(source.name)}"></span>`;
+    if (source.logo && /^(assets\/|https:\/\/)/.test(source.logo)) {
+      return `<span class="source-logo image-logo${size}"><img src="${esc(source.logo)}" alt="Logotipo de ${esc(source.name)}"><span class="logo-fallback" aria-hidden="true">${esc(source.initials)}</span></span>`;
     }
     return `<span class="source-logo ${esc(source.color)}${size}">${esc(source.initials)}</span>`;
   }
@@ -255,5 +255,14 @@
       }
     }
   });
+  document.addEventListener(
+    "error",
+    (event) => {
+      if (event.target.matches?.(".source-logo img")) {
+        event.target.closest(".source-logo")?.classList.add("logo-error");
+      }
+    },
+    true,
+  );
   render();
 })();
