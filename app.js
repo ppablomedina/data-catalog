@@ -47,6 +47,7 @@
         })[c],
     );
   const { departments, sources } = window.CATALOG;
+  const apiLibrary = window.API_LIBRARY || [];
   const main = document.getElementById("main");
   let query = "",
     filter = "all",
@@ -57,13 +58,17 @@
   ).padStart(2, "0");
   document.getElementById("overview-nav").href = `#/${departments[0].id}`;
   document.querySelector(".brand").href = `#/${departments[0].id}`;
+  const sourceDepartments = (source) =>
+    source.departmentIds || [source.departmentId];
+  const belongsToDepartment = (source, departmentId) =>
+    sourceDepartments(source).includes(departmentId);
   document
     .querySelectorAll("[data-icon]")
     .forEach((el) => (el.innerHTML = icon(el.dataset.icon)));
   document.getElementById("department-nav").innerHTML = departments
     .map(
       (d) =>
-        `<a class="nav-item department" data-route="${esc(d.id)}" href="#/${esc(d.id)}">${icon("layers")}${esc(d.name)}<span class="nav-chevron">⌄</span></a><div class="service-nav">${d.services.map((s) => `<a href="#/${esc(d.id)}/${esc(s.id)}" data-route="${esc(s.id)}"><span class="service-dot ${esc(s.color)}"></span>${esc(s.name)}</a>`).join("")}</div>`,
+        `<a class="nav-item department" data-route="${esc(d.id)}" href="#/${esc(d.id)}">${icon("layers")}${esc(d.name)}${d.services.length ? '<span class="nav-chevron">⌄</span>' : ""}</a>${d.services.length ? `<div class="service-nav">${d.services.map((s) => `<a href="#/${esc(d.id)}/${esc(s.id)}" data-route="${esc(s.id)}"><span class="service-dot ${esc(s.color)}"></span>${esc(s.name)}</a>`).join("")}</div>` : ""}`,
     )
     .join("");
   function badge(s) {
@@ -86,22 +91,22 @@
     }
     return `<span class="source-logo ${esc(source.color)}${size}">${esc(source.initials)}</span>`;
   }
-  function sourceCard(s) {
+  function sourceCard(s, departmentId) {
     const preview = s.datasets
       .slice(0, 2)
       .map((x) => `<span>${icon(x.icon)}${esc(x.name)}</span>`)
       .join("");
     const remaining = s.datasets.length - 2;
-    return `<a class="source-card" href="#/${esc(s.departmentId)}/fuente/${esc(s.id)}"><div class="source-card-top">${sourceLogo(s)}<span class="card-open">${icon("arrow")}</span></div><div class="source-name">${esc(s.name)}<span class="category">${esc(s.category)}</span></div><p>${esc(s.description)}</p><div class="data-labels">${preview}${remaining > 0 ? `<span>+${remaining} ${esc(s.itemLabel || "conjuntos")}</span>` : ""}</div><div class="source-card-bottom">${badge(s)}<span>${s.datasets.length} ${esc(s.itemLabel || "conjuntos de datos")}</span></div></a>`;
+    return `<a class="source-card" href="#/${esc(departmentId)}/fuente/${esc(s.id)}"><div class="source-card-top">${sourceLogo(s)}<span class="card-open">${icon("arrow")}</span></div><div class="source-name">${esc(s.name)}<span class="category">${esc(s.category)}</span></div><p>${esc(s.description)}</p><div class="data-labels">${preview}${remaining > 0 ? `<span>+${remaining} ${esc(s.itemLabel || "conjuntos")}</span>` : ""}</div><div class="source-card-bottom">${badge(s)}<span>${s.datasets.length} ${esc(s.itemLabel || "conjuntos de datos")}</span></div></a>`;
   }
   function listing(d, service) {
     const scoped = sources.filter(
       (s) =>
-        s.departmentId === d.id &&
+        belongsToDepartment(s, d.id) &&
         (!service || s.serviceIds.includes(service.id)),
     );
     const unassignedCount = sources.filter(
-      (s) => s.departmentId === d.id && !s.serviceIds.length,
+      (s) => belongsToDepartment(s, d.id) && !s.serviceIds.length,
     ).length;
     main.innerHTML = `${crumbs(d, service)}<div class="page-heading"><div><div class="eyebrow">${service ? "SUBTIPO · " + esc(d.name.toUpperCase()) : "TU DIRECTORIO DE CONOCIMIENTO"}</div><h1>${esc(service ? service.name : d.name)}<span class="heading-dot">.</span></h1><p>${esc(service ? service.description : d.description)}</p></div><span class="department-chip">${icon(service ? service.icon : "layers")}${service ? "Subtipo" : "Departamento"}</span></div>
       <div class="stats"><div class="stat"><span class="stat-icon blue">${icon("database")}</span><div><strong>${scoped.length.toString().padStart(2, "0")}</strong><span>Fuentes de datos</span></div></div><div class="stat"><span class="stat-icon green">${icon("code")}</span><div><strong>${scoped
@@ -123,9 +128,9 @@
           2,
           "0",
         )}</strong><span>API por confirmar</span></div></div></div>
-      ${!service ? `<section class="services-section"><div class="section-heading"><div><h2>Explora por subtipo</h2><p>Cada subtipo, su información en un mismo lugar.</p></div><span class="section-count">${d.services.length} subtipos</span></div><div class="services">${d.services.map((s) => `<a class="service-card ${esc(s.color)}" href="#/${esc(d.id)}/${esc(s.id)}"><span class="service-art">${icon(s.icon)}</span><div><h3>${esc(s.name)}</h3><p>${sources.filter((x) => x.departmentId === d.id && x.serviceIds.includes(s.id)).length} fuentes asignadas</p></div><span class="service-arrow">${icon("arrow")}</span></a>`).join("")}</div></section>` : ""}
+      ${!service && d.services.length ? `<section class="services-section"><div class="section-heading"><div><h2>Explora por subtipo</h2><p>Cada subtipo, su información en un mismo lugar.</p></div><span class="section-count">${d.services.length} subtipos</span></div><div class="services">${d.services.map((s) => `<a class="service-card ${esc(s.color)}" href="#/${esc(d.id)}/${esc(s.id)}"><span class="service-art">${icon(s.icon)}</span><div><h3>${esc(s.name)}</h3><p>${sources.filter((x) => belongsToDepartment(x, d.id) && x.serviceIds.includes(s.id)).length} fuentes asignadas</p></div><span class="service-arrow">${icon("arrow")}</span></a>`).join("")}</div></section>` : ""}
       <section class="sources-section"><div class="section-heading"><div><h2>${service ? "Fuentes del subtipo" : "Fuentes de datos"} <span class="count-pill">${scoped.length}</span></h2><p>${service ? "Información vinculada específicamente a este subtipo." : `Proveedores, integraciones y datos que forman parte de ${esc(d.name)}.`}</p></div><span class="section-kicker">EXPLORAR EL CATÁLOGO</span></div><div class="search-toolbar"><label class="search">${icon("search")}<input id="search" type="search" placeholder="Buscar fuente, dato o proveedor…" aria-label="Buscar fuentes de datos" value="${esc(query)}"><kbd>/</kbd></label><label class="filter">${icon("code")}<select id="api-filter" aria-label="Filtrar por tipo de acceso"><option value="all">Todas las fuentes</option><option value="available">API disponible</option><option value="direct">Acceso directo</option><option value="pending">API por confirmar</option></select></label></div><div id="source-results" class="source-grid" aria-live="polite"></div><div class="results-footer"><span id="result-count"></span><span>${icon("info")}Información en construcción</span></div></section>
-      <div class="notice">${icon("info")}<div><strong>Un catálogo que crece contigo</strong><p>${service ? (scoped.length ? `Esta vista reúne las fuentes vinculadas a ${esc(service.name)}. Se añadirán más a medida que crezca el catálogo.` : `Todavía no hay fuentes asignadas a ${esc(service.name)}. Consulta el departamento para ver la información disponible.`) : unassignedCount ? `Algunas fuentes permanecen a nivel de ${esc(d.name)} hasta confirmar su relación con los subtipos.` : `Todas las fuentes registradas están vinculadas a los tres subtipos de ${esc(d.name)}.`}</p></div>${service ? `<a href="#/${esc(d.id)}">Ver ${esc(d.name)} ${icon("arrow")}</a>` : '<span class="notice-tag">PRIMERA VERSIÓN</span>'}</div>`;
+      <div class="notice">${icon("info")}<div><strong>Un catálogo que crece contigo</strong><p>${service ? (scoped.length ? `Esta vista reúne las fuentes vinculadas a ${esc(service.name)}. Se añadirán más a medida que crezca el catálogo.` : `Todavía no hay fuentes asignadas a ${esc(service.name)}. Consulta el departamento para ver la información disponible.`) : d.services.length ? (unassignedCount ? `Algunas fuentes permanecen a nivel de ${esc(d.name)} hasta confirmar su relación con los subtipos.` : `Todas las fuentes registradas están vinculadas a los tres subtipos de ${esc(d.name)}.`) : `${scoped.length} ${scoped.length === 1 ? "fuente registrada" : "fuentes registradas"} a nivel del departamento de ${esc(d.name)}.`}</p></div>${service ? `<a href="#/${esc(d.id)}">Ver ${esc(d.name)} ${icon("arrow")}</a>` : '<span class="notice-tag">PRIMERA VERSIÓN</span>'}</div>`;
     const input = document.getElementById("search");
     const select = document.getElementById("api-filter");
     select.value = filter;
@@ -148,7 +153,7 @@
           ).includes(normalize(query.trim())),
       );
       document.getElementById("source-results").innerHTML = results.length
-        ? results.map(sourceCard).join("")
+        ? results.map((source) => sourceCard(source, d.id)).join("")
         : `<div class="empty">${icon("search")}<h3>${scoped.length ? "No hay resultados" : "Aún no hay fuentes asignadas"}</h3><p>${scoped.length ? "Prueba con otra búsqueda o cambia el filtro." : "Las fuentes se mostrarán aquí cuando se confirme su relación con este servicio."}</p>${scoped.length ? '<button id="clear-search" class="text-button">Limpiar búsqueda y filtros</button>' : `<a href="#/${esc(d.id)}" class="text-button">Explorar las fuentes de ${esc(d.name)} ${icon("arrow")}</a>`}</div>`;
       document.getElementById("result-count").textContent =
         `${results.length} de ${scoped.length} fuentes`;
@@ -176,6 +181,9 @@
     return `<div class="access-row"><span class="access-icon">${icon(ico)}</span><div><h3>${esc(label)}</h3><p>${esc(note)}</p></div>${safe ? `<a class="access-link" href="${esc(url)}" target="_blank" rel="noopener noreferrer">Abrir ${icon("external")}</a>` : '<span class="badge neutral">Enlace pendiente</span>'}</div>`;
   }
   function detail(d, s) {
+    const applicableServices = s.serviceIds
+      .map((id) => d.services.find((service) => service.id === id))
+      .filter(Boolean);
     main.innerHTML = `${crumbs(d, null, s)}<a class="back-link" href="#/${esc(d.id)}">← Volver a las fuentes</a><div class="detail-heading">${sourceLogo(s, true)}<div><div class="eyebrow">FUENTE DE DATOS · ${esc(d.name.toUpperCase())}</div><h1>${esc(s.name)}<span class="heading-dot">.</span></h1><p>${esc(s.description)}</p></div>${badge(s)}</div><div class="tabs" role="tablist" aria-label="Información de la fuente">${[
       ["overview", "Información general"],
       ["data", s.contentTitle || "Conjuntos de datos"],
@@ -197,16 +205,16 @@
       const el = document.getElementById("detail-panel");
       el.setAttribute("aria-labelledby", `tab-${tab}`);
       if (tab === "overview")
-        el.innerHTML = `<div class="detail-columns"><section class="panel"><h2>Acerca de esta fuente</h2><p>${esc(s.description)}</p><dl><div><dt>Departamento</dt><dd>${esc(d.name)}</dd></div><div><dt>Servicio</dt><dd>${s.serviceIds.length ? esc(s.serviceIds.map((id) => d.services.find((v) => v.id === id)?.name || id).join(", ")) : "Pendiente de asignar"}</dd></div><div><dt>Tipo de información</dt><dd>${esc(s.category)}</dd></div><div><dt>Responsable</dt><dd>${esc(s.owner || "Por documentar")}</dd></div><div><dt>Tipo de acceso</dt><dd>${badge(s)}</dd></div></dl></section><section class="panel pending-panel"><span class="stat-icon yellow">${icon("tasks")}</span><h2>Por completar</h2><p>Próximos pasos para conectar esta fuente.</p><ul>${s.pending.map((p) => `<li>${icon("clock")}<span>${esc(p)}</span></li>`).join("")}</ul><div class="small-note">La información pendiente no implica que el recurso no exista.</div></section></div>`;
+        el.innerHTML = `<div class="detail-columns"><section class="panel"><h2>Acerca de esta fuente</h2><p>${esc(s.description)}</p><dl><div><dt>Departamento</dt><dd>${esc(d.name)}</dd></div><div><dt>${d.services.length ? "Subtipos" : "Alcance"}</dt><dd>${applicableServices.length ? esc(applicableServices.map((service) => service.name).join(", ")) : "Todo el departamento"}</dd></div><div><dt>Tipo de información</dt><dd>${esc(s.category)}</dd></div><div><dt>Responsable</dt><dd>${esc(s.owner || "Por documentar")}</dd></div><div><dt>Tipo de acceso</dt><dd>${badge(s)}</dd></div></dl></section><section class="panel pending-panel"><span class="stat-icon yellow">${icon("tasks")}</span><h2>Por completar</h2><p>Próximos pasos para conectar esta fuente.</p><ul>${s.pending.map((p) => `<li>${icon("clock")}<span>${esc(p)}</span></li>`).join("")}</ul><div class="small-note">La información pendiente no implica que el recurso no exista.</div></section></div>`;
       if (tab === "data")
         el.innerHTML = `<section class="panel"><h2>${esc(s.contentTitle || "Conjuntos de datos")}</h2><p>${esc(s.contentDescription || "Información identificada en esta fuente. El esquema, formato y frecuencia de actualización están pendientes de documentar.")}</p>${s.datasets
           .map((x) => {
             const safeUrl = x.url && /^https?:\/\//i.test(x.url);
-            return `<div class="dataset-row"><span class="stat-icon blue">${icon(x.icon)}</span><div>${x.queryNumber ? `<span class="query-number">Consulta ${esc(x.queryNumber)}</span>` : ""}<h3>${esc(x.name)}</h3><p>${esc(x.description)}</p></div><div class="dataset-actions">${x.status ? `<span class="badge pending"><i></i>${esc(x.status)}</span>` : ""}${safeUrl ? `<a class="access-link" href="${esc(x.url)}" target="_blank" rel="noopener noreferrer">${esc(x.linkLabel || "Abrir consulta")} ${icon("external")}</a>` : '<span class="badge neutral">Esquema pendiente</span>'}</div></div>`;
+            return `<div class="dataset-row"><span class="stat-icon blue">${icon(x.icon)}</span><div>${x.queryNumber ? `<span class="query-number">Consulta ${esc(x.queryNumber)}</span>` : ""}<h3>${esc(x.name)}</h3><p>${esc(x.description)}</p></div><div class="dataset-actions">${x.status ? `<span class="badge pending"><i></i>${esc(x.status)}</span>` : ""}${safeUrl ? `<a class="access-link" href="${esc(x.url)}" target="_blank" rel="noopener noreferrer">${esc(x.linkLabel || "Abrir consulta")} ${icon("external")}</a>` : s.apiLibraryId ? `<a class="access-link" href="#/apis/${esc(s.apiLibraryId)}">Ver documentación ${icon("arrow")}</a>` : '<span class="badge neutral">Esquema pendiente</span>'}</div></div>`;
           })
           .join("")}</section>`;
       if (tab === "access")
-        el.innerHTML = `<section class="panel"><h2>API y puntos de acceso</h2><p>Accesos directos a la documentación, repositorios y ubicación de los datos.</p>${s.api.status === "direct" ? "" : accessItem("API", s.api.url, s.api.note, "code")}${accessItem(s.accessLabel || "Portal del proveedor", s.website, s.websiteNote || "Dirección del portal pendiente de documentar.", "external")}${accessItem("Repositorio", s.repository, "Repositorio y permisos pendientes de documentar.", "folder")}${accessItem("Ubicación de los datos", s.storage, "Almacenamiento y condiciones de acceso pendientes de documentar.", "database")}</section><div class="notice">${icon("info")}<div><strong>Acceso seguro</strong><p>Documenta el procedimiento para solicitar permisos. No guardes contraseñas, tokens ni claves en el catálogo.</p></div></div>`;
+        el.innerHTML = `<section class="panel"><h2>API y puntos de acceso</h2><p>Accesos directos a la documentación, repositorios y ubicación de los datos.</p>${s.apiLibraryId ? `<div class="access-row"><span class="access-icon">${icon("code")}</span><div><h3>Documentación técnica</h3><p>Esquemas, campos, convenciones y documento original de la API.</p></div><a class="access-link" href="#/apis/${esc(s.apiLibraryId)}">Abrir biblioteca ${icon("arrow")}</a></div>` : ""}${s.api.status === "direct" ? "" : accessItem("API", s.api.url, s.api.note, "code")}${accessItem(s.accessLabel || "Portal del proveedor", s.website, s.websiteNote || "Dirección del portal pendiente de documentar.", "external")}${accessItem("Repositorio", s.repository, "Repositorio y permisos pendientes de documentar.", "folder")}${accessItem("Ubicación de los datos", s.storage, "Almacenamiento y condiciones de acceso pendientes de documentar.", "database")}</section><div class="notice">${icon("info")}<div><strong>Acceso seguro</strong><p>Documenta el procedimiento para solicitar permisos. No guardes contraseñas, tokens ni claves en el catálogo.</p></div></div>`;
       if (tab === "responsibilities") {
         const history = s.responsibilityHistory || [];
         el.innerHTML = `<section class="panel"><h2>Histórico de responsabilidades</h2><p>Personas o equipos responsables de mantener esta fuente. Las fechas pendientes se completarán cuando estén confirmadas.</p>${
@@ -263,14 +271,95 @@
     });
     panel();
   }
+  function apiLogo(api, large = false) {
+    return sourceLogo(
+      {
+        name: api.name,
+        logo: api.logo,
+        initials: api.provider?.slice(0, 1) || "API",
+        color: "blue",
+      },
+      large,
+    );
+  }
+  function apiEndpointCount(api) {
+    return api.groups.reduce(
+      (total, group) => total + group.endpoints.length,
+      0,
+    );
+  }
+  function renderApiLibrary() {
+    const endpointCount = apiLibrary.reduce(
+      (total, api) => total + apiEndpointCount(api),
+      0,
+    );
+    const departmentCount = new Set(
+      apiLibrary.flatMap((api) =>
+        api.groups.map((group) => group.departmentId),
+      ),
+    ).size;
+    main.innerHTML = `<nav class="breadcrumbs" aria-label="Ruta de navegación"><a href="#/${esc(departments[0].id)}">Catálogo</a>${icon("chevron")}<span>Biblioteca de APIs</span></nav>
+      <div class="page-heading"><div><div class="eyebrow">DOCUMENTACIÓN TÉCNICA</div><h1>Biblioteca de APIs<span class="heading-dot">.</span></h1><p>Contratos, esquemas y requisitos de las APIs que conectan los datos de la organización.</p></div><span class="department-chip">${icon("code")}Biblioteca</span></div>
+      <div class="stats api-stats"><div class="stat"><span class="stat-icon blue">${icon("code")}</span><div><strong>${String(apiLibrary.length).padStart(2, "0")}</strong><span>API documentadas</span></div></div><div class="stat"><span class="stat-icon green">${icon("database")}</span><div><strong>${String(endpointCount).padStart(2, "0")}</strong><span>Endpoints definidos</span></div></div><div class="stat"><span class="stat-icon orange">${icon("layers")}</span><div><strong>${String(departmentCount).padStart(2, "0")}</strong><span>Departamentos conectados</span></div></div></div>
+      <section><div class="section-heading"><div><h2>APIs disponibles <span class="count-pill">${apiLibrary.length}</span></h2><p>Selecciona una API para consultar su documentación.</p></div></div><div class="api-library-grid">${apiLibrary
+        .map(
+          (api) =>
+            `<a class="api-library-card" href="#/apis/${esc(api.id)}"><div class="api-card-head">${apiLogo(api)}<span class="badge available"><i></i>Documentada</span></div><div><span class="eyebrow">DESARROLLADA POR ${esc(api.provider.toUpperCase())}</span><h2>${esc(api.name)}</h2><p>${esc(api.description)}</p></div><div class="api-card-meta"><span>${icon("database")}${apiEndpointCount(api)} endpoints</span><span>${icon("layers")}${api.groups.length} departamentos</span><span class="api-card-arrow">Ver documentación ${icon("arrow")}</span></div></a>`,
+        )
+        .join("")}</div></section>`;
+  }
+  function renderApiDocumentation(api) {
+    const endpointCount = apiEndpointCount(api);
+    main.innerHTML = `<nav class="breadcrumbs" aria-label="Ruta de navegación"><a href="#/${esc(departments[0].id)}">Catálogo</a>${icon("chevron")}<a href="#/apis">Biblioteca de APIs</a>${icon("chevron")}<span>${esc(api.name)}</span></nav>
+      <a class="back-link" href="#/apis">← Volver a la biblioteca</a>
+      <div class="detail-heading api-detail-heading">${apiLogo(api, true)}<div><div class="eyebrow">API REST · ${esc(api.provider.toUpperCase())}</div><h1>${esc(api.name)}<span class="heading-dot">.</span></h1><p>${esc(api.description)}</p></div><span class="badge available"><i></i>Especificación disponible</span></div>
+      <div class="api-summary-grid"><section class="panel api-overview"><h2>Resumen técnico</h2><dl><div><dt>Desarrollador</dt><dd>${esc(api.provider)}</dd></div><div><dt>URL base</dt><dd><span class="badge pending"><i></i>Por documentar</span></dd></div><div><dt>Autenticación</dt><dd><span class="badge pending"><i></i>Por documentar</span></dd></div><div><dt>Versionado</dt><dd>${esc(api.versioning)}</dd></div><div><dt>Frecuencia prevista</dt><dd>${esc(api.refreshFrequency)}</dd></div><div><dt>Endpoints</dt><dd>${endpointCount}</dd></div></dl></section><section class="panel api-document"><span class="stat-icon blue">${icon("folder")}</span><h2>Documento original</h2><p>Especificación recibida de ${esc(api.document.pages)} páginas. Se conserva junto al código para que la documentación no dependa de enlaces externos.</p><a class="document-link" href="${esc(api.document.url)}" target="_blank" rel="noopener">${icon("external")}Abrir ${esc(api.document.name)}</a></section></div>
+      <section class="panel api-conventions"><h2>Convenciones generales</h2><div class="convention-grid">${api.conventions.map((item) => `<div>${icon("check")}<span>${esc(item)}</span></div>`).join("")}</div></section>
+      <section class="api-reference"><div class="section-heading"><div><h2>Referencia de endpoints <span class="count-pill">${endpointCount}</span></h2><p>Campos publicados, columnas de origen, tipos y obligatoriedad.</p></div></div>${api.groups
+        .map(
+          (group) =>
+            `<section class="api-group"><div class="api-group-heading"><div><span class="eyebrow">DEPARTAMENTO</span><h2>${esc(group.name)}</h2><p>${esc(group.scope)}</p></div><a href="#/${esc(group.departmentId)}">Ver departamento ${icon("arrow")}</a></div><div class="endpoint-list">${group.endpoints
+              .map(
+                (endpoint, index) =>
+                  `<details class="endpoint-card"${index === 0 ? " open" : ""}><summary><span class="endpoint-icon">${icon("code")}</span><span><strong>${esc(endpoint.name)}</strong><small>Tabla de origen: ${esc(endpoint.sourceTable)}</small></span><span class="endpoint-field-count">${endpoint.fields.length} campos</span><span class="badge pending"><i></i>Ruta pendiente</span><span class="endpoint-chevron">⌄</span></summary><div class="endpoint-body"><p>${esc(endpoint.description)}</p>${endpoint.notes?.length ? `<div class="endpoint-notes">${endpoint.notes.map((note) => `<span>${icon("info")}${esc(note)}</span>`).join("")}</div>` : ""}<div class="schema-table-wrap"><table class="schema-table"><thead><tr><th>Campo API</th><th>Columna origen</th><th>Tipo</th><th>Obligatorio</th><th>Descripción y observaciones</th></tr></thead><tbody>${endpoint.fields
+                    .map(
+                      (fieldInfo) =>
+                        `<tr><td><code>${esc(fieldInfo.name)}</code></td><td><code>${esc(fieldInfo.source)}</code></td><td>${esc(fieldInfo.type)}</td><td><span class="badge ${fieldInfo.required ? "available" : "neutral"}">${fieldInfo.required ? "Sí" : "No"}</span></td><td>${fieldInfo.description ? esc(fieldInfo.description) : '<span class="muted">Sin descripción adicional</span>'}${fieldInfo.note ? `<small class="field-note">${esc(fieldInfo.note)}</small>` : ""}</td></tr>`,
+                    )
+                    .join("")}</tbody></table></div></div></details>`,
+              )
+              .join("")}</div></section>`,
+        )
+        .join("")}</section>
+      <div class="api-notes-grid"><section class="panel pending-panel"><span class="stat-icon yellow">${icon("clock")}</span><h2>Pendiente de completar</h2><ul>${api.unresolved.map((item) => `<li>${icon("clock")}<span>${esc(item)}</span></li>`).join("")}</ul></section><section class="panel"><span class="stat-icon blue">${icon("info")}</span><h2>Notas de alcance</h2><ul class="plain-notes">${api.notes.map((item) => `<li>${esc(item)}</li>`).join("")}</ul></section></div>`;
+  }
   function render() {
     route = location.hash.replace(/^#\/?/, "").split("/");
+    if (route[0] === "apis") {
+      const api = route[1]
+        ? apiLibrary.find((item) => item.id === route[1])
+        : null;
+      if (route.length > 2 || (route[1] && !api)) {
+        main.innerHTML = `<div class="empty"><h1>Página no encontrada</h1><p>Esta API no pertenece a la biblioteca.</p><a href="#/apis" class="text-button">Volver a la biblioteca</a></div>`;
+        return;
+      }
+      document.querySelectorAll("[data-route]").forEach((el) => {
+        el.classList.remove("active");
+        el.removeAttribute("aria-current");
+      });
+      document.getElementById("overview-nav").classList.remove("active");
+      document.getElementById("api-nav").classList.add("active");
+      document.getElementById("api-nav").setAttribute("aria-current", "page");
+      document.title = `${api?.name || "Biblioteca de APIs"} · Atlas`;
+      api ? renderApiDocumentation(api) : renderApiLibrary();
+      return;
+    }
     const d =
       departments.find((x) => x.id === route[0]) ||
       (!route[0] ? departments[0] : null);
     const source =
       d && route[1] === "fuente"
-        ? sources.find((s) => s.id === route[2] && s.departmentId === d.id)
+        ? sources.find((s) => s.id === route[2] && belongsToDepartment(s, d.id))
         : null;
     const service = d?.services.find((x) => x.id === route[1]);
     if (
@@ -287,6 +376,11 @@
       if (selected) el.setAttribute("aria-current", "page");
       else el.removeAttribute("aria-current");
     });
+    document.getElementById("api-nav").classList.remove("active");
+    document.getElementById("api-nav").removeAttribute("aria-current");
+    document
+      .getElementById("overview-nav")
+      .classList.toggle("active", !service && !source);
     document.title = `${source?.name || service?.name || d.name} · Atlas`;
     source ? detail(d, source) : listing(d, service);
   }

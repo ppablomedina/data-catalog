@@ -1,6 +1,6 @@
 # Atlas · Catálogo de datos
 
-Portal estático en español para consultar los datos utilizados y generados por la empresa. Primera área: **Moxsi**, organizada en los subtipos **Sítycleta Mecánica**, **Sítycleta Eléctrica** y **Sítyneta — Patinetes Eléctricos**.
+Portal estático en español para consultar los datos utilizados y generados por la empresa. Incluye los departamentos **Moxsi**, **Aparcamientos** y **S.E.R.**, además de una biblioteca de documentación de APIs. Moxsi se organiza en los subtipos **Sítycleta Mecánica**, **Sítycleta Eléctrica** y **Sítyneta — Patinetes Eléctricos**.
 
 ## Abrir el portal
 
@@ -20,7 +20,9 @@ Las tipografías se solicitan a Google Fonts; si no hay conexión se usan las fu
 - `index.html`: estructura y navegación principal.
 - `styles.css`: diseño adaptable y colores corporativos.
 - `catalog-data.js`: departamentos, servicios y fuentes; punto de entrada para ampliar el catálogo.
+- `api-library.js`: documentación estructurada de APIs, endpoints y esquemas.
 - `app.js`: navegación por rutas hash, búsqueda, filtros y fichas con pestañas.
+- `docs/`: documentos técnicos originales enlazados desde la biblioteca.
 
 ## Añadir información
 
@@ -40,6 +42,8 @@ El menú y las fichas se generan desde los datos. Las rutas siguen `#/departamen
 **Nextbike:** once consultas operativas de Sítycleta traducidas al español, con acceso directo a cada consulta del portal de Nextbike.
 
 **Google Sheets de Moxsi:** VMP para revisar, control de almacén, inventario VMP histórico e incidencias anuales. Cada ficha incluye accesos directos y un histórico de responsabilidades con periodos confirmados o pendientes.
+
+**API SAGULPA:** API desarrollada por Kubo y compartida por Moxsi, Aparcamientos y S.E.R. La biblioteca documenta sus once endpoints, campos, tipos, convenciones y asuntos pendientes. El PDF original se conserva en `docs/API Sagulpa.pdf`.
 
 Las dos fuentes pertenecen a Moxsi. No se presupone su relación con Sítycleta o Sítyneta. No se han inventado URLs, responsables, repositorios, esquemas ni ubicaciones.
 

@@ -34,6 +34,20 @@ window.CATALOG = {
         },
       ],
     },
+    {
+      id: "aparcamientos",
+      name: "Aparcamientos",
+      description:
+        "Fuentes de datos de los aparcamientos gestionados por SAGULPA, incluidos su inventario y sus usos.",
+      services: [],
+    },
+    {
+      id: "ser",
+      name: "S.E.R.",
+      description:
+        "Fuentes del Servicio de Estacionamiento Regulado: horarios, calles, zonas, tiques y parquímetros.",
+      services: [],
+    },
   ],
   sources: [
     {
@@ -471,6 +485,115 @@ window.CATALOG = {
         "Confirmar desde qué fecha participan SIO y SOS en el mantenimiento de los archivos.",
         "Documentar el proceso de creación de cada archivo anual.",
         "Registrar los cambios de responsabilidad futuros con sus fechas efectivas.",
+      ],
+    },
+    {
+      id: "api-sagulpa",
+      departmentIds: ["moxsi", "aparcamientos", "ser"],
+      serviceIds: ["sitycleta-mecanica", "sitycleta-electrica", "sityneta"],
+      name: "API SAGULPA",
+      logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR-qqhMc65g-1hR5rrPlEpZyaWI71kNisFuGKv0k_DNeA&s=10",
+      initials: "K",
+      color: "blue",
+      category: "API REST",
+      icon: "code",
+      description:
+        "API desarrollada por Kubo para compartir datos de Moxsi, Aparcamientos y el Servicio de Estacionamiento Regulado.",
+      itemLabel: "endpoints",
+      contentTitle: "Endpoints documentados",
+      contentDescription:
+        "La especificación funcional describe once endpoints. Las rutas definitivas y la URL base no figuran en el documento recibido.",
+      datasets: [
+        {
+          name: "Recorridos de Sítycleta",
+          description: "Tabla Track con recorridos, geometría y distancias.",
+          icon: "pin",
+          status: "Ruta pendiente",
+        },
+        {
+          name: "Alquileres de Sítycleta",
+          description:
+            "Tabla Rental con alquileres, bicicletas, usuarios, importes y métricas.",
+          icon: "bike",
+          status: "Ruta pendiente",
+        },
+        {
+          name: "Estaciones de Sítycleta",
+          description: "Inventario y localización de estaciones de Sítycleta.",
+          icon: "pin",
+          status: "Ruta pendiente",
+        },
+        {
+          name: "Aparcamientos",
+          description:
+            "Listado de aparcamientos, localización y número de plazas.",
+          icon: "database",
+          status: "Ruta pendiente",
+        },
+        {
+          name: "Usos de aparcamientos",
+          description:
+            "Estacionamientos de vehículos con entrada, salida y tipo de usuario.",
+          icon: "vehicle",
+          status: "Ruta pendiente",
+        },
+        {
+          name: "Horarios del S.E.R.",
+          description:
+            "Franjas horarias de estacionamiento regulado por zona y día.",
+          icon: "clock",
+          status: "Ruta pendiente",
+        },
+        {
+          name: "Oferta horaria por calles",
+          description: "Oferta por calle, plazas, periodo y horario del S.E.R.",
+          icon: "clock",
+          status: "Ruta pendiente",
+        },
+        {
+          name: "Calles de LPAPark",
+          description:
+            "Calles de LPAPark relacionadas con el callejero municipal.",
+          icon: "pin",
+          status: "Ruta pendiente",
+        },
+        {
+          name: "Zonas del S.E.R.",
+          description: "Zonas de estacionamiento regulado y su tipo de área.",
+          icon: "pin",
+          status: "Ruta pendiente",
+        },
+        {
+          name: "Tiques del S.E.R.",
+          description:
+            "Operaciones y periodos de servicio de los tiques de estacionamiento.",
+          icon: "tasks",
+          status: "Ruta pendiente",
+        },
+        {
+          name: "Parquímetros",
+          description:
+            "Inventario, localización, zona y estado de los parquímetros.",
+          icon: "database",
+          status: "Ruta pendiente",
+        },
+      ],
+      api: {
+        status: "available",
+        url: null,
+        note: "La especificación está documentada, pero falta registrar la URL base, las rutas definitivas y el mecanismo de autenticación.",
+      },
+      apiLibraryId: "sagulpa",
+      website: null,
+      repository: null,
+      storage: null,
+      owner: "Kubo (desarrollo)",
+      responsibilityHistory: [],
+      pending: [
+        "Registrar la URL base y las rutas definitivas de los once endpoints.",
+        "Documentar el mecanismo de autenticación y los permisos.",
+        "Resolver la diferencia funcional entre tenant_id y user_id en Rental.",
+        "Confirmar la puesta en producción y la periodicidad mensual prevista.",
       ],
     },
   ],
