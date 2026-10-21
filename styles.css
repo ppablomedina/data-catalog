@@ -106,18 +106,31 @@ svg {
   border-radius: 13px 13px 13px 3px;
   background: var(--primary);
   color: white;
-  font-size: 36px;
-  position: relative;
   display: grid;
   place-items: center;
-  padding-bottom: 6px;
 }
-.brand-icon span {
-  position: absolute;
-  color: var(--orange);
-  font-size: 27px;
-  right: -5px;
-  bottom: -10px;
+.brand-icon svg {
+  width: 86%;
+  height: 86%;
+  overflow: visible;
+}
+.lighthouse-body {
+  fill: currentColor;
+}
+.lighthouse-frame {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.7;
+  stroke-linejoin: round;
+}
+.lighthouse-beam,
+.lighthouse-light {
+  fill: #fec735;
+}
+.lighthouse-stripes {
+  fill: none;
+  stroke: #0b537f;
+  stroke-width: 3;
 }
 .workspace {
   border: 1px solid var(--line);
@@ -1946,9 +1959,6 @@ footer {
   .brand small {
     font-size: 6px;
     margin-top: 7px;
-  }
-  .brand-icon span {
-    font-size: 24px;
   }
   .workspace,
   .nav-label,
