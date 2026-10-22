@@ -13,7 +13,7 @@
     search: '<circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/>',
     bike: '<circle cx="5" cy="16" r="4"/><circle cx="19" cy="16" r="4"/><path d="m5 16 5-10 5 10H5m3-10h5m2-3h3l3 13"/>',
     ebike:
-      '<circle cx="5" cy="17" r="3.5"/><circle cx="19" cy="17" r="3.5"/><path d="M5 17 9 8l5 9H5l4-9h5l5 9M16 5h3l2 12M7 6h4"/><path d="M10.5 10h3l1 4h-3l-1-4Zm2.1.8-.8 1.4h1l-.8 1.2"/>',
+      '<circle cx="5" cy="17" r="3.5"/><circle cx="19" cy="17" r="3.5"/><path d="M5 17 9 8l5 9H5l4-9h5l5 9M16 5h3l2 12M7 6h4"/><path d="m13.5 7-3 5h3l-2.2 5 5.2-7h-3l2-3h-2Z" fill="currentColor" stroke="none"/>',
     scooter:
       '<circle cx="5" cy="18" r="2.25"/><circle cx="19" cy="18" r="2.25"/><path d="M5 18h8.2a3.5 3.5 0 0 0 3.4-2.7L18.8 6M16 6h5M8 15h7"/>',
     vehicle:
