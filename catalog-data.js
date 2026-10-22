@@ -21,7 +21,7 @@ window.CATALOG = {
         {
           id: "sitycleta-electrica",
           name: "Sítycleta Eléctrica",
-          icon: "ebike",
+          icon: "bike",
           description:
             "Fuentes de datos vinculadas a las bicicletas eléctricas de Sítycleta.",
           color: "electric",
