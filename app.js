@@ -60,10 +60,21 @@
   const themeToggle = document.getElementById("theme-toggle");
   const themeColor = document.getElementById("theme-color");
   const themeStorageKey = "atlas-theme";
+  const sourceColumnsStorageKey = "atlas-source-columns";
+  const savedSourceColumns = (() => {
+    try {
+      return Number(localStorage.getItem(sourceColumnsStorageKey));
+    } catch (_) {
+      return 0;
+    }
+  })();
   let query = "",
     filter = "all",
     tab = "overview";
   let facetFilters = {};
+  let sourceColumns = [2, 3, 4].includes(savedSourceColumns)
+    ? savedSourceColumns
+    : 2;
   let route;
   const selectedTheme = () =>
     document.documentElement.dataset.theme === "dark" ? "dark" : "light";
@@ -284,10 +295,14 @@
     main.innerHTML = `${crumbs(d, service)}<div class="page-heading"><div><div class="eyebrow">${service ? "SUBTIPO · " + esc(d.name.toUpperCase()) : "ÁREA · CATÁLOGO CORPORATIVO"}</div><h1>${service ? icon(service.icon) : `<span class="heading-emoji" aria-hidden="true">${esc(d.emoji || "📁")}</span>`}${esc(service ? service.name : d.name)}<span class="heading-dot">.</span></h1><p>${esc(service ? service.description : d.description)}</p></div><span class="department-chip">${service ? icon(service.icon) : `<span aria-hidden="true">${esc(d.emoji || "📁")}</span>`}${service ? "Subtipo" : "Área"}</span></div>
       <div class="stats"><div class="stat"><span class="stat-icon blue">${icon("database")}</span><div><strong>${scoped.length.toString().padStart(2, "0")}</strong><span>Fuentes de datos</span></div></div><div class="stat"><span class="stat-icon orange">${icon("info")}</span><div><strong>${personalCount.toString().padStart(2, "0")}</strong><span>Con datos personales</span></div></div><div class="stat"><span class="stat-icon yellow">${icon("clock")}</span><div><strong>${criticalCount.toString().padStart(2, "0")}</strong><span>Criticidad alta o muy alta</span></div></div><div class="stat"><span class="stat-icon green">${icon("tasks")}</span><div><strong>${incompleteCount.toString().padStart(2, "0")}</strong><span>Fichas por completar</span></div></div></div>
       ${!service && d.services.length ? `<section class="services-section"><div class="section-heading"><div><h2>Explora por subtipo</h2><p>Cada subtipo, su información en un mismo lugar.</p></div><span class="section-count">${d.services.length} subtipos</span></div><div class="services">${d.services.map((s) => `<a class="service-card ${esc(s.color)}" href="#/${esc(d.id)}/${esc(s.id)}"><span class="service-art">${icon(s.icon)}</span><div><h3>${esc(s.name)}</h3><p>${sources.filter((x) => belongsToDepartment(x, d.id) && x.serviceIds.includes(s.id)).length} fuentes asignadas</p></div><span class="service-arrow">${icon("arrow")}</span></a>`).join("")}</div></section>` : ""}
-      <section class="sources-section"><div class="section-heading"><div><h2>${service ? "Fuentes del subtipo" : "Fuentes de datos"} <span class="count-pill">${scoped.length}</span></h2><p>${service ? "Información vinculada específicamente a este subtipo." : `Sistemas, ficheros e integraciones que forman parte de ${esc(d.name)}.`}</p></div><span class="section-kicker">EXPLORAR EL CATÁLOGO</span></div><div class="search-toolbar"><label class="search">${icon("search")}<input id="search" type="search" placeholder="Buscar fuente, dato o caso de uso…" aria-label="Buscar fuentes de datos" value="${esc(query)}"><kbd>/</kbd></label><label class="filter">${icon("code")}<select id="api-filter" aria-label="Filtrar por tipo de acceso"><option value="all">Todos los accesos</option><option value="available">API disponible</option><option value="direct">Acceso directo</option><option value="pending">Acceso por confirmar</option></select></label></div><details class="facet-panel" open><summary><span>${icon("layers")}Filtros de gobierno</span><small>Formato, frecuencia, calidad, sensibilidad y criticidad</small><strong id="active-filter-count">Sin filtros</strong></summary><div class="facet-grid">${filterMarkup}</div><button class="clear-facets" id="clear-facets" type="button">Limpiar filtros</button></details><div id="source-results" class="source-grid" aria-live="polite"></div><div class="results-footer"><span id="result-count"></span><span>${icon("info")}Inventario vivo</span></div></section>
+      <section class="sources-section"><div class="section-heading"><div><h2>${service ? "Fuentes del subtipo" : "Fuentes de datos"} <span class="count-pill">${scoped.length}</span></h2><p>${service ? "Información vinculada específicamente a este subtipo." : `Sistemas, ficheros e integraciones que forman parte de ${esc(d.name)}.`}</p></div><div class="source-view-options"><span>Columnas</span><div class="column-switcher" role="group" aria-label="Número de columnas de tarjetas">${[2, 3, 4].map((columns) => `<button type="button" data-columns="${columns}" aria-pressed="${sourceColumns === columns}" title="Mostrar ${columns} columnas"><span class="column-preview" aria-hidden="true">${Array.from({ length: columns }, () => "<i></i>").join("")}</span><b>${columns}</b></button>`).join("")}</div></div></div><div class="search-toolbar"><label class="search">${icon("search")}<input id="search" type="search" placeholder="Buscar fuente, dato o caso de uso…" aria-label="Buscar fuentes de datos" value="${esc(query)}"><kbd>/</kbd></label><label class="filter">${icon("code")}<select id="api-filter" aria-label="Filtrar por tipo de acceso"><option value="all">Todos los accesos</option><option value="available">API disponible</option><option value="direct">Acceso directo</option><option value="pending">Acceso por confirmar</option></select></label></div><details class="facet-panel" open><summary><span>${icon("layers")}Filtros de gobierno</span><small>Formato, frecuencia, calidad, sensibilidad y criticidad</small><strong id="active-filter-count">Sin filtros</strong></summary><div class="facet-grid">${filterMarkup}</div><button class="clear-facets" id="clear-facets" type="button">Limpiar filtros</button></details><div id="source-results" class="source-grid" data-columns="${sourceColumns}" aria-live="polite"></div><div class="results-footer"><span id="result-count"></span><span>${icon("info")}Inventario vivo</span></div></section>
       <div class="notice">${icon("info")}<div><strong>Un catálogo que crece contigo</strong><p>${service ? (scoped.length ? `Esta vista reúne las fuentes vinculadas a ${esc(service.name)}. Se añadirán más a medida que crezca el catálogo.` : `Todavía no hay fuentes asignadas a ${esc(service.name)}. Consulta el área para ver la información disponible.`) : d.services.length ? (unassignedCount ? `Algunas fuentes permanecen a nivel de ${esc(d.name)} hasta confirmar su relación con los subtipos.` : `Todas las fuentes registradas están vinculadas a los tres subtipos de ${esc(d.name)}.`) : `${scoped.length} ${scoped.length === 1 ? "fuente registrada" : "fuentes registradas"} en el área ${esc(d.name)}.`}</p></div>${service ? `<a href="#/${esc(d.id)}">Ver ${esc(d.name)} ${icon("arrow")}</a>` : '<a href="#/plan-ia">Ver mapa del Plan de IA</a>'}</div>`;
     const input = document.getElementById("search");
     const select = document.getElementById("api-filter");
+    const sourceGrid = document.getElementById("source-results");
+    const columnButtons = [
+      ...document.querySelectorAll(".column-switcher [data-columns]"),
+    ];
     const facetSelects = [...document.querySelectorAll("[data-facet]")];
     select.value = filter;
     facetSelects.forEach((facetSelect) => {
@@ -337,6 +352,18 @@
     select.addEventListener("change", () => {
       filter = select.value;
       update();
+    });
+    columnButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        sourceColumns = Number(button.dataset.columns);
+        sourceGrid.dataset.columns = String(sourceColumns);
+        columnButtons.forEach((option) =>
+          option.setAttribute("aria-pressed", String(option === button)),
+        );
+        try {
+          localStorage.setItem(sourceColumnsStorageKey, String(sourceColumns));
+        } catch (_) {}
+      });
     });
     facetSelects.forEach((facetSelect) => {
       facetSelect.addEventListener("change", () => {

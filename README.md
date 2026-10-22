@@ -20,7 +20,7 @@ Después abre `http://localhost:8000`. Las tipografías se solicitan a Google Fo
 ## Contenido
 
 - **Vista general:** accesos directos a las 16 áreas, la Biblioteca de APIs y el Plan de IA.
-- **Áreas:** fuentes propias y compartidas, búsqueda y filtros por formato o vía de acceso, frecuencia, histórico, calidad, datos personales, categoría RGPD, clasificación y criticidad.
+- **Áreas:** fuentes propias y compartidas, búsqueda, filtros de gobierno y un selector persistente para mostrar las tarjetas en 2, 3 o 4 columnas.
 - **Fichas de fuente:** datos aportados, casos de uso, acceso, gobierno, bloqueos y porcentaje de documentación. Los campos pendientes aparecen como **Por completar**.
 - **Plan de IA:** 20 casos de uso, 18 gaps y peticiones, criterios de calidad, sensibilidad y reglas del conjunto mínimo viable.
 - **Biblioteca de APIs:** documentación técnica de la API SAGULPA desarrollada por Kubo, compartida por Moxsi, Aparcamientos y S.E.R.
