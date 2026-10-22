@@ -1,10 +1,12 @@
-/* Añade departamentos, servicios y fuentes aquí. Los identificadores deben ser únicos.
+/* Añade áreas, servicios y fuentes aquí. Los identificadores deben ser únicos.
    null significa información pendiente. No incluyas credenciales ni tokens. */
 window.CATALOG = {
   departments: [
     {
       id: "moxsi",
       name: "Moxsi",
+      emoji: "🚲",
+      accent: "#619E2E",
       description:
         "Un punto de encuentro para los datos que mueven Moxsi. Explora los servicios, descubre sus fuentes y encuentra la información que necesitas.",
       services: [
@@ -37,6 +39,8 @@ window.CATALOG = {
     {
       id: "aparcamientos",
       name: "Aparcamientos",
+      emoji: "🅿️",
+      accent: "#0B537F",
       description:
         "Fuentes de datos de los aparcamientos gestionados por SAGULPA, incluidos su inventario y sus usos.",
       services: [],
@@ -44,8 +48,127 @@ window.CATALOG = {
     {
       id: "ser",
       name: "S.E.R.",
+      emoji: "🅿️",
+      accent: "#E9761F",
       description:
         "Fuentes del Servicio de Estacionamiento Regulado: horarios, calles, zonas, tiques y parquímetros.",
+      services: [],
+    },
+    {
+      id: "centro-incidencias-operativas",
+      name: "Centro de Incidencias Operativas",
+      emoji: "🚨",
+      accent: "#E9761F",
+      description:
+        "Llamadas, tickets, facturación e incidencias operativas para facilitar la atención y el análisis de recurrencias.",
+      services: [],
+    },
+    {
+      id: "movilidad-trafico",
+      name: "Movilidad y Tráfico",
+      emoji: "🚦",
+      accent: "#619E2E",
+      description:
+        "Proyectos, instalaciones, activos monitorizados y documentación técnica de movilidad y tráfico.",
+      services: [],
+    },
+    {
+      id: "oficina-dato",
+      name: "Oficina del Dato",
+      emoji: "📊",
+      accent: "#0B537F",
+      description:
+        "Calidad, preparación, cruce y análisis de datos corporativos y de movilidad.",
+      services: [],
+    },
+    {
+      id: "financiero",
+      name: "Financiero",
+      emoji: "💶",
+      accent: "#FEC735",
+      description:
+        "Contabilidad, recaudación, nóminas, ingresos, gastos y control económico.",
+      services: [],
+    },
+    {
+      id: "personas-talento",
+      name: "Personas y Talento",
+      emoji: "👥",
+      accent: "#E9761F",
+      description:
+        "Información laboral, desarrollo, formación, igualdad, salud y analítica de personas.",
+      services: [],
+    },
+    {
+      id: "sistemas",
+      name: "Sistemas",
+      emoji: "🖥️",
+      accent: "#0B537F",
+      description:
+        "Aplicaciones corporativas, soporte, monitorización, ciberseguridad e integraciones.",
+      services: [],
+    },
+    {
+      id: "juridico",
+      name: "Jurídico",
+      emoji: "⚖️",
+      accent: "#E9761F",
+      description:
+        "Expedientes, contratación, licitaciones, pliegos y documentación jurídica.",
+      services: [],
+    },
+    {
+      id: "tecnico",
+      name: "Técnico",
+      emoji: "🏗️",
+      accent: "#FEC735",
+      description:
+        "Obras, proyectos, mantenimiento, instalaciones y documentación técnica.",
+      services: [],
+    },
+    {
+      id: "seguridad-salud-calidad",
+      name: "Seguridad, Salud y Calidad",
+      emoji: "🛡️",
+      accent: "#619E2E",
+      description:
+        "Prevención, salud laboral, riesgos, requisitos legales y gestión de calidad.",
+      services: [],
+    },
+    {
+      id: "financiacion-externa",
+      name: "Financiación Externa",
+      emoji: "🎯",
+      accent: "#E9761F",
+      description:
+        "Convocatorias, subvenciones, justificaciones y repositorio de proyectos financiados.",
+      services: [],
+    },
+    {
+      id: "sostenibilidad-energia",
+      name: "Sostenibilidad y Energía",
+      emoji: "🌱",
+      accent: "#619E2E",
+      description:
+        "Producción energética, instalaciones fotovoltaicas y documentación de sostenibilidad.",
+      services: [],
+    },
+    {
+      id: "atencion",
+      name: "Atención",
+      emoji: "🎧",
+      accent: "#0B537F",
+      description:
+        "Datos de contacto y atención vinculados a residentes y servicios operativos.",
+      services: [],
+    },
+    {
+      id: "transversal",
+      name: "Transversal",
+      emoji: "🔄",
+      accent: "#0B537F",
+      description:
+        "Fuentes compartidas para reuniones, tareas, proyectos y colaboración entre áreas.",
       services: [],
     },
   ],
