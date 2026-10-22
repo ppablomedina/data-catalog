@@ -381,6 +381,36 @@
     const safe = url && /^https?:\/\//i.test(url);
     return `<div class="access-row"><span class="access-icon">${icon(ico)}</span><div><h3>${esc(label)}</h3><p>${esc(note)}</p></div>${safe ? `<a class="access-link" href="${esc(url)}" target="_blank" rel="noopener noreferrer">Abrir ${icon("external")}</a>` : '<span class="badge neutral">Enlace pendiente</span>'}</div>`;
   }
+  function querySampleCell(value, column, guide) {
+    if (value === null || value === undefined || value === "") {
+      return '<span class="sample-null">NULL</span>';
+    }
+    if (column.key === "active") {
+      return `<span class="active-value ${value === 1 ? "enabled" : "disabled"}">${esc(value)}</span>`;
+    }
+    if (column.key === "channel") {
+      const channelName = guide.channelMap[value] || "Otros";
+      return `<span class="channel-value"><strong>${esc(value)}</strong><small>${esc(channelName)}</small></span>`;
+    }
+    if (column.key === "registrationDate" || column.key === "uid") {
+      return `<code>${esc(value)}</code>`;
+    }
+    return esc(value);
+  }
+  function renderQueryGuide(guide) {
+    const nullRate = (value) =>
+      Number(value).toLocaleString("es-ES", { maximumFractionDigits: 2 });
+    return `<details class="query-guide"><summary><span class="query-guide-icon">${icon("database")}</span><span><strong>Ejemplo de datos y reglas de uso</strong><small>Parámetros, cálculo de usuarios activos, 10 registros ficticios y calidad de columnas</small></span><span class="badge available"><i></i>Documentado</span><span class="endpoint-chevron">⌄</span></summary><div class="query-guide-body"><div class="sample-disclaimer">${icon("info")}<div><strong>Ejemplo completamente ficticio</strong><p>Los nombres, teléfonos, correos, identificadores y demás valores de esta tabla se han inventado para representar la estructura de la consulta. No corresponden a clientes reales.</p></div></div><section class="query-guide-section"><div class="query-guide-heading"><span>01</span><div><h3>Parámetros de entrada</h3><p>La consulta filtra por la fecha en que se registró cada cuenta.</p></div></div><div class="query-input-grid">${guide.inputs.map((input) => `<div><span>${icon("clock")}</span><strong>${esc(input.name)}</strong><p>${esc(input.description)}</p></div>`).join("")}</div></section><section class="query-guide-section"><div class="query-guide-heading"><span>02</span><div><h3>Cómo interpretar active</h3><p>Regla utilizada actualmente para el seguimiento de usuarios.</p></div></div><div class="active-rule-grid"><article><span class="active-value enabled">1</span><div><strong>Cuenta activada</strong><p>Tiene un método de usuario activado.</p></div></article><article><span class="active-value disabled">0</span><div><strong>Cuenta no activada</strong><p>No tiene un método de usuario activado.</p></div></article></div><div class="calculation-callout"><div><span class="eyebrow">TOTAL DE USUARIOS ACTIVOS EN UNA FECHA</span><strong>06/03/2018 → fecha de evaluación</strong><p>${esc(guide.currentUsersRule)}</p></div><code>contar(active = 1)</code></div><p class="rule-note">${icon("info")}${esc(guide.activeRule)} ${esc(guide.activeCaveat)}</p><div class="active-timeline">${guide.activeExample.map((step) => `<div><span>${esc(step.date)}</span><p>${esc(step.text)}</p></div>`).join("")}</div></section><section class="query-guide-section"><div class="query-guide-heading"><span>03</span><div><h3>Vista de ejemplo</h3><p>Consulta simulada desde ${esc(guide.samplePeriod.from)} hasta ${esc(guide.samplePeriod.to)}.</p></div></div><div class="sample-table-wrap"><table class="sample-data-table"><thead><tr>${guide.columns.map((column) => `<th>${esc(column.label)}</th>`).join("")}</tr></thead><tbody>${guide.sampleRows.map((row) => `<tr>${guide.columns.map((column) => `<td>${querySampleCell(row[column.key], column, guide)}</td>`).join("")}</tr>`).join("")}</tbody></table></div><p class="table-scroll-hint">Desplázate horizontalmente para consultar todas las columnas.</p></section><section class="query-guide-section"><div class="query-guide-heading"><span>04</span><div><h3>Canales de alta</h3><p>Traducción operativa del campo channel.</p></div></div><div class="channel-map">${Object.entries(
+      guide.channelMap,
+    )
+      .map(
+        ([code, name]) =>
+          `<span><strong>${esc(code)}</strong>${esc(name)}</span>`,
+      )
+      .join(
+        "",
+      )}<span><strong>Resto</strong>Otros</span></div></section><details class="column-dictionary"><summary><span>${icon("layers")}Diccionario y porcentaje de nulos</span><strong>${guide.columns.length} columnas</strong></summary><div class="column-profile-grid">${guide.columns.map((column) => `<article><div><strong>${esc(column.label)}</strong><span>${nullRate(column.nullRate)}% nulos</span></div><p>${esc(column.note)}</p><div class="coverage-track" title="${nullRate(100 - column.nullRate)}% con dato"><i style="width:${100 - column.nullRate}%"></i></div></article>`).join("")}</div></details><div class="future-improvement"><span>💡</span><div><strong>Línea futura de mejora</strong><p>${esc(guide.futureImprovement)}</p></div></div></div></details>`;
+  }
   function detail(d, s) {
     const applicableServices = s.serviceIds
       .map((id) => d.services.find((service) => service.id === id))
@@ -420,7 +450,7 @@
         el.innerHTML = `<section class="panel"><h2>${esc(s.contentTitle || "Conjuntos de datos")}</h2><p>${esc(s.contentDescription || "Información identificada en esta fuente. El esquema, formato y frecuencia de actualización están pendientes de documentar.")}</p>${s.datasets
           .map((x) => {
             const safeUrl = x.url && /^https?:\/\//i.test(x.url);
-            return `<div class="dataset-row"><span class="stat-icon blue">${icon(x.icon)}</span><div>${x.queryNumber ? `<span class="query-number">Consulta ${esc(x.queryNumber)}</span>` : ""}<h3>${esc(x.name)}</h3><p>${esc(x.description)}</p></div><div class="dataset-actions">${x.status ? `<span class="badge pending"><i></i>${esc(x.status)}</span>` : ""}${safeUrl ? `<a class="access-link" href="${esc(x.url)}" target="_blank" rel="noopener noreferrer">${esc(x.linkLabel || "Abrir consulta")} ${icon("external")}</a>` : s.apiLibraryId ? `<a class="access-link" href="#/apis/${esc(s.apiLibraryId)}">Ver documentación ${icon("arrow")}</a>` : '<span class="badge neutral">Esquema pendiente</span>'}</div></div>`;
+            return `<div class="dataset-row"><span class="stat-icon blue">${icon(x.icon)}</span><div>${x.queryNumber ? `<span class="query-number">Consulta ${esc(x.queryNumber)}</span>` : ""}<h3>${esc(x.name)}</h3><p>${esc(x.description)}</p></div><div class="dataset-actions">${x.status ? `<span class="badge pending"><i></i>${esc(x.status)}</span>` : ""}${safeUrl ? `<a class="access-link" href="${esc(x.url)}" target="_blank" rel="noopener noreferrer">${esc(x.linkLabel || "Abrir consulta")} ${icon("external")}</a>` : s.apiLibraryId ? `<a class="access-link" href="#/apis/${esc(s.apiLibraryId)}">Ver documentación ${icon("arrow")}</a>` : '<span class="badge neutral">Esquema pendiente</span>'}</div></div>${x.queryGuide ? renderQueryGuide(x.queryGuide) : ""}`;
           })
           .join("")}</section>`;
       if (tab === "access") {

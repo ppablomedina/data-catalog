@@ -62,7 +62,7 @@ La portada está en `#/overview`; las áreas usan `#/id-area`; las fichas, `#/id
 
 - **4gflota:** geolocalización de vehículos y batería Docubi; API pendiente de confirmar.
 - **qucit:** evaluación del desempeño y tareas del equipo de logística en calle; API disponible con detalles por documentar.
-- **Nextbike:** once consultas operativas traducidas al español, cada una con acceso directo.
+- **Nextbike:** once consultas operativas traducidas al español, cada una con acceso directo. La consulta «Detalles de clientes» incluye parámetros, reglas de interpretación, calidad por columna y un ejemplo ficticio de diez registros.
 - **Google Sheets de Moxsi:** VMP para revisar, control de almacén, inventario VMP histórico e incidencias anuales, con accesos e histórico de responsabilidades.
 - **API SAGULPA:** once endpoints, campos, tipos, convenciones y asuntos pendientes extraídos de su PDF.
 
