@@ -824,10 +824,13 @@ h2 {
   gap: 12px;
   padding: 17px 17px 12px;
 }
+.facet-filter {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
 .facet-filter > span {
   display: block;
-  min-height: 25px;
-  margin-bottom: 6px;
   color: #728794;
   font-size: 8px;
   font-weight: 650;
