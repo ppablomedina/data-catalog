@@ -2289,6 +2289,26 @@ footer {
 :root[data-theme="dark"] .service-card.electric {
   background: #142b36;
 }
+:root[data-theme="dark"] .service-card.green h3 {
+  color: #a9dc7d;
+}
+:root[data-theme="dark"] .service-card.electric h3 {
+  color: #f6cf55;
+}
+:root[data-theme="dark"] .service-card.orange h3 {
+  color: #ff9b5a;
+}
+:root[data-theme="dark"] .service-card p,
+:root[data-theme="dark"] .service-card.orange p,
+:root[data-theme="dark"] .service-card.electric p {
+  color: #b4c9d4;
+}
+:root[data-theme="dark"] .service-card.orange .service-art {
+  background: #452d20;
+}
+:root[data-theme="dark"] .service-card.electric .service-art {
+  background: #403819;
+}
 :root[data-theme="dark"] .notice {
   border-color: #294959;
   background: #142d3a;

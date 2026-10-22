@@ -15,7 +15,7 @@
     ebike:
       '<circle cx="5" cy="17" r="3.5"/><circle cx="19" cy="17" r="3.5"/><path d="m5 17 5-10 5 10H5m3-10h5m3-4h3l3 14M12 9l-2 4h3l-2 4"/>',
     scooter:
-      '<circle cx="6" cy="19" r="2"/><circle cx="18" cy="19" r="2"/><path d="M6 19h7a4 4 0 0 0 4-4V6m-3 0h6M8 9h5l2 7"/>',
+      '<circle cx="5" cy="18" r="2.25"/><circle cx="19" cy="18" r="2.25"/><path d="M5 18h8.2a3.5 3.5 0 0 0 3.4-2.7L18.8 6M16 6h5M8 15h7"/>',
     vehicle:
       '<path d="m5 7 2-4h10l2 4 2 3v8H3v-8l2-3Zm-2 3h18M5 18v3m14-3v3M6 14h2m8 0h2"/>',
     pin: '<path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/>',
