@@ -4387,7 +4387,7 @@ footer {
 }
 .document-metric[open] .endpoint-chevron { transform: rotate(180deg); }
 .document-metric-body {
-  padding: 3px 21px 22px 65px;
+  padding: 20px 21px 22px 65px;
 }
 .document-metric-body > p {
   margin-bottom: 13px;
