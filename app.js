@@ -54,6 +54,7 @@
     criteria: {},
   };
   const apiLibrary = window.API_LIBRARY || [];
+  const documentLibrary = window.DOCUMENT_LIBRARY || [];
   const main = document.getElementById("main");
   const themeToggle = document.getElementById("theme-toggle");
   const themeColor = document.getElementById("theme-color");
@@ -282,6 +283,9 @@
     const incompleteCount = scoped.filter(
       (s) => s.completeness && s.completeness.percent < 100,
     ).length;
+    const relatedDocuments = documentLibrary.filter(
+      (document) => document.areaId === d.id,
+    );
     const filterMarkup = facetConfigs
       .map((config) => {
         const options = [
@@ -293,6 +297,7 @@
     main.innerHTML = `${crumbs(d, service)}<div class="page-heading"><div><div class="eyebrow">${service ? "SUBTIPO · " + esc(d.name.toUpperCase()) : "ÁREA · CATÁLOGO CORPORATIVO"}</div><h1>${service ? icon(service.icon) : `<span class="heading-emoji" aria-hidden="true">${esc(d.emoji || "📁")}</span>`}${esc(service ? service.name : d.name)}<span class="heading-dot">.</span></h1><p>${esc(service ? service.description : d.description)}</p></div><span class="department-chip">${service ? icon(service.icon) : `<span aria-hidden="true">${esc(d.emoji || "📁")}</span>`}${service ? "Subtipo" : "Área"}</span></div>
       <div class="stats"><div class="stat"><span class="stat-icon blue">${icon("database")}</span><div><strong>${scoped.length.toString().padStart(2, "0")}</strong><span>Fuentes de datos</span></div></div><div class="stat"><span class="stat-icon orange">${icon("info")}</span><div><strong>${personalCount.toString().padStart(2, "0")}</strong><span>Con datos personales</span></div></div><div class="stat"><span class="stat-icon yellow">${icon("clock")}</span><div><strong>${criticalCount.toString().padStart(2, "0")}</strong><span>Criticidad alta o muy alta</span></div></div><div class="stat"><span class="stat-icon green">${icon("tasks")}</span><div><strong>${incompleteCount.toString().padStart(2, "0")}</strong><span>Fichas por completar</span></div></div></div>
       ${!service && d.services.length ? `<section class="services-section"><div class="section-heading"><div><h2>Explora por subtipo</h2><p>Cada subtipo, su información en un mismo lugar.</p></div><span class="section-count">${d.services.length} subtipos</span></div><div class="services">${d.services.map((s) => `<a class="service-card ${esc(s.color)}" href="#/${esc(d.id)}/${esc(s.id)}"><span class="service-art">${icon(s.icon)}</span><div><h3>${esc(s.name)}</h3><p>${sources.filter((x) => belongsToDepartment(x, d.id) && x.serviceIds.includes(s.id)).length} fuentes asignadas</p></div><span class="service-arrow">${icon("arrow")}</span></a>`).join("")}</div></section>` : ""}
+      ${!service && relatedDocuments.length ? `<section class="area-documents-section"><div class="section-heading"><div><h2>Informes y encuestas <span class="count-pill">${relatedDocuments.length}</span></h2><p>Documentos del área conectados con sus métricas y fuentes de datos.</p></div><a class="section-link" href="#/documents">Ver biblioteca ${icon("arrow")}</a></div><div class="area-document-grid">${relatedDocuments.map((document) => `<a href="#/documents/${esc(document.id)}" class="area-document-card"><span class="document-card-icon ${esc(document.color)}">${esc(document.icon)}</span><div><span class="eyebrow">${esc(document.organization)} · ${esc(document.type)}</span><h3>${esc(document.title)}</h3><p>${documentMetricCount(document)} métricas · ${esc(document.frequency)}</p></div><span class="card-open">${icon("arrow")}</span></a>`).join("")}</div></section>` : ""}
       <section class="sources-section"><div class="section-heading"><div><h2>${service ? "Fuentes del subtipo" : "Fuentes de datos"} <span class="count-pill">${scoped.length}</span></h2><p>${service ? "Información vinculada específicamente a este subtipo." : `Sistemas, ficheros e integraciones que forman parte de ${esc(d.name)}.`}</p></div><div class="source-view-options"><span>Columnas</span><div class="column-switcher" role="group" aria-label="Número de columnas de tarjetas">${[2, 3, 4].map((columns) => `<button type="button" data-columns="${columns}" aria-pressed="${sourceColumns === columns}" title="Mostrar ${columns} columnas"><span class="column-preview" aria-hidden="true">${Array.from({ length: columns }, () => "<i></i>").join("")}</span><b>${columns}</b></button>`).join("")}</div></div></div><div class="search-toolbar"><label class="search">${icon("search")}<input id="search" type="search" placeholder="Buscar fuente, dato o caso de uso…" aria-label="Buscar fuentes de datos" value="${esc(query)}"><kbd>/</kbd></label><label class="filter">${icon("code")}<select id="api-filter" aria-label="Filtrar por tipo de acceso"><option value="all">Todos los accesos</option><option value="available">API disponible</option><option value="direct">Acceso directo</option><option value="pending">Acceso por confirmar</option></select></label></div><details class="facet-panel" open><summary><span>${icon("layers")}Filtros de gobierno</span><small>Formato, frecuencia, calidad, sensibilidad y criticidad</small><strong id="active-filter-count">Sin filtros</strong></summary><div class="facet-grid">${filterMarkup}</div><button class="clear-facets" id="clear-facets" type="button">Limpiar filtros</button></details><div id="source-results" class="source-grid" data-columns="${sourceColumns}" aria-live="polite"></div><div class="results-footer"><span id="result-count"></span><span>${icon("info")}Inventario vivo</span></div></section>
       <div class="notice">${icon("info")}<div><strong>Un catálogo que crece contigo</strong><p>${service ? (scoped.length ? `Esta vista reúne las fuentes vinculadas a ${esc(service.name)}. Se añadirán más a medida que crezca el catálogo.` : `Todavía no hay fuentes asignadas a ${esc(service.name)}. Consulta el área para ver la información disponible.`) : d.services.length ? (unassignedCount ? `Algunas fuentes permanecen a nivel de ${esc(d.name)} hasta confirmar su relación con los subtipos.` : `Todas las fuentes registradas están vinculadas a los tres subtipos de ${esc(d.name)}.`) : `${scoped.length} ${scoped.length === 1 ? "fuente registrada" : "fuentes registradas"} en el área ${esc(d.name)}.`}</p></div>${service ? `<a href="#/${esc(d.id)}">Ver ${esc(d.name)} ${icon("arrow")}</a>` : '<a href="#/plan-ia">Ver mapa del Plan de IA</a>'}</div>`;
     const input = document.getElementById("search");
@@ -595,6 +600,11 @@
       (total, api) => total + apiEndpointCount(api),
       0,
     );
+    const documentMetricCount = documentLibrary.reduce(
+      (total, document) =>
+        total + document.sections.reduce((sum, section) => sum + section.metrics.length, 0),
+      0,
+    );
     document.querySelectorAll("[data-route]").forEach((el) => {
       el.classList.remove("active");
       el.removeAttribute("aria-current");
@@ -603,13 +613,15 @@
     document.getElementById("api-nav").removeAttribute("aria-current");
     document.getElementById("inventory-nav").classList.remove("active");
     document.getElementById("inventory-nav").removeAttribute("aria-current");
+    document.getElementById("document-nav").classList.remove("active");
+    document.getElementById("document-nav").removeAttribute("aria-current");
     document.getElementById("overview-nav").classList.add("active");
     document
       .getElementById("overview-nav")
       .setAttribute("aria-current", "page");
     document.title = "Vista general · Atlas";
     main.innerHTML = `<nav class="breadcrumbs" aria-label="Ruta de navegación"><span>Catálogo</span>${icon("chevron")}<span>Vista general</span></nav>
-      <div class="page-heading overview-heading"><div><div class="eyebrow">DIRECTORIO CORPORATIVO</div><h1>Explora el catálogo<span class="heading-dot">.</span></h1><p>Accede a las fuentes de cada área y consulta la documentación técnica y el mapa del Plan de IA.</p></div><span class="department-chip">${icon("grid")}Vista general</span></div>
+      <div class="page-heading overview-heading"><div><div class="eyebrow">DIRECTORIO CORPORATIVO</div><h1>Explora el catálogo<span class="heading-dot">.</span></h1><p>Accede a fuentes de datos, APIs, informes, encuestas, estudios y documentación corporativa.</p></div><span class="department-chip">${icon("grid")}Vista general</span></div>
       <div class="stats overview-stats"><div class="stat"><span class="stat-icon blue">${icon("layers")}</span><div><strong>${String(departments.length).padStart(2, "0")}</strong><span>Áreas</span></div></div><div class="stat"><span class="stat-icon green">${icon("database")}</span><div><strong>${String(sources.length).padStart(2, "0")}</strong><span>Fuentes registradas</span></div></div><div class="stat"><span class="stat-icon orange">${icon("tasks")}</span><div><strong>${String(inventoryMeta.useCases.length).padStart(2, "0")}</strong><span>Casos de uso priorizados</span></div></div><div class="stat"><span class="stat-icon yellow">${icon("link")}</span><div><strong>${String(endpointCount).padStart(2, "0")}</strong><span>Endpoints definidos</span></div></div></div>
       <section class="directory-section"><div class="section-heading"><div><h2>Áreas <span class="count-pill">${departments.length}</span></h2><p>Selecciona un área para consultar sus fuentes, filtros de gobierno y accesos.</p></div><span class="section-kicker">EXPLORAR POR ÁREA</span></div><div class="directory-grid">${departments
         .map((department) => {
@@ -619,7 +631,7 @@
           return `<a class="directory-card" href="#/${esc(department.id)}"${areaStyle(department)}><div class="directory-card-head"><span class="directory-icon"><span aria-hidden="true">${esc(department.emoji || "📁")}</span></span><span class="card-open">${icon("arrow")}</span></div><div><span class="eyebrow">ÁREA</span><h2>${esc(department.name)}</h2><p>${esc(department.description)}</p></div><div class="directory-card-meta"><span>${icon("database")}${departmentSources.length} ${departmentSources.length === 1 ? "fuente" : "fuentes"}</span>${department.services.length ? `<span>${icon("layers")}${department.services.length} ${department.services.length === 1 ? "subtipo" : "subtipos"}</span>` : ""}<strong>Entrar ${icon("arrow")}</strong></div></a>`;
         })
         .join("")}</div></section>
-      <section class="api-access-section"><div class="section-heading"><div><h2>Recursos transversales</h2><p>Documentación técnica, casos de uso, gaps y criterios del inventario.</p></div></div><div class="overview-access-grid"><a class="library-access-card" href="#/apis"><span class="library-access-icon">${icon("code")}</span><div><span class="eyebrow">BIBLIOTECA DE APIs</span><h2>Consulta todas las APIs</h2><p>${apiLibrary.length} ${apiLibrary.length === 1 ? "API documentada" : "APIs documentadas"} · ${endpointCount} endpoints definidos</p></div><span class="library-access-action">Abrir ${icon("arrow")}</span></a><a class="library-access-card plan-access-card" href="#/plan-ia"><span class="library-access-icon">🎯</span><div><span class="eyebrow">PLAN DE IMPLANTACIÓN DE IA</span><h2>Mapa de datos mínimos viables</h2><p>${inventoryMeta.useCases.length} casos de uso · ${inventoryMeta.gaps.length} gaps y peticiones</p></div><span class="library-access-action">Explorar ${icon("arrow")}</span></a></div></section>`;
+      <section class="api-access-section"><div class="section-heading"><div><h2>Recursos transversales</h2><p>Documentación técnica, entregables corporativos, casos de uso y criterios del inventario.</p></div></div><div class="overview-access-grid"><a class="library-access-card" href="#/apis"><span class="library-access-icon">${icon("code")}</span><div><span class="eyebrow">BIBLIOTECA DE APIs</span><h2>Consulta todas las APIs</h2><p>${apiLibrary.length} ${apiLibrary.length === 1 ? "API documentada" : "APIs documentadas"} · ${endpointCount} endpoints definidos</p></div><span class="library-access-action">Abrir ${icon("arrow")}</span></a><a class="library-access-card document-access-card" href="#/documents"><span class="library-access-icon">${icon("folder")}</span><div><span class="eyebrow">INFORMES Y ENCUESTAS</span><h2>Biblioteca documental</h2><p>${documentLibrary.length} documentos · ${documentMetricCount} métricas trazadas</p></div><span class="library-access-action">Explorar ${icon("arrow")}</span></a><a class="library-access-card plan-access-card" href="#/plan-ia"><span class="library-access-icon">🎯</span><div><span class="eyebrow">PLAN DE IMPLANTACIÓN DE IA</span><h2>Mapa de datos mínimos viables</h2><p>${inventoryMeta.useCases.length} casos de uso · ${inventoryMeta.gaps.length} gaps y peticiones</p></div><span class="library-access-action">Explorar ${icon("arrow")}</span></a></div></section>`;
   }
   function renderInventoryPlan() {
     const inventorySources = window.DATA_INVENTORY || [];
@@ -635,7 +647,7 @@
       el.classList.remove("active");
       el.removeAttribute("aria-current");
     });
-    ["overview-nav", "api-nav"].forEach((id) => {
+    ["overview-nav", "api-nav", "document-nav"].forEach((id) => {
       document.getElementById(id).classList.remove("active");
       document.getElementById(id).removeAttribute("aria-current");
     });
@@ -777,6 +789,115 @@
       document.getElementById("api-search-empty").hidden = visibleCount > 0;
     });
   }
+  function documentMetricCount(document) {
+    return document.sections.reduce(
+      (total, section) => total + section.metrics.length,
+      0,
+    );
+  }
+  function documentPendingCount(document) {
+    return (
+      document.pending.length +
+      document.sections.reduce(
+        (sectionTotal, section) =>
+          sectionTotal +
+          section.metrics.reduce(
+            (metricTotal, metric) =>
+              metricTotal +
+              metric.pending.length +
+              metric.sources.filter((source) => source.status === "pending")
+                .length,
+            0,
+          ),
+        0,
+      ) +
+      document.archive.filter((file) => !file.url).length
+    );
+  }
+  function setDocumentNavigation(active) {
+    document.querySelectorAll("[data-route]").forEach((el) => {
+      el.classList.remove("active");
+      el.removeAttribute("aria-current");
+    });
+    ["overview-nav", "api-nav", "inventory-nav", "document-nav"].forEach(
+      (id) => {
+        const item = document.getElementById(id);
+        item.classList.toggle("active", active && id === "document-nav");
+        if (active && id === "document-nav")
+          item.setAttribute("aria-current", "page");
+        else item.removeAttribute("aria-current");
+      },
+    );
+  }
+  function renderDocumentLibrary() {
+    setDocumentNavigation(true);
+    const metricCount = documentLibrary.reduce(
+      (total, document) => total + documentMetricCount(document),
+      0,
+    );
+    const pendingCount = documentLibrary.reduce(
+      (total, document) => total + documentPendingCount(document),
+      0,
+    );
+    const areas = [...new Set(documentLibrary.map((item) => item.areaName))];
+    const types = [...new Set(documentLibrary.map((item) => item.type))];
+    document.title = "Informes y encuestas · Atlas";
+    main.innerHTML = `<nav class="breadcrumbs" aria-label="Ruta de navegación"><a href="#/overview">Catálogo</a>${icon("chevron")}<span>Informes y encuestas</span></nav>
+      <div class="page-heading"><div><div class="eyebrow">BIBLIOTECA DOCUMENTAL</div><h1>Informes y encuestas<span class="heading-dot">.</span></h1><p>Entregables, estudios y archivos conectados con sus métricas, cálculos y fuentes de datos.</p></div><span class="department-chip">${icon("folder")}Documentos</span></div>
+      <div class="stats document-stats"><div class="stat"><span class="stat-icon blue">${icon("folder")}</span><div><strong>${String(documentLibrary.length).padStart(2, "0")}</strong><span>Documentos</span></div></div><div class="stat"><span class="stat-icon green">${icon("chart")}</span><div><strong>${String(metricCount).padStart(2, "0")}</strong><span>Métricas trazadas</span></div></div><div class="stat"><span class="stat-icon orange">${icon("layers")}</span><div><strong>${String(areas.length).padStart(2, "0")}</strong><span>Áreas</span></div></div><div class="stat"><span class="stat-icon yellow">${icon("clock")}</span><div><strong>${String(pendingCount).padStart(2, "0")}</strong><span>Pendientes identificados</span></div></div></div>
+      <section class="document-toolbar panel"><label class="document-search">${icon("search")}<input id="document-search" type="search" placeholder="Buscar informe, encuesta o entidad…" autocomplete="off"></label><label><span>Área</span><select id="document-area"><option value="">Todas</option>${areas.map((area) => `<option>${esc(area)}</option>`).join("")}</select></label><label><span>Tipo</span><select id="document-type"><option value="">Todos</option>${types.map((type) => `<option>${esc(type)}</option>`).join("")}</select></label></section>
+      <section><div class="section-heading"><div><h2>Documentos disponibles <span class="count-pill" id="document-result-count">${documentLibrary.length}</span></h2><p>Selecciona un documento para revisar sus métricas y consultar las entregas anuales.</p></div><span class="section-kicker">ESCALABLE POR ÁREA Y TIPO</span></div><div class="document-library-grid">${documentLibrary.map((document) => `<a class="document-library-card" href="#/documents/${esc(document.id)}" data-area="${esc(document.areaName)}" data-type="${esc(document.type)}" data-search="${esc(normalizeText(`${document.title} ${document.organization} ${document.areaName} ${document.description}`))}"><div class="document-card-head"><span class="document-card-icon ${esc(document.color)}">${esc(document.icon)}</span><span class="badge available"><i></i>${esc(document.type)}</span></div><div><span class="eyebrow">${esc(document.organization)} · ${esc(document.areaName)}</span><h2>${esc(document.title)}</h2><p>${esc(document.description)}</p></div><div class="document-card-tags"><span>${icon("clock")}${esc(document.frequency)}</span><span>${icon("chart")}${documentMetricCount(document)} métricas</span><span class="pending-tag">${icon("info")}${documentPendingCount(document)} pendientes</span></div><div class="document-card-footer"><span>${esc(document.referencePeriod)}</span><strong>Ver detalle ${icon("arrow")}</strong></div></a>`).join("")}</div><div class="empty document-empty" id="document-empty" hidden><h2>Sin resultados</h2><p>Prueba con otros términos o filtros.</p></div></section>`;
+    const applyFilters = () => {
+      const search = normalizeText(document.getElementById("document-search").value);
+      const area = document.getElementById("document-area").value;
+      const type = document.getElementById("document-type").value;
+      let visible = 0;
+      main.querySelectorAll(".document-library-card").forEach((card) => {
+        card.hidden =
+          (search && !card.dataset.search.includes(search)) ||
+          (area && card.dataset.area !== area) ||
+          (type && card.dataset.type !== type);
+        if (!card.hidden) visible += 1;
+      });
+      document.getElementById("document-result-count").textContent = visible;
+      document.getElementById("document-empty").hidden = visible > 0;
+    };
+    ["document-search", "document-area", "document-type"].forEach((id) =>
+      document.getElementById(id).addEventListener("input", applyFilters),
+    );
+  }
+  function renderMetricSource(source) {
+    const content = `<span>${source.status === "pending" ? "?" : icon("link")}</span><span><strong>${esc(source.name)}</strong><small>${esc(source.relation)}</small></span><em>${source.status === "pending" ? "Origen pendiente" : "Relación propuesta"}</em>`;
+    return source.href
+      ? `<a class="metric-source" href="${esc(source.href)}">${content}${icon("arrow")}</a>`
+      : `<div class="metric-source pending-source">${content}</div>`;
+  }
+  function renderDocumentDetail(document) {
+    setDocumentNavigation(true);
+    window.document.title = `${document.title} · Atlas`;
+    const metricCount = documentMetricCount(document);
+    const sourceCount = new Set(
+      document.sections.flatMap((section) =>
+        section.metrics.flatMap((metric) => metric.sources.map((source) => source.name)),
+      ),
+    ).size;
+    main.innerHTML = `<nav class="breadcrumbs" aria-label="Ruta de navegación"><a href="#/overview">Catálogo</a>${icon("chevron")}<a href="#/documents">Informes y encuestas</a>${icon("chevron")}<span>${esc(document.title)}</span></nav>
+      <a class="back-link" href="#/documents">← Volver a informes y encuestas</a>
+      <div class="document-detail-heading"><span class="document-hero-icon ${esc(document.color)}">${esc(document.icon)}</span><div><div class="eyebrow">${esc(document.organization)} · ${esc(document.type)} · ${esc(document.areaName)}</div><h1>${esc(document.title)}<span class="heading-dot">.</span></h1><p>${esc(document.description)}</p></div><a class="primary-document-link" href="${esc(document.template.url)}" target="_blank" rel="noopener">${icon("sheet")}Abrir plantilla</a></div>
+      ${document.confidentialityNote ? `<div class="document-confidentiality">🔐 <span>${esc(document.confidentialityNote)}</span></div>` : ""}
+      <div class="document-facts"><div><span>📅 Periodo</span><strong>${esc(document.referencePeriod)}</strong></div><div><span>🔁 Frecuencia</span><strong>${esc(document.frequency)}</strong></div><div><span>👤 Responsable</span>${document.owner ? `<strong>${esc(document.owner)}</strong>` : '<strong class="field-pending">Por completar</strong>'}</div><div><span>🔐 Clasificación</span>${document.classification ? `<strong>${esc(document.classification)}</strong>` : '<strong class="field-pending">Por completar</strong>'}</div></div>
+      <div class="document-jump-nav"><button type="button" data-scroll-target="document-metrics">${icon("chart")}${metricCount} métricas y cálculos</button><button type="button" data-scroll-target="document-archive">${icon("folder")}Histórico anual</button><a href="${esc(document.template.url)}" target="_blank" rel="noopener">${icon("sheet")}Plantilla original</a></div>
+      <section id="document-metrics" class="document-detail-section"><div class="section-heading"><div><h2>Métricas, cálculos y fuentes <span class="count-pill">${metricCount}</span></h2><p>Cada indicador conserva la fórmula de la plantilla y muestra de dónde debería obtenerse.</p></div><span class="section-kicker">${sourceCount} FUENTES RELACIONADAS</span></div><div class="metric-legend"><span><i class="legend-dot proposed"></i>Relación propuesta para validar</span><span><i class="legend-dot missing"></i>Origen todavía sin identificar</span></div>${document.sections.map((section) => `<section class="document-metric-group"><div class="document-metric-group-heading"><div><h3>${esc(section.title)}</h3>${section.note ? `<p>${esc(section.note)}</p>` : ""}</div><span>${section.metrics.length} ${section.metrics.length === 1 ? "campo" : "campos"}</span></div><div class="document-metric-list">${section.metrics.map((metric, index) => `<details class="document-metric"><summary><span class="metric-number">${String(index + 1).padStart(2, "0")}</span><span><strong>${esc(metric.name)}</strong><small>${esc(metric.period)}</small></span><span class="metric-source-count">${metric.sources.length} ${metric.sources.length === 1 ? "fuente" : "fuentes"}</span><span class="endpoint-chevron">⌄</span></summary><div class="document-metric-body">${metric.description ? `<p>${esc(metric.description)}</p>` : ""}<div class="metric-formula"><span>🧮 Cálculo</span><strong>${esc(metric.formula)}</strong></div>${metric.note ? `<div class="metric-note">${icon("info")}<span>${esc(metric.note)}</span></div>` : ""}<div class="metric-sources"><h4>Fuentes relacionadas</h4>${metric.sources.map(renderMetricSource).join("")}</div>${metric.pending.length ? `<div class="metric-pending"><strong>${icon("clock")}Pendiente de validar</strong><ul>${metric.pending.map((item) => `<li>${esc(item)}</li>`).join("")}</ul></div>` : ""}</div></details>`).join("")}</div></section>`).join("")}</section>
+      <section id="document-archive" class="document-detail-section"><div class="section-heading"><div><h2>Histórico anual</h2><p>Acceso a las plantillas y a los documentos cumplimentados que se conservarán en Cloud Storage.</p></div><span class="section-kicker">CLOUD STORAGE</span></div><div class="document-archive-layout"><article class="template-archive-card"><span class="archive-icon">${icon("sheet")}</span><div><span class="eyebrow">PLANTILLA DE TRABAJO</span><h3>${esc(document.template.name)}</h3><p>Copia original recibida, disponible para consulta o descarga.</p></div><a href="${esc(document.template.url)}" target="_blank" rel="noopener">Abrir archivo ${icon("external")}</a></article><div class="annual-file-list">${document.archive.map((file) => `<article class="annual-file-card ${file.url ? "available" : "pending"}"><div class="annual-year">${esc(file.year)}</div><div><span class="eyebrow">ENTREGA ANUAL</span><h3>${esc(file.label)}</h3><p>${esc(file.note)}</p></div>${file.url ? `<a href="${esc(file.url)}" target="_blank" rel="noopener">Abrir en Cloud Storage ${icon("external")}</a>` : `<span class="cloud-pending">${icon("clock")}Ruta de Cloud Storage por completar</span>`}</article>`).join("")}</div></div></section>
+      <section class="panel document-pending-panel"><div><span class="stat-icon yellow">${icon("clock")}</span><div><h2>Campos generales pendientes</h2><p>Estos datos no aparecen en las plantillas recibidas y deben confirmarse antes de cerrar la ficha.</p></div></div><ul>${document.pending.map((item) => `<li>${icon("clock")}<span>${esc(item)}</span></li>`).join("")}</ul></section>`;
+    main.querySelectorAll("[data-scroll-target]").forEach((button) => {
+      button.addEventListener("click", () => {
+        window.document
+          .getElementById(button.dataset.scrollTarget)
+          ?.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    });
+  }
   function render() {
     route = location.hash.replace(/^#\/?/, "").split("/");
     if (!route[0] || route[0] === "overview") {
@@ -808,12 +929,27 @@
         el.removeAttribute("aria-current");
       });
       document.getElementById("overview-nav").classList.remove("active");
+      document.getElementById("document-nav").classList.remove("active");
+      document.getElementById("document-nav").removeAttribute("aria-current");
       document.getElementById("inventory-nav").classList.remove("active");
       document.getElementById("inventory-nav").removeAttribute("aria-current");
       document.getElementById("api-nav").classList.add("active");
       document.getElementById("api-nav").setAttribute("aria-current", "page");
       document.title = `${api?.name || "Biblioteca de APIs"} · Atlas`;
       api ? renderApiDocumentation(api) : renderApiLibrary();
+      return;
+    }
+    if (route[0] === "documents") {
+      const documentItem = route[1]
+        ? documentLibrary.find((item) => item.id === route[1])
+        : null;
+      if (route.length > 2 || (route[1] && !documentItem)) {
+        main.innerHTML = `<div class="empty"><h1>Página no encontrada</h1><p>Este documento no pertenece a la biblioteca.</p><a href="#/documents" class="text-button">Volver a informes y encuestas</a></div>`;
+        return;
+      }
+      documentItem
+        ? renderDocumentDetail(documentItem)
+        : renderDocumentLibrary();
       return;
     }
     const d = departments.find((x) => x.id === route[0]);
@@ -852,6 +988,8 @@
     document.getElementById("inventory-nav").removeAttribute("aria-current");
     document.getElementById("overview-nav").classList.remove("active");
     document.getElementById("overview-nav").removeAttribute("aria-current");
+    document.getElementById("document-nav").classList.remove("active");
+    document.getElementById("document-nav").removeAttribute("aria-current");
     document.title = `${dataset?.name || source?.name || service?.name || d.name} · Atlas`;
     if (dataset) {
       renderQueryDocumentation(d, source, dataset);
