@@ -1431,6 +1431,14 @@ footer {
 .query-documentation-heading {
   align-items: flex-end;
 }
+.query-documentation-heading > div {
+  flex: 1;
+  min-width: 0;
+}
+.query-documentation-heading p {
+  max-width: none;
+  white-space: nowrap;
+}
 .query-documentation-heading .access-link {
   margin-left: auto;
 }
@@ -1516,6 +1524,9 @@ footer {
   margin-top: 4px;
   font-size: 9px;
   line-height: 1.65;
+}
+.query-guide-section > .sample-disclaimer {
+  margin: 0 0 14px;
 }
 .query-guide-section {
   padding: 22px 0;
@@ -2623,6 +2634,14 @@ footer {
 .api-notes-grid h2 {
   margin-top: 16px;
 }
+.api-overview dd code {
+  color: #315a72;
+  font:
+    500 9px/1.5 ui-monospace,
+    SFMono-Regular,
+    Consolas,
+    monospace;
+}
 .document-link {
   display: inline-flex;
   align-items: center;
@@ -2668,6 +2687,61 @@ footer {
 }
 .api-reference {
   margin-bottom: 30px;
+}
+.api-endpoint-search {
+  height: 48px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: -14px 0 28px;
+  padding: 0 14px;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  background: #fff;
+  color: #8496a1;
+}
+.api-endpoint-search svg {
+  width: 16px;
+  flex-shrink: 0;
+}
+.api-endpoint-search input {
+  min-width: 0;
+  flex: 1;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--ink);
+  font: inherit;
+  font-size: 10px;
+}
+.api-endpoint-search > span {
+  font-size: 8px;
+  white-space: nowrap;
+}
+.api-search-empty {
+  margin: -14px 0 28px;
+  padding: 24px;
+  display: grid;
+  justify-items: center;
+  gap: 6px;
+  border: 1px dashed var(--line);
+  border-radius: 7px;
+  color: #8496a1;
+  text-align: center;
+}
+.api-search-empty[hidden] {
+  display: none;
+}
+.api-search-empty svg {
+  width: 18px;
+  color: var(--primary);
+}
+.api-search-empty strong {
+  color: var(--ink);
+  font-size: 11px;
+}
+.api-search-empty span {
+  font-size: 9px;
 }
 .api-group {
   margin-bottom: 25px;
@@ -2768,6 +2842,33 @@ footer {
   color: #7c8e99;
   font-size: 11px;
 }
+.endpoint-route {
+  display: grid;
+  gap: 7px;
+  margin-bottom: 17px;
+  padding: 12px 13px;
+  border: 1px solid #dce8ed;
+  border-radius: 6px;
+  background: #f5f9fb;
+}
+.endpoint-route span,
+.endpoint-table-section h4 {
+  color: #6c8290;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+}
+.endpoint-route code {
+  overflow-x: auto;
+  color: #235c7b;
+  font:
+    500 9px/1.6 ui-monospace,
+    SFMono-Regular,
+    Consolas,
+    monospace;
+  white-space: nowrap;
+}
 .endpoint-notes {
   display: grid;
   gap: 7px;
@@ -2792,11 +2893,20 @@ footer {
 .schema-table-wrap {
   overflow-x: auto;
 }
+.endpoint-table-section + .endpoint-table-section {
+  margin-top: 20px;
+}
+.endpoint-table-section h4 {
+  margin-bottom: 8px;
+}
 .schema-table {
   width: 100%;
   min-width: 830px;
   border-collapse: collapse;
   text-align: left;
+}
+.technical-table {
+  min-width: 640px;
 }
 .schema-table th {
   padding: 10px 12px;
@@ -2827,6 +2937,51 @@ footer {
   display: block;
   margin-top: 4px;
   color: #9a7a23;
+}
+.endpoint-payloads {
+  display: grid;
+  gap: 8px;
+  margin-top: 20px;
+}
+.payload-card {
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: #f8fafb;
+}
+.payload-card > summary {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 13px;
+  cursor: pointer;
+  list-style: none;
+}
+.payload-card > summary::-webkit-details-marker {
+  display: none;
+}
+.payload-card > summary svg {
+  width: 14px;
+  color: var(--primary);
+}
+.payload-card > summary strong {
+  flex: 1;
+  font-size: 9px;
+}
+.payload-card[open] .endpoint-chevron {
+  transform: rotate(180deg);
+}
+.payload-card pre {
+  max-height: 430px;
+  margin: 0;
+  padding: 14px;
+  overflow: auto;
+  border-top: 1px solid var(--line);
+  background: #102530;
+  color: #d6e8f0;
+  font-size: 9px;
+  line-height: 1.6;
+  white-space: pre;
 }
 .plain-notes {
   margin: 20px 0 0;
@@ -3135,6 +3290,15 @@ footer {
 :root[data-theme="dark"] .schema-table code {
   color: #b7cedb;
 }
+:root[data-theme="dark"] .api-overview dd code,
+:root[data-theme="dark"] .endpoint-route code {
+  color: #8ed1f1;
+}
+:root[data-theme="dark"] .api-endpoint-search,
+:root[data-theme="dark"] .endpoint-route,
+:root[data-theme="dark"] .payload-card {
+  background: #112832;
+}
 :root[data-theme="dark"] .source-logo.image-logo {
   background: #fff;
 }
@@ -3162,6 +3326,9 @@ footer {
   }
 }
 @media (max-width: 1150px) {
+  .query-documentation-heading p {
+    white-space: normal;
+  }
   :root {
     --sidebar: 216px;
   }
@@ -3797,6 +3964,9 @@ footer {
   }
   .query-guide > summary > .badge {
     display: none;
+  }
+  .query-documentation-heading p {
+    white-space: normal;
   }
   .query-guide-body {
     padding: 0 12px 12px;

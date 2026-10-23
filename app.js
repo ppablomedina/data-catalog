@@ -430,7 +430,7 @@
         ? `<div class="frequent-values"><em>Valores frecuentes · estimación</em><div>${values.map((item) => `<span><b>${esc(item.value)}</b><small>≈${roundedPercentage(item.share)}%</small></span>`).join("")}</div></div>`
         : "";
     };
-    return `<details class="query-guide"${expanded ? " open" : ""}><summary><span class="query-guide-icon">${icon("database")}</span><span><strong>Ejemplo de datos y reglas de uso</strong><small>Parámetros, cálculo de usuarios activos, 10 registros sintéticos y calidad de columnas</small></span><span class="badge available"><i></i>Documentado</span><span class="endpoint-chevron">⌄</span></summary><div class="query-guide-body"><div class="sample-disclaimer">${icon("info")}<div><strong>Muestra sintética, no clientes reales</strong><p>La muestra combina de forma ficticia los valores frecuentes suministrados y datos de ejemplo. Cada fila se ha construido para representar la estructura y distribución aproximada; no corresponde a un cliente real.</p></div></div><details class="query-guide-section"><summary class="query-guide-section-summary"><div class="query-guide-heading"><span>01</span><div><h3>Parámetros de entrada</h3><p>La consulta filtra por la fecha en que se registró cada cuenta.</p></div></div><span class="section-chevron">⌄</span></summary><div class="query-input-grid">${guide.inputs.map((input) => `<div><span>${icon("clock")}</span><strong>${esc(input.name)}</strong><p>${esc(input.description)}</p></div>`).join("")}</div></details><details class="query-guide-section"><summary class="query-guide-section-summary"><div class="query-guide-heading"><span>02</span><div><h3>Cómo interpretar ${formatFieldReferences("active", guide)}</h3><p>Regla utilizada actualmente para el seguimiento de usuarios.</p></div></div><span class="section-chevron">⌄</span></summary><div class="active-rule-grid"><article><span class="active-value enabled">1</span><div><strong>Cuenta activada</strong><p>Tiene un método de usuario activado.</p></div></article><article><span class="active-value disabled">0</span><div><strong>Cuenta no activada</strong><p>No tiene un método de usuario activado.</p></div></article></div><div class="calculation-callout"><div><span class="eyebrow">TOTAL DE USUARIOS ACTIVOS EN UNA FECHA</span><strong>06/03/2018 → fecha de evaluación</strong><p>${formatFieldReferences(guide.currentUsersRule, guide)}</p></div><code>contar(${formatFieldReferences("active", guide)} = 1)</code></div><p class="rule-note">${icon("info")}<span>${formatFieldReferences(`${guide.activeRule} ${guide.activeCaveat}`, guide)}</span></p><div class="active-timeline">${guide.activeExample.map((step) => `<div><span>${esc(step.date)}</span><p>${formatFieldReferences(step.text, guide)}</p></div>`).join("")}</div></details><details class="query-guide-section"><summary class="query-guide-section-summary"><div class="query-guide-heading"><span>03</span><div><h3>Vista de ejemplo</h3><p>Consulta simulada desde ${esc(guide.samplePeriod.from)} hasta ${esc(guide.samplePeriod.to)}.</p></div></div><span class="section-chevron">⌄</span></summary><div class="sample-table-wrap"><table class="sample-data-table"><thead><tr>${guide.columns.map((column) => `<th>${esc(column.label)}</th>`).join("")}</tr></thead><tbody>${guide.sampleRows.map((row) => `<tr>${guide.columns.map((column) => `<td>${querySampleCell(row[column.key], column, guide)}</td>`).join("")}</tr>`).join("")}</tbody></table></div><p class="table-scroll-hint">Desplázate horizontalmente para consultar todas las columnas.</p></details><details class="query-guide-section"><summary class="query-guide-section-summary"><div class="query-guide-heading"><span>04</span><div><h3>Canales de alta</h3><p>Traducción operativa del campo ${formatFieldReferences("channel", guide)}.</p></div></div><span class="section-chevron">⌄</span></summary><div class="channel-map">${Object.entries(
+    return `<details class="query-guide"${expanded ? " open" : ""}><summary><span class="query-guide-icon">${icon("database")}</span><span><strong>Ejemplo de datos y reglas de uso</strong><small>Parámetros, cálculo de usuarios activos, 10 registros sintéticos y calidad de columnas</small></span><span class="badge available"><i></i>Documentado</span><span class="endpoint-chevron">⌄</span></summary><div class="query-guide-body"><details class="query-guide-section"><summary class="query-guide-section-summary"><div class="query-guide-heading"><span>01</span><div><h3>Parámetros de entrada</h3><p>La consulta filtra por la fecha en que se registró cada cuenta.</p></div></div><span class="section-chevron">⌄</span></summary><div class="query-input-grid">${guide.inputs.map((input) => `<div><span>${icon("clock")}</span><strong>${esc(input.name)}</strong><p>${esc(input.description)}</p></div>`).join("")}</div></details><details class="query-guide-section"><summary class="query-guide-section-summary"><div class="query-guide-heading"><span>02</span><div><h3>Cómo interpretar ${formatFieldReferences("active", guide)}</h3><p>Regla utilizada actualmente para el seguimiento de usuarios.</p></div></div><span class="section-chevron">⌄</span></summary><div class="active-rule-grid"><article><span class="active-value enabled">1</span><div><strong>Cuenta activada</strong><p>Tiene un método de usuario activado.</p></div></article><article><span class="active-value disabled">0</span><div><strong>Cuenta no activada</strong><p>No tiene un método de usuario activado.</p></div></article></div><div class="calculation-callout"><div><span class="eyebrow">TOTAL DE USUARIOS ACTIVOS EN UNA FECHA</span><strong>06/03/2018 → fecha de evaluación</strong><p>${formatFieldReferences(guide.currentUsersRule, guide)}</p></div><code>contar(${formatFieldReferences("active", guide)} = 1)</code></div><p class="rule-note">${icon("info")}<span>${formatFieldReferences(`${guide.activeRule} ${guide.activeCaveat}`, guide)}</span></p><div class="active-timeline">${guide.activeExample.map((step) => `<div><span>${esc(step.date)}</span><p>${formatFieldReferences(step.text, guide)}</p></div>`).join("")}</div></details><details class="query-guide-section"><summary class="query-guide-section-summary"><div class="query-guide-heading"><span>03</span><div><h3>Vista de ejemplo</h3><p>Consulta simulada desde ${esc(guide.samplePeriod.from)} hasta ${esc(guide.samplePeriod.to)}.</p></div></div><span class="section-chevron">⌄</span></summary><div class="sample-disclaimer">${icon("info")}<div><strong>Muestra sintética, no clientes reales</strong><p>La muestra combina de forma ficticia los valores frecuentes suministrados y datos de ejemplo. Cada fila se ha construido para representar la estructura y distribución aproximada; no corresponde a un cliente real.</p></div></div><div class="sample-table-wrap"><table class="sample-data-table"><thead><tr>${guide.columns.map((column) => `<th>${esc(column.label)}</th>`).join("")}</tr></thead><tbody>${guide.sampleRows.map((row) => `<tr>${guide.columns.map((column) => `<td>${querySampleCell(row[column.key], column, guide)}</td>`).join("")}</tr>`).join("")}</tbody></table></div><p class="table-scroll-hint">Desplázate horizontalmente para consultar todas las columnas.</p></details><details class="query-guide-section"><summary class="query-guide-section-summary"><div class="query-guide-heading"><span>04</span><div><h3>Canales de alta</h3><p>Traducción operativa del campo ${formatFieldReferences("channel", guide)}.</p></div></div><span class="section-chevron">⌄</span></summary><div class="channel-map">${Object.entries(
       guide.channelMap,
     )
       .map(
@@ -684,34 +684,98 @@
       <section><div class="section-heading"><div><h2>APIs disponibles <span class="count-pill">${apiLibrary.length}</span></h2><p>Selecciona una API para consultar su documentación.</p></div></div><div class="api-library-grid">${apiLibrary
         .map(
           (api) =>
-            `<a class="api-library-card" href="#/apis/${esc(api.id)}"><div class="api-card-head">${apiLogo(api)}<span class="badge available"><i></i>Documentada</span></div><div><span class="eyebrow">DESARROLLADA POR ${esc(api.provider.toUpperCase())}</span><h2>${esc(api.name)}</h2><p>${esc(api.description)}</p></div><div class="api-card-meta"><span>${icon("database")}${apiEndpointCount(api)} endpoints</span><span>${icon("layers")}${api.groups.length} áreas</span><span class="api-card-arrow">Ver documentación ${icon("arrow")}</span></div></a>`,
+            `<a class="api-library-card" href="#/apis/${esc(api.id)}"><div class="api-card-head">${apiLogo(api)}<span class="badge available"><i></i>Documentada</span></div><div><span class="eyebrow">DESARROLLADA POR ${esc(api.provider.toUpperCase())}</span><h2>${esc(api.name)}</h2><p>${esc(api.description)}</p></div><div class="api-card-meta"><span>${icon("database")}${apiEndpointCount(api)} endpoints</span><span>${icon("layers")}${api.groups.length} ${esc(api.groupLabel || "áreas")}</span><span class="api-card-arrow">Ver documentación ${icon("arrow")}</span></div></a>`,
         )
         .join("")}</div></section>`;
   }
+  function apiSummaryValue(value) {
+    return value
+      ? `<code>${esc(value)}</code>`
+      : '<span class="badge pending"><i></i>Por documentar</span>';
+  }
+  function renderTechnicalTable(table) {
+    const headers = table.headers || [];
+    return `<section class="endpoint-table-section"><h4>${esc(table.title || "Parámetros")}</h4><div class="schema-table-wrap"><table class="schema-table technical-table"><thead><tr>${headers.map((header) => `<th>${esc(header)}</th>`).join("")}</tr></thead><tbody>${(table.rows || []).map((row) => `<tr>${row.map((cell, index) => `<td>${index === 0 ? `<code>${esc(cell)}</code>` : esc(cell)}</td>`).join("")}</tr>`).join("")}</tbody></table></div></section>`;
+  }
+  function renderEndpointCard(api, endpoint, index) {
+    const tables = endpoint.tables || [];
+    const parameterCount =
+      endpoint.fields?.length ||
+      tables.reduce((total, table) => total + (table.rows?.length || 0), 0);
+    const countLabel = endpoint.fields
+      ? parameterCount === 1
+        ? "campo"
+        : "campos"
+      : parameterCount === 1
+        ? "elemento"
+        : "elementos";
+    const subtitle =
+      endpoint.title ||
+      (endpoint.sourceTable
+        ? `Tabla de origen: ${endpoint.sourceTable}`
+        : "Operación documentada");
+    const searchText = normalizeText(
+      [endpoint.name, endpoint.title, endpoint.description, endpoint.route]
+        .filter(Boolean)
+        .join(" "),
+    );
+    const routeMarkup = endpoint.route
+      ? `<div class="endpoint-route"><span>Ruta documentada</span><code>${esc(endpoint.route)}</code></div>`
+      : "";
+    const tablesMarkup = endpoint.fields
+      ? `<section class="endpoint-table-section"><h4>Campos publicados</h4><div class="schema-table-wrap"><table class="schema-table"><thead><tr><th>Campo API</th><th>Columna origen</th><th>Tipo</th><th>Obligatorio</th><th>Descripción y observaciones</th></tr></thead><tbody>${endpoint.fields
+          .map(
+            (fieldInfo) =>
+              `<tr><td><code>${esc(fieldInfo.name)}</code></td><td><code>${esc(fieldInfo.source)}</code></td><td>${esc(fieldInfo.type)}</td><td><span class="badge ${fieldInfo.required ? "available" : "neutral"}">${fieldInfo.required ? "Sí" : "No"}</span></td><td>${fieldInfo.description ? esc(fieldInfo.description) : '<span class="muted">Sin descripción adicional</span>'}${fieldInfo.note ? `<small class="field-note">${esc(fieldInfo.note)}</small>` : ""}</td></tr>`,
+          )
+          .join("")}</tbody></table></div></section>`
+      : tables.map(renderTechnicalTable).join("");
+    const payloads = [
+      ...(endpoint.schemas || []),
+      ...(endpoint.examples || []),
+    ];
+    const payloadMarkup = payloads.length
+      ? `<div class="endpoint-payloads">${payloads
+          .map(
+            (payload) =>
+              `<details class="payload-card"><summary>${icon("code")}<strong>${esc(payload.title)}</strong><span class="endpoint-chevron">⌄</span></summary><pre><code>${esc(payload.content)}</code></pre></details>`,
+          )
+          .join("")}</div>`
+      : "";
+    const open = api.defaultEndpointOpen !== false && index === 0;
+    return `<details class="endpoint-card" data-search="${esc(searchText)}"${open ? " open" : ""}><summary><span class="endpoint-icon">${icon("code")}</span><span><strong>${esc(endpoint.name)}</strong><small>${esc(subtitle)}</small></span><span class="endpoint-field-count">${parameterCount} ${countLabel}</span><span class="badge ${endpoint.route ? "available" : "pending"}"><i></i>${endpoint.route ? "Ruta documentada" : "Ruta pendiente"}</span><span class="endpoint-chevron">⌄</span></summary><div class="endpoint-body"><p>${esc(endpoint.description)}</p>${routeMarkup}${endpoint.notes?.length ? `<div class="endpoint-notes">${endpoint.notes.map((note) => `<span>${icon("info")}${esc(note)}</span>`).join("")}</div>` : ""}${tablesMarkup}${payloadMarkup}</div></details>`;
+  }
   function renderApiDocumentation(api) {
     const endpointCount = apiEndpointCount(api);
+    const documentDescription =
+      api.document.format === "HTML"
+        ? "Documento HTML original conservado junto al código para consulta y trazabilidad."
+        : `Especificación recibida de ${esc(api.document.pages)} páginas. Se conserva junto al código para que la documentación no dependa de enlaces externos.`;
     main.innerHTML = `<nav class="breadcrumbs" aria-label="Ruta de navegación"><a href="#/overview">Catálogo</a>${icon("chevron")}<a href="#/apis">Biblioteca de APIs</a>${icon("chevron")}<span>${esc(api.name)}</span></nav>
       <a class="back-link" href="#/apis">← Volver a la biblioteca</a>
-      <div class="detail-heading api-detail-heading">${apiLogo(api, true)}<div><div class="eyebrow">API REST · ${esc(api.provider.toUpperCase())}</div><h1>${esc(api.name)}<span class="heading-dot">.</span></h1><p>${esc(api.description)}</p></div><span class="badge available"><i></i>Especificación disponible</span></div>
-      <div class="api-summary-grid"><section class="panel api-overview"><h2>Resumen técnico</h2><dl><div><dt>Desarrollador</dt><dd>${esc(api.provider)}</dd></div><div><dt>URL base</dt><dd><span class="badge pending"><i></i>Por documentar</span></dd></div><div><dt>Autenticación</dt><dd><span class="badge pending"><i></i>Por documentar</span></dd></div><div><dt>Versionado</dt><dd>${esc(api.versioning)}</dd></div><div><dt>Frecuencia prevista</dt><dd>${esc(api.refreshFrequency)}</dd></div><div><dt>Endpoints</dt><dd>${endpointCount}</dd></div></dl></section><section class="panel api-document"><span class="stat-icon blue">${icon("folder")}</span><h2>Documento original</h2><p>Especificación recibida de ${esc(api.document.pages)} páginas. Se conserva junto al código para que la documentación no dependa de enlaces externos.</p><a class="document-link" href="${esc(api.document.url)}" target="_blank" rel="noopener">${icon("external")}Abrir ${esc(api.document.name)}</a></section></div>
+      <div class="detail-heading api-detail-heading">${apiLogo(api, true)}<div><div class="eyebrow">${esc(api.protocol || "API REST")} · ${esc(api.provider.toUpperCase())}</div><h1>${esc(api.name)}<span class="heading-dot">.</span></h1><p>${esc(api.description)}</p></div><span class="badge available"><i></i>Especificación disponible</span></div>
+      <div class="api-summary-grid"><section class="panel api-overview"><h2>Resumen técnico</h2><dl><div><dt>Desarrollador</dt><dd>${esc(api.provider)}</dd></div><div><dt>URL base</dt><dd>${apiSummaryValue(api.baseUrl)}</dd></div><div><dt>Autenticación</dt><dd>${api.authentication ? esc(api.authentication) : '<span class="badge pending"><i></i>Por documentar</span>'}</dd></div><div><dt>Versionado</dt><dd>${esc(api.versioning)}</dd></div><div><dt>Frecuencia prevista</dt><dd>${esc(api.refreshFrequency)}</dd></div><div><dt>Endpoints</dt><dd>${endpointCount}</dd></div></dl></section><section class="panel api-document"><span class="stat-icon blue">${icon("folder")}</span><h2>Documento original</h2><p>${documentDescription}</p><a class="document-link" href="${esc(api.document.url)}" target="_blank" rel="noopener">${icon("external")}Abrir ${esc(api.document.name)}</a></section></div>
       <section class="panel api-conventions"><h2>Convenciones generales</h2><div class="convention-grid">${api.conventions.map((item) => `<div>${icon("check")}<span>${esc(item)}</span></div>`).join("")}</div></section>
-      <section class="api-reference"><div class="section-heading"><div><h2>Referencia de endpoints <span class="count-pill">${endpointCount}</span></h2><p>Campos publicados, columnas de origen, tipos y obligatoriedad.</p></div></div>${api.groups
+      <section class="api-reference"><div class="section-heading"><div><h2>Referencia de endpoints <span class="count-pill">${endpointCount}</span></h2><p>Rutas, parámetros, esquemas y ejemplos disponibles en la especificación.</p></div></div>${endpointCount > 15 ? `<label class="api-endpoint-search">${icon("search")}<input id="api-endpoint-search" type="search" placeholder="Buscar endpoint o descripción…" autocomplete="off"><span>${endpointCount} operaciones</span></label><div class="api-search-empty" id="api-search-empty" hidden>${icon("search")}<strong>Sin resultados</strong><span>Prueba con otro nombre o término técnico.</span></div>` : ""}${api.groups
         .map(
           (group) =>
-            `<section class="api-group"><div class="api-group-heading"><div><span class="eyebrow">ÁREA</span><h2>${esc(group.name)}</h2><p>${esc(group.scope)}</p></div><a href="#/${esc(group.departmentId)}">Ver área ${icon("arrow")}</a></div><div class="endpoint-list">${group.endpoints
-              .map(
-                (endpoint, index) =>
-                  `<details class="endpoint-card"${index === 0 ? " open" : ""}><summary><span class="endpoint-icon">${icon("code")}</span><span><strong>${esc(endpoint.name)}</strong><small>Tabla de origen: ${esc(endpoint.sourceTable)}</small></span><span class="endpoint-field-count">${endpoint.fields.length} campos</span><span class="badge pending"><i></i>Ruta pendiente</span><span class="endpoint-chevron">⌄</span></summary><div class="endpoint-body"><p>${esc(endpoint.description)}</p>${endpoint.notes?.length ? `<div class="endpoint-notes">${endpoint.notes.map((note) => `<span>${icon("info")}${esc(note)}</span>`).join("")}</div>` : ""}<div class="schema-table-wrap"><table class="schema-table"><thead><tr><th>Campo API</th><th>Columna origen</th><th>Tipo</th><th>Obligatorio</th><th>Descripción y observaciones</th></tr></thead><tbody>${endpoint.fields
-                    .map(
-                      (fieldInfo) =>
-                        `<tr><td><code>${esc(fieldInfo.name)}</code></td><td><code>${esc(fieldInfo.source)}</code></td><td>${esc(fieldInfo.type)}</td><td><span class="badge ${fieldInfo.required ? "available" : "neutral"}">${fieldInfo.required ? "Sí" : "No"}</span></td><td>${fieldInfo.description ? esc(fieldInfo.description) : '<span class="muted">Sin descripción adicional</span>'}${fieldInfo.note ? `<small class="field-note">${esc(fieldInfo.note)}</small>` : ""}</td></tr>`,
-                    )
-                    .join("")}</tbody></table></div></div></details>`,
-              )
-              .join("")}</div></section>`,
+            `<section class="api-group"><div class="api-group-heading"><div><span class="eyebrow">${esc(api.groupType || "ÁREA")}</span><h2>${esc(group.name)}</h2><p>${esc(group.scope)}</p></div><a href="#/${esc(group.departmentId)}">Ver área ${icon("arrow")}</a></div><div class="endpoint-list">${group.endpoints.map((endpoint, index) => renderEndpointCard(api, endpoint, index)).join("")}</div></section>`,
         )
         .join("")}</section>
       <div class="api-notes-grid"><section class="panel pending-panel"><span class="stat-icon yellow">${icon("clock")}</span><h2>Pendiente de completar</h2><ul>${api.unresolved.map((item) => `<li>${icon("clock")}<span>${esc(item)}</span></li>`).join("")}</ul></section><section class="panel"><span class="stat-icon blue">${icon("info")}</span><h2>Notas de alcance</h2><ul class="plain-notes">${api.notes.map((item) => `<li>${esc(item)}</li>`).join("")}</ul></section></div>`;
+    const endpointSearch = document.getElementById("api-endpoint-search");
+    endpointSearch?.addEventListener("input", () => {
+      const term = normalizeText(endpointSearch.value);
+      let visibleCount = 0;
+      main.querySelectorAll(".endpoint-card").forEach((card) => {
+        card.hidden = Boolean(term) && !card.dataset.search.includes(term);
+        if (!card.hidden) visibleCount += 1;
+      });
+      main.querySelectorAll(".api-group").forEach((group) => {
+        group.hidden = !group.querySelector(".endpoint-card:not([hidden])");
+      });
+      document.getElementById("api-search-empty").hidden = visibleCount > 0;
+    });
   }
   function render() {
     route = location.hash.replace(/^#\/?/, "").split("/");

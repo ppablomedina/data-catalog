@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<!-- Copia local sanitizada de la documentación facilitada. -->
+<html lang="en" dir="ltr"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <title>develop:api_english</title>
+
+
+<style>
+    html, body {
+        background: #fbfaf9;
+    }
+    div.export {
+        margin: 2em;
+        margin-left: 25em;
+    }
+    #dw__toc {
+        position:fixed;
+        overflow:scroll;
+        width: 23em;
+        height: 100%;
+        padding-top: 1em;
+        margin: 0em;
+        left: 0em;
+        top: 0em;
+    }
+    .dokuwiki div:not(#dw__toc) h3{
+        font-size: 1em;
+        margin: 4em 0 1em;
+        padding: .5em .5em;
+        background: #808080;
+        color: #fff;
+    }
+    pre {
+        font-size:0.7em;
+        box-shadow: none;
+        background: #f1f1f1;
+    }
+    </style><style>
+            .flipX video::-webkit-media-text-track-display {
+                transform: matrix(-1, 0, 0, 1, 0, 0) !important;
+            }
+            .flipXY video::-webkit-media-text-track-display {
+                transform: matrix(-1, 0, 0, -1, 0, 0) !important;
+            }
+            .flipXYX video::-webkit-media-text-track-display {
+                transform: matrix(1, 0, 0, -1, 0, 0) !important;
+            }</style><style>
+            @keyframes blinkWarning {
+                0% { color: red; }
+                100% { color: white; }
+            }
+            @-webkit-keyframes blinkWarning {
+                0% { color: red; }
+                100% { color: white; }
+            }
+            .blinkWarning {
+                -webkit-animation: blinkWarning 1s linear infinite;
+                -moz-animation: blinkWarning 1s linear infinite;
+                animation: blinkWarning 1s linear infinite;
+            }</style></head>
+<body>
+<div class="dokuwiki export">
+<!-- TOC START -->
+<div id="dw__toc">
+<h3 class="toggle">Inhaltsverzeichnis</h3>
+<div>
+<ul class="toc">
+<li class="level3"><div class="li"><a href="https://sandbox.nextbike.net/api/doc.php?mode=classic-regular&amp;apikey=REDACTED#acceptAgreement">acceptAgreement</a></div></li><li class="level3"><div class="li"><a href="https://sandbox.nextbike.net/api/doc.php?mode=classic-regular&amp;apikey=REDACTED#activeBenefits">activeBenefits</a></div></li><li class="level3"><div class="li"><a href="https://sandbox.nextbike.net/api/doc.php?mode=classic-regular&amp;apikey=REDACTED#activeBookings">activeBookings</a></div></li><li class="level3"><div class="li"><a href="https://sandbox.nextbike.net/api/doc.php?mode=classic-regular&amp;apikey=REDACTED#addAppMessageToken">addAppMessageToken</a></div></li><li class="level3"><div class="li"><a href="https://sandbox.nextbike.net/api/doc.php?mode=classic-regular&amp;apikey=REDACTED#availableBenefits">availableBenefits</a></div></li><li class="level3"><div class="li"><a href="https://sandbox.nextbike.net/api/doc.php?mode=classic-regular&amp;apikey=REDACTED#benefit">benefit</a></div></li><li class="level3"><div class="li"><a href="https://sandbox.nextbike.net/api/doc.php?mode=classic-regular&amp;apikey=REDACTED#booking">booking</a></div></li><li class="level3"><div class="li"><a href="https://sandbox.nextbike.net/api/doc.php?mode=classic-regular&amp;apikey=REDACTED#bookingCost">bookingCost</a></div></li><li class="level3"><div class="li"><a href="https://sandbox.nextbike.net/api/doc.php?mode=classic-regular&amp;apikey=REDACTED#bookingInfo">bookingInfo</a></div></li><li class="level3"><div class="li"><a href="https://sandbox.nextbike.net/api/doc.php?mode=classic-regular&amp;apikey=REDACTED#cancelBooking">cancelBooking</a></div></li><li class="level3"><div class="li"><a href="https://sandbox.nextbike.net/api/doc.php?mode=classic-regular&amp;apikey=REDACTED#cancelSubscription">cancelSubscription</a></div></li><li class="level3"><div class="li"><a href="https://sandbox.nextbike.net/api/doc.php?mode=classic-regular&amp;apikey=REDACTED#checkAgreement">checkAgreement</a></div></li><li class="level3"><div class="li"><a href="https://sandbox.nextbike.net/api/doc.php?mode=classic-regular&amp;apikey=REDACTED#createCoupon">createCoupon</a></div></li><li class="level3"><div class="li"><a href="https://sandbox.nextbike.net/api/doc.php?mode=classic-regular&amp;apikey=REDACTED#createCouponItem">createCouponItem</a></div></li><li class="level3"><div class="li"><a href="https://sandbox.nextbike.net/api/doc.php?mode=classic-regular&amp;apikey=REDACTED#deleteCouponItem">deleteCouponItem</a></div></li><li class="level3"><div class="li"><a href="https://sandbox.nextbike.net/api/doc.php?mode=classic-regular&amp;apikey=REDACTED#echo">echo</a></div></li><li class="level3"><div class="li"><a href="https://sandbox.nextbike.net/api/doc.php?mode=classic-regular&amp;apikey=REDACTED#getAgreementDataForDomain">getAgreementDataForDomain</a></div></li><li class="level3"><div class="li"><a href="https://sandbox.nextbike.net/api/doc.php?mode=classic-regular&amp;apikey=REDACTED#getApiErrorList">getApiErrorList</a></div></li><li class="level3"><div class="li"><a href="https://sandbox.nextbike.net/api/doc.php?mode=classic-regular&amp;apikey=REDACTED#getApplicableCoupons">getApplicableCoupons</a></div></li><li class="level3"><div class="li"><a href="https://sandbox.nextbike.net/api/doc.php?mode=classic-regular&amp;apikey=REDACTED#getBikeList">getBikeList</a></div></li><li class="level3"><div class="li"><a href="https://sandbox.nextbike.net/api/doc.php?mode=classic-regular&amp;apikey=REDACTED#getBikeState">getBikeState</a></div></li><li class="level3"><div class="li"><a href="https://sandbox.nextbike.net/api/doc.php?mode=classic-regular&amp;apikey=REDACTED#getBikeTrackingLocations">getBikeTrackingLocations</a></div></li><li class="level3"><div class="li"><a href="https://sandbox.nextbike.net/api/doc.php?mode=classic-regular&amp;apikey=REDACTED#getBikeTypeGroups">getBikeTypeGroups</a></div></li><li class="level3"><div class="li"><a href="https://sandbox.nextbike.net/api/doc.php?mode=classic-regular&amp;apikey=REDACTED#getBikeTypes">getBikeTypes</a></div></li><li class="level3"><div class="li"><a href="https://sandbox.nextbike.net/api/doc.php?mode=classic-regular&amp;apikey=REDACTED#getBoardcomputerHistory">getBoardcomputerHistory</a></div></li><li class="level3"><div class="li"><a href="https://sandbox.nextbike.net/api/doc.php?mode=classic-regular&amp;apikey=REDACTED#getCouponItemStatus">getCouponItemStatus</a></div></li><li class="level3"><div class="li"><a href="https://sandbox.nextbike.net/api/doc.php?mode=classic-regular&amp;apikey=REDACTED#getErrorReports">getErrorReports</a></div></li><li class="level3"><div class="li"><a href="https://sandbox.nextbike.net/api/doc.php?mode=classic-regular&amp;apikey=REDACTED#getErrorTreeAsJson">getErrorTreeAsJson</a></div></li><li class="level3"><div class="li"><a href="https://sandbox.nextbike.net/api/doc.php?mode=classic-regular&amp;apikey=REDACTED#getFlexzones">getFlexzones</a></div></li><li class="level3"><div class="li"><a href="https://sandbox.nextbike.net/api/doc.php?mode=classic-regular&amp;apikey=REDACTED#getLocation">getLocation</a></div></li><li class="level3"><div class="li"><a href="https://sandbox.nextbike.net/api/doc.php?mode=classic-regular&amp;apikey=REDACTED#getLoginToken">getLoginToken</a></div></li><li class="level3"><div class="li"><a href="https://sandbox.nextbike.net/api/doc.php?mode=classic-regular&amp;apikey=REDACTED#getNews">getNews</a></div></li><li class="level3"><div class="li"><a href="https://sandbox.nextbike.net/api/doc.php?mode=classic-regular&amp;apikey=REDACTED#getNewsDetails">getNewsDetails</a></div></li><li class="level3"><div class="li"><a href="https://sandbox.nextbike.net/api/doc.php?mode=classic-regular&amp;apikey=REDACTED#getNotifications">getNotifications</a></div></li><li class="level3"><div class="li"><a href="https://sandbox.nextbike.net/api/doc.php?mode=classic-regular&amp;apikey=REDACTED#getPaymentLinks">getPaymentLinks</a></div></li><li class="level3"><div class="li"><a href="https://sandbox.nextbike.net/api/doc.php?mode=classic-regular&amp;apikey=REDACTED#getPlaceDetails">getPlaceDetails</a></div></li><li class="level3"><div class="li"><a href="https://sandbox.nextbike.net/api/doc.php?mode=classic-regular&amp;apikey=REDACTED#getRentalDetails">getRentalDetails</a></div></li><li class="level3"><div class="li"><a href="https://sandbox.nextbike.net/api/doc.php?mode=classic-regular&amp;apikey=REDACTED#getRentalPdf">getRentalPdf</a></div></li><li class="level3"><div class="li"><a href="https://sandbox.nextbike.net/api/doc.php?mode=classic-regular&amp;apikey=REDACTED#getServiceCases">getServiceCases</a></div></li><li class="level3"><div class="li"><a href="https://sandbox.nextbike.net/api/doc.php?mode=classic-regular&amp;apikey=REDACTED#getTranslations">getTranslations</a></div></li><li class="level3"><div class="li"><a href="https://sandbox.nextbike.net/api/doc.php?mode=classic-regular&amp;apikey=REDACTED#getUserDetails">getUserDetails</a></div></li><li class="level3"><div class="li"><a href="https://sandbox.nextbike.net/api/doc.php?mode=classic-regular&amp;apikey=REDACTED#getUserInfo">getUserInfo</a></div></li><li class="level3"><div class="li"><a href="https://sandbox.nextbike.net/api/doc.php?mode=classic-regular&amp;apikey=REDACTED#getWorkshops">getWorkshops</a></div></li><li class="level3"><div class="li"><a href="https://sandbox.nextbike.net/api/doc.php?mode=classic-regular&amp;apikey=REDACTED#list">list</a></div></li><li class="level3"><div class="li"><a href="https://sandbox.nextbike.net/api/doc.php?mode=classic-regular&amp;apikey=REDACTED#login">login</a></div></li><li class="level3"><div class="li"><a href="https://sandbox.nextbike.net/api/doc.php?mode=classic-regular&amp;apikey=REDACTED#loginByLoginToken">loginByLoginToken</a></div></li><li class="level3"><div class="li"><a href="https://sandbox.nextbike.net/api/doc.php?mode=classic-regular&amp;apikey=REDACTED#logout">logout</a></div></li><li class="level3"><div class="li"><a href="https://sandbox.nextbike.net/api/doc.php?mode=classic-regular&amp;apikey=REDACTED#openHelmetBox">openHelmetBox</a></div></li><li class="level3"><div class="li"><a href="https://sandbox.nextbike.net/api/doc.php?mode=classic-regular&amp;apikey=REDACTED#openLock">openLock</a></div></li><li class="level3"><div class="li"><a href="https://sandbox.nextbike.net/api/doc.php?mode=classic-regular&amp;apikey=REDACTED#orderRfidCard">orderRfidCard</a></div></li><li class="level3"><div class="li"><a href="https://sandbox.nextbike.net/api/doc.php?mode=classic-regular&amp;apikey=REDACTED#partner">partner</a></div></li><li class="level3"><div class="li"><a href="https://sandbox.nextbike.net/api/doc.php?mode=classic-regular&amp;apikey=REDACTED#partnerLogin">partnerLogin</a></div></li><li class="level3"><div class="li"><a href="https://sandbox.nextbike.net/api/doc.php?mode=classic-regular&amp;apikey=REDACTED#partnerTokenLogin">partnerTokenLogin</a></div></li><li class="level3"><div class="li"><a href="https://sandbox.nextbike.net/api/doc.php?mode=classic-regular&amp;apikey=REDACTED#payBlik">payBlik</a></div></li><li class="level3"><div class="li"><a href="https://sandbox.nextbike.net/api/doc.php?mode=classic-regular&amp;apikey=REDACTED#pinRecover">pinRecover</a></div></li><li class="level3"><div class="li"><a href="https://sandbox.nextbike.net/api/doc.php?mode=classic-regular&amp;apikey=REDACTED#register">register</a></div></li><li class="level3"><div class="li"><a href="https://sandbox.nextbike.net/api/doc.php?mode=classic-regular&amp;apikey=REDACTED#rent">rent</a></div></li><li class="level3"><div class="li"><a href="https://sandbox.nextbike.net/api/doc.php?mode=classic-regular&amp;apikey=REDACTED#rentMultipleBikes">rentMultipleBikes</a></div></li><li class="level3"><div class="li"><a href="https://sandbox.nextbike.net/api/doc.php?mode=classic-regular&amp;apikey=REDACTED#rentalBreak">rentalBreak</a></div></li><li class="level3"><div class="li"><a href="https://sandbox.nextbike.net/api/doc.php?mode=classic-regular&amp;apikey=REDACTED#rentals">rentals</a></div></li><li class="level3"><div class="li"><a href="https://sandbox.nextbike.net/api/doc.php?mode=classic-regular&amp;apikey=REDACTED#return">return</a></div></li><li class="level3"><div class="li"><a href="https://sandbox.nextbike.net/api/doc.php?mode=classic-regular&amp;apikey=REDACTED#revokeAgreement">revokeAgreement</a></div></li><li class="level3"><div class="li"><a href="https://sandbox.nextbike.net/api/doc.php?mode=classic-regular&amp;apikey=REDACTED#sendErrorReport">sendErrorReport</a></div></li><li class="level3"><div class="li"><a href="https://sandbox.nextbike.net/api/doc.php?mode=classic-regular&amp;apikey=REDACTED#setAdId">setAdId</a></div></li><li class="level3"><div class="li"><a href="https://sandbox.nextbike.net/api/doc.php?mode=classic-regular&amp;apikey=REDACTED#tariffs">tariffs</a></div></li><li class="level3"><div class="li"><a href="https://sandbox.nextbike.net/api/doc.php?mode=classic-regular&amp;apikey=REDACTED#tpayDirectSale">tpayDirectSale</a></div></li><li class="level3"><div class="li"><a href="https://sandbox.nextbike.net/api/doc.php?mode=classic-regular&amp;apikey=REDACTED#transfer">transfer</a></div></li><li class="level3"><div class="li"><a href="https://sandbox.nextbike.net/api/doc.php?mode=classic-regular&amp;apikey=REDACTED#triggerBikeAlarm">triggerBikeAlarm</a></div></li><li class="level3"><div class="li"><a href="https://sandbox.nextbike.net/api/doc.php?mode=classic-regular&amp;apikey=REDACTED#updateRentalPrice">updateRentalPrice</a></div></li><li class="level3"><div class="li"><a href="https://sandbox.nextbike.net/api/doc.php?mode=classic-regular&amp;apikey=REDACTED#updateUser">updateUser</a></div></li><li class="level3"><div class="li"><a href="https://sandbox.nextbike.net/api/doc.php?mode=classic-regular&amp;apikey=REDACTED#voucher">voucher</a></div></li></ul>
+</div>
+</div>
+<!-- TOC END -->
+<h1 class="sectionedit1" id="nextbike_api">nextbike API</h1>
+<div id="acceptAgreement"><h3>acceptAgreement /  Accept Agreement </h3><ul><li>Accepts an agreement</li><li><a href="https://api.nextbike.net/api/acceptAgreement.xml?apikey=REDACTED&amp;loginkey=REDACTED&amp;agreement_id=X">https://api.nextbike.net/api/acceptAgreement.xml?apikey=REDACTED&amp;loginkey=REDACTED&amp;agreement_id=X</a></li></ul><table><thead><tr class="head"><th>Request-Parameter</th><th>Type</th><th>Description</th><th>Required</th></tr></thead><tbody><tr><td>agreement_id </td><td>Integer </td><td>Specific Agreement UID (You get that with getAgreementDataForDomain) </td><td>Required </td></tr></tbody></table><h4>Response Example</h4><pre class="code">&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;nextbike version="1.0" server_time="1234567890"&gt;
+  &lt;agreementaccept status="1"/&gt;
+&lt;/nextbike&gt;
+</pre></div><div id="activeBenefits"><h3>activeBenefits /  Active Benefits - Display the active benefits of the customer  </h3><ul><li>Get the users active benefits (active and valid tickets and connected partners)</li><li><a href="https://api.nextbike.net/api/activeBenefits.xml?apikey=REDACTED&amp;loginkey=REDACTED">https://api.nextbike.net/api/activeBenefits.xml?apikey=REDACTED&amp;loginkey=REDACTED"type": "object",
+    "nullable": true,
+    "properties": {},
+    "additionalProperties": {
+        "nullable": true
+    },
+    "required": []
+}
+</oas-input>
+<oas-output>
+{
+    "type": "object",
+    "nullable": false,
+    "properties": {
+        "server_time": {
+            "type": "integer",
+            "description": "UNIX timestamp of the server time"
+        },
+        "tariffs": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "uid": {
+                        "type": "integer",
+                        "nullable": false,
+                        "description": "Internal id of the tariff"
+                    },
+                    "name": {
+                        "type": "string",
+                        "nullable": false,
+                        "description": "Name of the tariff"
+                    },
+                    "type": {
+                        "type": "integer",
+                        "nullable": false,
+                        "description": "Type of the tariff"
+                    },
+                    "code": {
+                        "anyOf": [
+                            {
+                                "nullable": true
+                            },
+                            {
+                                "type": "string",
+                                "nullable": false
+                            }
+                        ],
+                        "description": "Code required to redeem the tariff"
+                    },
+                    "price": {
+                        "type": "integer",
+                        "nullable": false,
+                        "description": "Price of the tariff including VAT"
+                    },
+                    "net_price": {
+                        "type": "integer",
+                        "nullable": false,
+                        "description": "Price of the tariff excluding VAT"
+                    },
+                    "end_date": {
+                        "type": "integer",
+                        "nullable": false,
+                        "description": "end date of the tariff"
+                    },
+                    "valid_days": {
+                        "type": "integer",
+                        "nullable": false,
+                        "description": "Validity extension limit (in number of days) of the tariff"
+                    },
+                    "auto_renew": {
+                        "anyOf": [
+                            {
+                                "nullable": true
+                            },
+                            {
+                                "type": "string",
+                                "nullable": false,
+                                "enum": [
+                                    "day",
+                                    "week",
+                                    "month",
+                                    "quarter",
+                                    "semester",
+                                    "year"
+                                ]
+                            }
+                        ],
+                        "description": "the subscription interval"
+                    },
+                    "free_text": {
+                        "type": "string",
+                        "nullable": false,
+                        "description": "Free text Description of the tariff"
+                    },
+                    "partner_id": {
+                        "type": "integer",
+                        "nullable": false,
+                        "description": "Internal id of the partner which offers the tariff"
+                    },
+                    "domain": {
+                        "type": "string",
+                        "nullable": false,
+                        "description": "Domain of the tariff"
+                    },
+                    "currency": {
+                        "type": "string",
+                        "nullable": false,
+                        "description": "Currency of the tariff"
+                    },
+                    "brand": {
+                        "type": "string",
+                        "nullable": false,
+                        "description": "Brand of the tariff"
+                    },
+                    "description_conditions": {
+                        "anyOf": [
+                            {
+                                "nullable": true
+                            },
+                            {
+                                "type": "string",
+                                "nullable": false
+                            }
+                        ],
+                        "description": "a textual description of the conditions of the tariff"
+                    },
+                    "description_details": {
+                        "anyOf": [
+                            {
+                                "nullable": true
+                            },
+                            {
+                                "type": "string",
+                                "nullable": false
+                            }
+                        ],
+                        "description": "a textual description of the details of the tariff"
+                    },
+                    "description_hint": {
+                        "anyOf": [
+                            {
+                                "nullable": true
+                            },
+                            {
+                                "type": "string",
+                                "nullable": false
+                            }
+                        ],
+                        "description": "an additional hint for the tariff"
+                    },
+                    "category": {
+                        "anyOf": [
+                            {
+                                "nullable": true
+                            },
+                            {
+                                "type": "string",
+                                "nullable": false,
+                                "enum": [
+                                    "university_1",
+                                    "university_2",
+                                    "university_3",
+                                    "subscription_sub_daily",
+                                    "subscription_daily",
+                                    "subscription_sub_weekly",
+                                    "subscription_weekly",
+                                    "subscription_biweekly",
+                                    "subscription_sub_monthly",
+                                    "subscription_monthly",
+                                    "subscription_sub_yearly",
+                                    "subscription_yearly",
+                                    "corporate_tier_1",
+                                    "corporate_tier_2",
+                                    "mobility",
+                                    "corporate_benefit",
+                                    "university_subscription",
+                                    "charity",
+                                    "fee",
+                                    "promotion",
+                                    "municipal_benefit",
+                                    "pay_as_you_go"
+                                ]
+                            }
+                        ],
+                        "description": "enum that can be used to show an icon"
+                    },
+                    "terms_url": {
+                        "anyOf": [
+                            {
+                                "nullable": true
+                            },
+                            {
+                                "type": "string",
+                                "nullable": false
+                            }
+                        ],
+                        "description": "URL to the terms and conditions of the brand"
+                    },
+                    "withdrawal_policy_url": {
+                        "anyOf": [
+                            {
+                                "nullable": true
+                            },
+                            {
+                                "type": "string",
+                                "nullable": false
+                            }
+                        ],
+                        "description": "URL to the withdrawal policy of the brand"
+                    },
+                    "redeem_id": {
+                        "type": "integer",
+                        "nullable": false,
+                        "description": "the id of the coupon redeem, e.g. needed to cancel the ticket"
+                    },
+                    "redeem_valid_from": {
+                        "type": "integer",
+                        "nullable": false,
+                        "description": "UNIX-timestamp of the point in time when the ticket is valid"
+                    },
+                    "redeem_valid_thru": {
+                        "type": "integer",
+                        "nullable": false,
+                        "description": "UNIX-timestamp of the point in time when the ticket is not valid anymore (expiration of ticket without auto-renew or termination of a cancelled ticket with auto-renew)"
+                    },
+                    "redeem_is_cancelled": {
+                        "type": "boolean",
+                        "nullable": false,
+                        "description": "is true if the ticket is already cancelled"
+                    },
+                    "redeem_is_cancellable": {
+                        "type": "boolean",
+                        "nullable": false,
+                        "description": "is true if the ticket can be cancelled (see `cancelSubscription`)"
+                    },
+                    "redeem_earliest_termination_date": {
+                        "anyOf": [
+                            {
+                                "nullable": true
+                            },
+                            {
+                                "type": "integer",
+                                "nullable": false
+                            }
+                        ],
+                        "description": "UNIX-timestamp of the point in time when an instant cancellation of the ticket would take effect"
+                    },
+                    "redeem_expiration_notice_period": {
+                        "anyOf": [
+                            {
+                                "nullable": true
+                            },
+                            {
+                                "type": "integer",
+                                "nullable": false
+                            }
+                        ],
+                        "description": "UNIX-timestamp of the point in time until when the cancellation of the ticket should be done so that it will end at redeem_earliest_termination_date"
+                    }
+                },
+                "nullable": false,
+                "required": [
+                    "uid",
+                    "name",
+                    "type",
+                    "code",
+                    "price",
+                    "end_date",
+                    "valid_days",
+                    "auto_renew",
+                    "free_text",
+                    "partner_id",
+                    "domain",
+                    "currency",
+                    "brand",
+                    "description_conditions",
+                    "description_details",
+                    "description_hint",
+                    "category",
+                    "terms_url",
+                    "withdrawal_policy_url"
+                ]
+            }
+        },
+        "partners": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "uid": {
+                        "type": "integer",
+                        "nullable": false,
+                        "description": "Internal id of the partner"
+                    },
+                    "partner_name": {
+                        "type": "string",
+                        "nullable": false,
+                        "description": "Name of the partner"
+                    },
+                    "domain": {
+                        "type": "string",
+                        "nullable": false,
+                        "description": "Domain of the partner"
+                    },
+                    "verification_type": {
+                        "type": "string",
+                        "nullable": false,
+                        "enum": [
+                            "number",
+                            "mail",
+                            "link",
+                            "foreign_system"
+                        ],
+                        "description": "Connection path"
+                    },
+                    "description_conditions": {
+                        "anyOf": [
+                            {
+                                "nullable": true
+                            },
+                            {
+                                "type": "string",
+                                "nullable": false
+                            }
+                        ],
+                        "description": "a textual description of the conditions of the partner"
+                    },
+                    "description_details": {
+                        "anyOf": [
+                            {
+                                "nullable": true
+                            },
+                            {
+                                "type": "string",
+                                "nullable": false
+                            }
+                        ],
+                        "description": "a textual description of the details of the partner"
+                    },
+                    "description_hint": {
+                        "anyOf": [
+                            {
+                                "nullable": true
+                            },
+                            {
+                                "type": "string",
+                                "nullable": false
+                            }
+                        ],
+                        "description": "an additional hint for the partner"
+                    },
+                    "partner_number": {
+                        "type": "string",
+                        "nullable": false,
+                        "description": "First number identifier to connect with the partner (only if `verification_type` is `\"number\"`)"
+                    },
+                    "partner_number2": {
+                        "anyOf": [
+                            {
+                                "nullable": true
+                            },
+                            {
+                                "type": "string",
+                                "nullable": false
+                            }
+                        ],
+                        "description": "Second identifier to connect with the partner (only if `verification_type` is `\"number\"`)"
+                    },
+                    "link": {
+                        "type": "string",
+                        "nullable": false,
+                        "description": "url to external verification service (only if `verification_type` is `\"link\"`)"
+                    },
+                    "is_connected": {
+                        "type": "boolean",
+                        "nullable": false,
+                        "description": "whether the customer requesting is connected to the partner"
+                    },
+                    "user_number": {
+                        "anyOf": [
+                            {
+                                "nullable": true
+                            },
+                            {
+                                "type": "string",
+                                "nullable": false
+                            }
+                        ],
+                        "description": "First identifier used to connect to the partner (only if `verification_type` is `\"number\"` and `is_connected` is `true`)"
+                    },
+                    "user_number2": {
+                        "anyOf": [
+                            {
+                                "nullable": true
+                            },
+                            {
+                                "type": "string",
+                                "nullable": false
+                            }
+                        ],
+                        "description": "Second identifier used to connect to the partner (only if `verification_type` `\"number\"` and is_connected is `true`)"
+                    }
+                },
+                "nullable": false,
+                "required": [
+                    "uid",
+                    "partner_name",
+                    "domain",
+                    "verification_type",
+                    "description_conditions",
+                    "description_details",
+                    "description_hint",
+                    "partner_number",
+                    "partner_number2",
+                    "link",
+                    "is_connected",
+                    "user_number",
+                    "user_number2"
+                ]
+            }
+        }
+    },
+    "additionalProperties": {
+        "nullable": true
+    },
+    "required": [
+        "server_time",
+        "tariffs",
+        "partners"
+    ]
+}
+</oas-output>
+</div><div id="activeBookings"><h3>activeBookings /  Reservation - Ask for running bookings </h3><ul><li>Get all bookings information of bookings of a user that got started within the last seven days</li><li><a href="https://api.nextbike.net/api/activeBookings.xml?apikey=REDACTED&amp;loginkey=REDACTED">https://api.nextbike.net/api/activeBookings.xml?apikey=REDACTED&amp;loginkey=REDACTED"code xml">&lt;nextbike version="1.0"&gt;
+  &lt;booking id="12345" place="123" start_time="123456789" num_bikes="2" state="1" /&gt;
+  &lt;booking id="12381" place="321" start_time="123459789" num_bikes="1" state="2"/&gt;
+&lt;/nextbike&gt;
+</pre><table><thead><tr class="head"><th>Request-Parameter</th><th>Type</th><th>Description</th><th>Required</th></tr></thead><tbody><tr><td>apikey </td><td>String </td><td>Your API key </td><td>Required </td></tr><tr><td>version </td><td>Float </td><td>API version </td><td>optional (default latest) </td></tr><tr><td>loginkey </td><td>String </td><td>Login token of the customer </td><td>Required </td></tr></tbody></table><table><thead><tr class="head"><th>Node</th><th>Response-Parameter</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>booking </td><td>id </td><td>Int </td><td>UID of a active Reservation </td></tr><tr><td></td><td>bike_types </td><td>String (JSON) </td><td>Types of the reserved bikes </td></tr><tr><td></td><td>biketypes </td><td>String (JSON) </td><td>Types of the reserved bikes - deprecated, will be removed in the future, use bike_types instead </td></tr><tr><td></td><td>place_id </td><td>Int </td><td>UID of the Place for the Reservation </td></tr><tr><td></td><td>place_name </td><td>string </td><td>human readable name of the Place for the Reservation </td></tr><tr><td></td><td>lat </td><td>Float </td><td>Latitude of the Place for the Reservation </td></tr><tr><td></td><td>lng </td><td>Float </td><td>Longitude of the Place for the Reservation </td></tr><tr><td></td><td>spot </td><td>Boolean </td><td>if the reservation is at an officical stage </td></tr><tr><td></td><td>start_time </td><td>Int </td><td>Unixtime of the desired start time for rental (can also be the time difference from now until start of the booking in seconds, if lower than 160000000) </td></tr><tr><td></td><td>end_time </td><td>Int </td><td>Unixtime of the desired end time for rental (only relevant for UsedomRad) </td></tr><tr><td></td><td>num_bikes </td><td>Int </td><td>Number of booked bikes </td></tr><tr><td></td><td>booked </td><td>Int </td><td>Number of booked bikes </td></tr><tr><td></td><td>state_id </td><td>Int </td><td>state ID of the Reservation </td></tr><tr><td></td><td>state </td><td>String </td><td>human readable state of the Reservation </td></tr><tr><td></td><td>max_bookingtime_before_rental </td><td>Int </td><td>mininum count of minutes which has to pass between booking and rental begin </td></tr><tr><td></td><td>cust_id </td><td>Int </td><td>User ID </td></tr><tr><td></td><td>booking_code </td><td>? </td><td>the booking code which is to be entered on fetching the bike </td></tr><tr><td></td><td>price </td><td>Int </td><td>Price in cents that was charged </td></tr><tr><td></td><td>price_service </td><td>Service charge in cents </td></tr><tr><td></td><td>confirm </td><td>Boolean </td><td>if the booking was confirmed by the system </td></tr><tr><td></td><td>used_free_seconds </td><td>amount of free seconds that were used to "pay" </td></tr><tr><td></td><td>bike_blocking_time_seconds </td><td>amount of seconds of bike blocking time </td></tr><tr><td></td><td>max_bookingtime_before_rental_in_s </td><td>same as max_bookingtime_before_rental but in seconds instead minutes </td></tr><tr><td></td><td>domain </td><td>String </td><td>short code of the nextbike brand of the place </td></tr><tr><td></td><td>station_number </td><td>String </td><td>Station number of the start place </td></tr></tbody></table></div><div id="addAppMessageToken"><h3>addAppMessageToken /  Register the device by emit a FcmPushMessageTokenRegisterEvent </h3><ul><li><a href="https://api.nextbike.net/api/addAppMessageToken.xml?apikey=REDACTED&amp;os_type=ios&amp;message_token=jksdfsdf&amp;device_id=24234234">https://api.nextbike.net/api/addAppMessageToken.xml?apikey=REDACTED&amp;os_type=ios&amp;message_token=jksdfsdf&amp;device_id=24234234</a></li></ul><h4>Response Example</h4><pre class="code xml"></pre><table><thead><tr class="head"><th>Request-Parameter</th><th>Type</th><th>Description</th><th>Required</th></tr></thead><tbody><tr><td>apikey </td><td>String </td><td>API-key of your application </td><td>required </td></tr><tr><td>loginkey </td><td>String </td><td>login-token of the customer </td><td>required </td></tr><tr><td>message_token </td><td>String </td><td>fcm message token </td><td>required </td></tr><tr><td>device_id </td><td>String </td><td>the unique device-id </td><td>optional </td></tr><tr><td>os_type </td><td>String </td><td>operating system type: supported: ios or android </td><td>required </td></tr><tr><td>type </td><td>String </td><td>operating system type </td><td>optional </td></tr><tr><td>cloud_messenger </td><td>String </td><td>cloud messenger type: supported: mvg_rad </td><td>optional </td></tr></tbody></table></div><div id="availableBenefits"><h3>availableBenefits /  Available Benefits - Display the benefits that are available to the customer </h3><ul><li>Get available benefits for the given user</li><li><a href="https://api.nextbike.net/api/availableBenefits.xml?apikey=REDACTED&amp;loginkey=REDACTED">https://api.nextbike.net/api/availableBenefits.xml?apikey=REDACTED&amp;loginkey=REDACTED"code">&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;nextbike version="1.0" server_time="1234567890"&gt;
+  &lt;tariffs&gt;
+    &lt;item uid="2682" name="ticketAutoRenew" type="3" code="754948" price="30" net_price="25" start_date="1595761059" end_date="1627469859" valid_days="30" auto_renew="month" domain="de" currency="EUR" brand="nextbike Germany" description_conditions="Abc" description_details="Abc" description_hint="Abc" category="university_1" terms_url="https://www.nextbike.de/de/agb/" withdrawal_policy_url="https://www.nextbike.de/de/widerrufsbelehrung"/&gt;
+  &lt;/tariffs&gt;
+  &lt;partners&gt;
+    &lt;item uid="367" partner_name="PartnerMe" partner_number="Zugangsnummer" partner_number2="BenefitCard" domain="fr" verification_type="number" is_connected="0" category="university_1"/&gt;
+  &lt;/partners&gt;
+&lt;/nextbike&gt;
+</pre><table><thead><tr class="head"><th>Request-Parameter</th><th>Type</th><th>Description</th><th>Required</th></tr></thead><tbody><tr><td>apikey    </td><td>String </td><td>Your API key </td><td>Required </td></tr><tr><td>version   </td><td>Float  </td><td>API version </td><td>optional (default latest) </td></tr><tr><td>loginkey  </td><td>String </td><td>Login token of the customer, to check customer-specific availability (e.g. bike limits) </td><td>Required </td></tr><tr><td>language </td><td>String </td><td>language code for translated partners/tariffs if available </td><td>Optional </td></tr><tr><td>include_all_types </td><td>Boolean </td><td>Determines whether vouchers of all types, instead of only tickets, shall be included </td><td>Optional </td></tr><tr><td>include_active_vouchers </td><td>Boolean </td><td>Determines whether vouchers, which are currently in use by the customer, shall be included </td><td>Optional </td></tr></tbody></table><table><thead><tr class="head"><th>Node</th><th>Response-Parameter</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>tariffs </td><td>tariff </td><td>Node </td><td>Benefits that are available to the user </td></tr><tr><td></td><td>uid       </td><td>int    </td><td>Internal id of the tariff </td></tr><tr><td></td><td>name      </td><td>string </td><td>Name of the tariff </td></tr><tr><td></td><td>type      </td><td>int    </td><td>Type of the tariff </td></tr><tr><td></td><td>code      </td><td>string </td><td>Code required to redeem the tariff </td></tr><tr><td></td><td>price     </td><td>int    </td><td>Price of the tariff including VAT </td></tr><tr><td></td><td>net_price </td><td>int    </td><td>Price of the tariff excluding VAT (optional) </td></tr><tr><td></td><td>start_date </td><td>int   </td><td>start date of the tariff </td></tr><tr><td></td><td>end_date </td><td>int     </td><td>end date of the tariff </td></tr><tr><td></td><td>valid_days </td><td>int   </td><td>Validity extension limit (in number of days) of the tariff </td></tr><tr><td></td><td>auto_renew </td><td>string/null </td><td>the subscription interval - is either "day", "week", "month", "quarter" (3 month), "semester" (6 month), "year" </td></tr><tr><td></td><td>free_text </td><td>string </td><td>Free text Description of the tariff </td></tr><tr><td></td><td>partner_id </td><td>int   </td><td>Internal id of the partner which offers the tariff </td></tr><tr><td></td><td>domain    </td><td>string </td><td>Domain of the tariff </td></tr><tr><td></td><td>currency  </td><td>string </td><td>Currency of the tariff </td></tr><tr><td></td><td>brand     </td><td>string </td><td>Brand of the tariff </td></tr><tr><td></td><td>description_conditions </td><td>string/null </td><td>a textual description of the conditions of the tariff </td></tr><tr><td></td><td>description_details </td><td>string/null </td><td>a textual description of the details of the tariff </td></tr><tr><td></td><td>description_hint </td><td>string/null </td><td>an additional hint for the tariff </td></tr><tr><td></td><td>category </td><td>string/null </td><td>enum that can be used to show an icon - one of 'university_1', 'university_2', 'university_3', 'subscription_sub_daily ', 'subscription_daily', 'subscription_sub_weekly', 'subscription_weekly', 'subscription_biweekly', 'subscription_sub_monthly', 'subscription_monthly', 'subscription_sub_yearly', 'subscription_yearly', 'corporate_tier_1', 'corporate_tier_2', 'mobility', 'corporate_benefit', 'university_subscription', 'charity', 'fee', 'promotion', 'municipal_benefit', 'pay_as_you_go' </td></tr><tr><td></td><td>terms_url </td><td>string/null </td><td>URL to the terms and conditions of the brand </td></tr><tr><td></td><td>withdrawal_policy_url </td><td>string/null </td><td>URL to the withdrawal policy of the brand </td></tr><tr><td>partners </td><td>partner </td><td>Node </td><td>Partner connections that are available to the user </td></tr><tr><td></td><td>uid          </td><td>int    </td><td>Internal id of the partner </td></tr><tr><td></td><td>partner_name </td><td>string </td><td>Name of the partner </td></tr><tr><td></td><td>domain       </td><td>string </td><td>Domain of the partner </td></tr><tr><td></td><td>verification_type </td><td>string </td><td>Connection path ("number", "mail", "link", "foreign_system") </td></tr><tr><td></td><td>description_conditions </td><td>string/null </td><td>a textual description of the conditions of the partner </td></tr><tr><td></td><td>description_details </td><td>string/null </td><td>a textual description of the details of the partner </td></tr><tr><td></td><td>description_hint </td><td>string/null </td><td>an additional hint for the partner </td></tr><tr><td></td><td>category </td><td>string/null </td></tr><tr><td></td><td>partner_number  </td><td>string </td><td>First number identifier to connect with the partner (only if verification_type "number") </td></tr><tr><td></td><td>partner_number2 </td><td>string/null </td><td>Second identifier to connect with the partner (only if verification_type "number") </td></tr><tr><td></td><td>link </td><td>String </td><td>url to external verification service (only if verification_type "link") </td></tr><tr><td></td><td>is_connected </td><td>boolean </td><td>whether the customer requesting is connected to the partner (will be always false here) </td></tr></tbody></table></div><div id="benefit"><h3>benefit /  Benefit - Get the details of a benefit </h3><ul><li>Get the details of a benefit</li><li>might contains redeem-specific details if the given benefit is currently active for the customer</li><li>see activeBenefits, availableBenefits</li><li><a href="https://api.nextbike.net/api/benefit.xml?apikey=REDACTED&amp;loginkey=REDACTED&amp;coupon_id=xxx">https://api.nextbike.net/api/benefit.xml?apikey=REDACTED&amp;loginkey=REDACTED&amp;coupon_id=xxx</a></li></ul><h4>Response Example</h4><pre class="code">&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;nextbike version="1.0" server_time="1234567890"&gt;
+  &lt;tariff uid="2682" name="ticketAutoRenew" type="3" code="754948" price="30" net_price="25" start_date="1595761059" end_date="1627469859" valid_days="30" auto_renew="month" domain="de" currency="EUR" brand="nextbike Germany" description_conditions="Abc" description_details="Abc" description_hint="Abc" category="university_1" terms_url="https://www.nextbike.de/de/agb/" withdrawal_policy_url="https://www.nextbike.de/de/widerrufsbelehrung" redeem_id="10423" redeem_is_cancelled="0" redeem_is_cancellable="1" redeem_earliest_termination_date="1598525861" redeem_expiration_notice_period="1598525861"/&gt;
+&lt;/nextbike&gt;
+</pre><table><thead><tr class="head"><th>Request-Parameter</th><th>Type</th><th>Description</th><th>Required</th></tr></thead><tbody><tr><td>coupon_id       </td><td>Integer </td><td>Internal id of the tariff </td><td>Required </td></tr><tr><td>apikey    </td><td>String  </td><td>Your API key        </td><td>Required </td></tr><tr><td>loginkey  </td><td>String  </td><td>Login token of the customer, to check customer-specific availability (e.g. bike limits) </td><td>Required </td></tr><tr><td>version   </td><td>Float  </td><td>API version </td><td>optional (default latest) </td></tr></tbody></table><table><thead><tr class="head"><th>Node</th><th>Response-Parameter</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>tariff </td><td>tariff </td><td>Node </td><td>Details of tariff that is active or available for the user </td></tr><tr><td></td><td>uid       </td><td>int    </td><td>Internal id of the tariff </td></tr><tr><td></td><td>name      </td><td>string </td><td>Name of the tariff </td></tr><tr><td></td><td>type      </td><td>int    </td><td>Type of the tariff </td></tr><tr><td></td><td>code      </td><td>string/null </td><td>Code required to redeem the tariff </td></tr><tr><td></td><td>price     </td><td>int    </td><td>Price of the tariff including VAT </td></tr><tr><td></td><td>net_price </td><td>int    </td><td>Price of the tariff excluding VAT (optional) </td></tr><tr><td></td><td>end_date </td><td>int     </td><td>end date of the tariff </td></tr><tr><td></td><td>valid_days </td><td>int   </td><td>Validity extension limit (in number of days) of the tariff </td></tr><tr><td></td><td>auto_renew </td><td>string/null </td><td>the subscription interval - is either "day", "week", "month", "quarter" (3 month), "semester" (6 month), "year" </td></tr><tr><td></td><td>free_text </td><td>string </td><td>Free text Description of the tariff </td></tr><tr><td></td><td>partner_id </td><td>int   </td><td>Internal id of the partner which offers the tariff </td></tr><tr><td></td><td>domain    </td><td>string </td><td>Domain of the tariff </td></tr><tr><td></td><td>currency  </td><td>string </td><td>Currency of the tariff </td></tr><tr><td></td><td>brand     </td><td>string </td><td>Brand of the tariff </td></tr><tr><td></td><td>description_conditions </td><td>string/null </td><td>a textual description of the conditions of the tariff </td></tr><tr><td></td><td>description_details </td><td>string/null </td><td>a textual description of the details of the tariff </td></tr><tr><td></td><td>description_hint </td><td>string/null </td><td>an additional hint for the tariff </td></tr><tr><td></td><td>category </td><td>string/null </td><td>enum that can be used to show an icon - one of 'university_1', 'university_2', 'university_3', 'subscription_sub_daily ', 'subscription_daily', 'subscription_sub_weekly', 'subscription_weekly', 'subscription_biweekly', 'subscription_sub_monthly', 'subscription_monthly', 'subscription_sub_yearly', 'subscription_yearly', 'corporate_tier_1', 'corporate_tier_2', 'mobility', 'corporate_benefit', 'university_subscription', 'charity', 'fee', 'promotion', 'municipal_benefit', 'pay_as_you_go' </td></tr><tr><td></td><td>terms_url </td><td>string/null </td><td>URL to the terms and conditions of the brand </td></tr><tr><td></td><td>withdrawal_policy_url </td><td>string/null </td><td>URL to the withdrawal policy of the brand </td></tr><tr><td></td><td>redeem_id (optional) </td><td>integer </td><td>the id of the coupon redeem, e.g. needed to cancel the ticket </td></tr><tr><td></td><td>redeem_valid_from (optional) </td><td>int </td><td>UNIX-timestamp of the point in time when the ticket is valid </td></tr><tr><td></td><td>redeem_valid_thru (optional) </td><td>int </td><td>UNIX-timestamp of the point in time when the ticket is not valid anymore (expiration of ticket without auto-renew or termination of a cancelled ticket with auto-renew) </td></tr><tr><td></td><td>redeem_is_cancelled (optional) </td><td>boolean </td><td>is true if the ticket is already cancelled </td></tr><tr><td></td><td>redeem_is_cancellable (optional) </td><td>boolean </td><td>is true if the ticket can be cancelled (see cancelSubscription) </td></tr><tr><td></td><td>redeem_earliest_termination_date (optional) </td><td>int/null </td><td>UNIX-timestamp of the point in time when an instant cancellation of the ticket would take effect </td></tr><tr><td></td><td>redeem_expiration_notice_period (optional) </td><td>int/null </td><td>UNIX-timestamp of the point in time until when the cancellation of the ticket should be done so that it will end at redeem_earliest_termination_date </td></tr></tbody></table></div><div id="booking"><h3>booking /  Reservation - Booking </h3><ul><li>Book a defined numbers of bikes on a defined place</li><li>Please consider the brand specific conditions</li><li><a href="https://api.nextbike.net/api/booking.xml?apikey=REDACTED&amp;loginkey=REDACTED&amp;start_time=1421780107&amp;end_time=1422482068&amp;num_bikes=2&amp;place=123&amp;biketypes={4:3,5:1}">https://api.nextbike.net/api/booking.xml?apikey=REDACTED&amp;loginkey=REDACTED&amp;start_time=1421780107&amp;end_time=1422482068&amp;num_bikes=2&amp;place=123&amp;biketypes={4:3,5:1}</a></li></ul><h4>Response Example</h4><pre class="code xml">&lt;nextbike version="1.0"&gt;
+  &lt;booking id="12345" place_id="123" place_name="Nameless Street" booked="2" confirm="1" /&gt;
+&lt;/nextbike&gt;
+</pre><table><thead><tr class="head"><th>Request-Parameter</th><th>Type</th><th>Description</th><th>Required</th></tr></thead><tbody><tr><td>apikey </td><td>String </td><td>Your API key </td><td>Required </td></tr><tr><td>version </td><td>Float </td><td>API version </td><td>optional (default latest) </td></tr><tr><td>loginkey </td><td>String </td><td>Login token of the customer, to check customer-specific availability (e.g. bike limits) </td><td>Required </td></tr><tr><td>num_bikes </td><td>Int </td><td>Total number of bikes </td><td>Required, or biketypes</td></tr><tr><td>place </td><td>Int </td><td>id of the desired place </td><td>Required </td></tr><tr><td>bike </td><td>String </td><td>Bike name to reserve immediately for the configured city booking period at an official station or individual bike place; requires booking_specific_bike_enabled. Booking at an individual bike place also requires booking_at_unofficial for the city. Scheduling and manual fallback options are ignored. </td><td>Optional </td></tr><tr><td>start_time </td><td>Int </td><td>Time of the desired rentals </td><td>Required </td></tr><tr><td>end_time </td><td>Int </td><td>Time of the desired return </td><td>optional </td></tr><tr><td>biketypes </td><td>Int </td><td>Number of bikes per biketype. JSON, eg: {"3":1,"5":2} (1 bike type of 3 + 2 bikes of type 5) </td><td>Optional, or num_bikes </td></tr><tr><td>accept_manual </td><td>Int </td><td>Set to 1, if you accept creation of manual bookings (availability is not automatically guaranteed but requires intervention from customer support) </td><td>optional </td></tr><tr><td>callback_{event} </td><td>String </td><td>Callback URL for booking, will be copied to rental, once connected - see "Callback events"</td><td>optional </td></tr></tbody></table><ul><li>Callback events</li><li>All callback events for rent can be set here (will be copied on connection)</li></ul><table><thead><tr class="head"><th>Callback event</th><th>Description</th></tr></thead><tbody><tr><td>connect </td><td>booking has been connected to a new rental, happens for every rental for this booking (4 bikes booked -&gt; 4 rentals connected) </td></tr></tbody></table><table><thead><tr class="head"><th>Node</th><th>Response-Parameter</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>booking </td><td>id </td><td>Int </td><td>UID of a active Reservation </td></tr><tr><td></td><td>bike_types </td><td>String (JSON) </td><td>Types of the reserved bikes </td></tr><tr><td></td><td>biketypes </td><td>String (JSON) </td><td>Types of the reserved bikes - deprecated, will be removed in the future, use bike_types instead </td></tr><tr><td></td><td>place_id </td><td>Int </td><td>UID of the Place for the Reservation </td></tr><tr><td></td><td>station_id </td><td>Int </td><td>Original station for a specific-bike reservation at a station (create response only) </td></tr><tr><td></td><td>bike </td><td>String </td><td>Number of the selected bike for a specific-bike reservation </td></tr><tr><td></td><td>place_name </td><td>string </td><td>human readable name of the Place for the Reservation </td></tr><tr><td></td><td>lat </td><td>Float </td><td>Latitude of the Place for the Reservation </td></tr><tr><td></td><td>lng </td><td>Float </td><td>Longitude of the Place for the Reservation </td></tr><tr><td></td><td>spot </td><td>Boolean </td><td>if the reservation is at an official stage </td></tr><tr><td></td><td>start_time </td><td>Int </td><td>Unixtime of the desired start time for rental (can also be the time difference from now until start of the booking in seconds, if lower than 160000000) </td></tr><tr><td></td><td>end_time </td><td>Int </td><td>Unixtime of the desired end time for rental (only relevant for UsedomRad) </td></tr><tr><td></td><td>num_bikes </td><td>Int </td><td>Number of booked bikes </td></tr><tr><td></td><td>booked </td><td>Int </td><td>Number of booked bikes </td></tr><tr><td></td><td>state_id </td><td>Int </td><td>state ID of the Reservation </td></tr><tr><td></td><td>state </td><td>String </td><td>human readable state of the Reservation </td></tr><tr><td></td><td>max_bookingtime_before_rental </td><td>Int </td><td>minimum count of minutes which has to pass between booking and rental begin </td></tr><tr><td></td><td>cust_id </td><td>Int </td><td>User ID </td></tr><tr><td></td><td>booking_code </td><td>? </td><td>the booking code which is to be entered on fetching the bike </td></tr><tr><td></td><td>price </td><td>Int </td><td>Price in cents that was charged </td></tr><tr><td></td><td>price_service </td><td>Service charge in cents </td></tr><tr><td></td><td>confirm </td><td>Boolean </td><td>if the booking was confirmed by the system </td></tr><tr><td></td><td>used_free_seconds </td><td>amount of free seconds that were used to "pay" </td></tr><tr><td></td><td>bike_blocking_time_seconds </td><td>amount of seconds of bike blocking time </td></tr><tr><td></td><td>max_bookingtime_before_rental_in_s </td><td>same as max_bookingtime_before_rental but in seconds instead minutes </td></tr><tr><td></td><td>domain </td><td>String </td><td>short code of the nextbike brand of the place </td></tr><tr><td></td><td>station_number </td><td>String </td><td>Station number of the start place </td></tr></tbody></table></div><div id="bookingCost"><h3>bookingCost /  Reservation - bookingCosts </h3><ul><li>return price information for a defined place in the three scenarios, that either the customer</li><li>(1) cancels the booking using the API or</li><li>(2) actually rents a bike at the place the booking was made or</li><li>(3) lets the booking expire without renting or cancelling a bike</li><li><a href="https://api.nextbike.net/api/v1.1/bookingCost.json?apikey=REDACTED&amp;loginkey=REDACTED&amp;place=123&amp;bike_types=%7B%2271%22%3A%202%7D">https://api.nextbike.net/api/v1.1/bookingCost.json?apikey=REDACTED&amp;loginkey=REDACTED&amp;place=123&amp;bike_types=%7B%2271%22%3A%202%7D</a></li></ul><table><thead><tr class="head"><th>Request-Parameter</th><th>Type</th><th>Description</th><th>Required</th></tr></thead><tbody><tr><td>apikey </td><td>String </td><td>Your API key </td><td>Required </td></tr><tr><td>version </td><td>Float </td><td>API version </td><td>optional (default latest) </td></tr><tr><td>loginkey </td><td>String </td><td>Login token of the customer, to check customer-specifics like currency and free seconds </td><td>Required </td></tr><tr><td>place </td><td>Int </td><td>Id of the place the booking shall be made for </td><td>Required (or city) </td></tr><tr><td>city </td><td>Int </td><td>Id of the city the booking shall be made for </td><td>Required (or place) </td></tr><tr><td>start_time </td><td>Int </td><td>UNIX timestamp of the desired rentals </td><td>optional (now) </td></tr><tr><td>end_time </td><td>Int </td><td>UNIX timestamp of the end of booking (start of rental, should be &lt; max_bookingtime_before_rental) </td><td>optional (max_bookingtime_before_rental is used otherwise. (max_bookingtime_before_rental: a parameter set in city settings; it defines the time in minutes before the customer will start the rental, respectively before the booking appointment.)</td></tr><tr><td>num_bikes </td><td>Int </td><td>number of bikes to be booked </td><td>optional (one) </td></tr><tr><td>biketypes </td><td>Int </td><td>Number of bikes per biketype. JSON, eg: {"3":1,"5":2} (1 bike type of 3 + 2 bikes of type 5) </td><td>Optional, or num_bikes </td></tr></tbody></table><table><thead><tr class="head"><th>Node</th><th>Response-Parameter</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>bookings_enabled </td><td>Bool </td><td>whether bookings are enabled for this city </td></tr><tr><td>booking_specific_bike_enabled </td><td>Bool </td><td>whether booking a specific bike at station is enabled </td></tr><tr><td>booking_costs </td></tr><tr><td></td><td>currency </td><td>String </td><td>currency of the customer and of the maximum_price's within the response </td></tr><tr><td></td><td>booking_maximum_duration_seconds </td><td>Int </td><td>the maximum amount of time a booked bike is blocked/that will be charged, see bike_blocking_time_seconds </td></tr><tr><td></td><td>amount_of_bikes </td><td>Int </td><td>amount of bikes (specified either by using num_bikes or biketypes parameter) </td></tr><tr><td></td><td>prices_are_exchanged </td><td>Bool </td><td>whether the stated prices had to be converted into the currency of the customer -&gt; if true, prices may slightly vary for actual bookings because of exchange rate variations </td></tr><tr><td></td><td>customer_has_free_seconds </td><td>Bool </td><td>whether the customer (currently) has _any_ free seconds. If she/he has free seconds, they will usually be used first, and the resulting price will be lower </td></tr><tr><td></td><td>pricing_url </td><td>String</td><td>Nulls </td><td>URL to the website of the city / domain containing more information about pricing </td></tr><tr><td></td><td>prices_per_bike </td><td>Node </td><td></td></tr></tbody></table><table><thead><tr class="head"><th>Node</th><th>Response-Parameter</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>prices_per_bike </td></tr><tr><td></td><td>cancels_booking </td><td>Node </td><td>Information about the (maximally charged) costs if the customer cancels the booking using cancelBooking API before it expires </td></tr><tr><td></td><td>rents_bike </td><td>Node </td><td>Information about the (maximally charged) costs if the customer will rent a bike of the booking </td></tr><tr><td></td><td>booking_expires </td><td>Node </td><td>Information about the costs if the customer lets the booking expire without renting a bike </td></tr></tbody></table><table><thead><tr class="head"><th>Node</th><th>Response-Parameter</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>cancels_booking </td></tr><tr><td></td><td>maximum_price </td><td>Int </td><td>maximum price (amount in 1/100 of customer currency) if the booking is cancelled by the customer - the effective price may vary depending on "price_varies" and the amount of used free seconds </td></tr><tr><td></td><td>price_varies </td><td>Bool </td><td>whether the price depends on the amount of time that is between start and cancellation of the booking (e.g. 0.15 EUR per minute) </td></tr><tr><td></td><td>maximum_free_seconds_charged </td><td>Int </td><td>How many free seconds of the customer are used maximally - the effective amount may vary depending on "price_varies" (irrelevant if the the customer has none) </td></tr><tr><td></td><td>minutes_free_of_charge </td><td>Int </td><td>Is set if a certain amount of time is never charged, e.g. the booking is free if it gets cancelled within the first 5 minutes </td></tr></tbody></table><table><thead><tr class="head"><th>Node</th><th>Response-Parameter</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>rents_bike </td></tr><tr><td></td><td>maximum_price </td><td>Int </td><td>maximum price (amount in 1/100 of customer currency) if an actual rental of a reserved bike is started - the effective price may vary depending on "price_varies" and the amount of used free seconds </td></tr><tr><td></td><td>price_varies </td><td>Bool </td><td>whether the price depends on the amount of time that is between start of the booking and start of the rental (e.g. 0.15 EUR per minute) </td></tr><tr><td></td><td>maximum_free_seconds_charged </td><td>Int </td><td>How many free seconds of the customer are used maximally - the effective amount may vary depending on "price_varies" (irrelevant if the the customer has none) </td></tr><tr><td></td><td>minutes_free_of_charge </td><td>Int </td><td>Is set if a certain amount of time is never charged, e.g. the booking is free if a bike gets rented within the first 5 minutes </td></tr></tbody></table><table><thead><tr class="head"><th>Node</th><th>Response-Parameter</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>booking_expires </td></tr><tr><td></td><td>maximum_price </td><td>Int </td><td>price (amount in 1/100 of customer currency) if the booking is expiring - the effective price may vary depending on the number of used free seconds </td></tr><tr><td></td><td>maximum_free_seconds_charged </td><td>Int </td><td>How many free seconds of the customer are used maximally (irrelevant if the customer has none) </td></tr></tbody></table>All bookings are free of charge.
+<h4>Response Example</h4><pre class="code">&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;nextbike version="1.0" server_time="1234567890"&gt;
+  &lt;item bookings_enabled="1" booking_specific_bike_enabled="0"&gt;
+    &lt;booking_costs currency="EUR" booking_maximum_duration_seconds="900" amount_of_bikes="1" prices_are_exchanged="0" customer_has_free_seconds="0" pricing_url="https://www.nextbike.de/de/leipzig/preise/"&gt;
+      &lt;prices_per_bike&gt;
+        &lt;cancels_booking maximum_price="0" price_varies="0" maximum_free_seconds_charged="0" minutes_free_of_charge="0"/&gt;
+        &lt;rents_bike maximum_price="0" price_varies="0" maximum_free_seconds_charged="0" minutes_free_of_charge="0"/&gt;
+        &lt;booking_expires maximum_price="0" maximum_free_seconds_charged="0"/&gt;
+      &lt;/prices_per_bike&gt;
+    &lt;/booking_costs&gt;
+  &lt;/item&gt;
+&lt;/nextbike&gt;
+</pre>In all three scenarios, either free seconds or a price of 1.20 MXN per minute is charged.
+<h4>Response Example</h4><pre class="code">&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;nextbike version="1.0" server_time="1234567890"&gt;
+  &lt;item bookings_enabled="1" booking_specific_bike_enabled="0"&gt;
+    &lt;booking_costs currency="MXN" booking_maximum_duration_seconds="600" amount_of_bikes="1" prices_are_exchanged="0" customer_has_free_seconds="1" pricing_url="https://www.nextbike.de/de/leipzig/preise/"&gt;
+      &lt;prices_per_bike&gt;
+        &lt;cancels_booking maximum_price="1200" price_varies="1" maximum_free_seconds_charged="600" minutes_free_of_charge="0"/&gt;
+        &lt;rents_bike maximum_price="1200" price_varies="1" maximum_free_seconds_charged="600" minutes_free_of_charge="0"/&gt;
+        &lt;booking_expires maximum_price="1200" maximum_free_seconds_charged="600"/&gt;
+      &lt;/prices_per_bike&gt;
+    &lt;/booking_costs&gt;
+  &lt;/item&gt;
+&lt;/nextbike&gt;
+</pre>Bikes are blocked up to 15 minutes, but if the bike was blocked for less then 5 minutes, the booking is free.
+If it is cancelled, a bike rented or it expires, the additional time will be charged (either free seconds or 0.05 PLN will be charged per minute).
+<h4>Response Example</h4><pre class="code">&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;nextbike version="1.0" server_time="1234567890"&gt;
+  &lt;item bookings_enabled="1" booking_specific_bike_enabled="0"&gt;
+    &lt;booking_costs currency="PLN" booking_maximum_duration_seconds="900" amount_of_bikes="1" prices_are_exchanged="0" customer_has_free_seconds="0" pricing_url="https://www.nextbike.de/de/leipzig/preise/"&gt;
+      &lt;prices_per_bike&gt;
+        &lt;cancels_booking maximum_price="50" price_varies="1" maximum_free_seconds_charged="600" minutes_free_of_charge="5"/&gt;
+        &lt;rents_bike maximum_price="50" price_varies="1" maximum_free_seconds_charged="600" minutes_free_of_charge="5"/&gt;
+        &lt;booking_expires maximum_price="50" maximum_free_seconds_charged="600"/&gt;
+      &lt;/prices_per_bike&gt;
+    &lt;/booking_costs&gt;
+  &lt;/item&gt;
+&lt;/nextbike&gt;
+</pre>Bookings are free if a bike gets rented or the booking is cancelled before it is expiring, only in that case 5.00 EUR (or 600 free seconds) are charged.
+<h4>Response Example</h4><pre class="code">&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;nextbike version="1.0" server_time="1234567890"&gt;
+  &lt;item bookings_enabled="1" booking_specific_bike_enabled="0"&gt;
+    &lt;booking_costs currency="EUR" booking_maximum_duration_seconds="600" amount_of_bikes="1" prices_are_exchanged="0" customer_has_free_seconds="0" pricing_url="https://www.nextbike.de/de/leipzig/preise/"&gt;
+      &lt;prices_per_bike&gt;
+        &lt;cancels_booking maximum_price="0" price_varies="0" maximum_free_seconds_charged="0" minutes_free_of_charge="0"/&gt;
+        &lt;rents_bike maximum_price="0" price_varies="0" maximum_free_seconds_charged="0" minutes_free_of_charge="0"/&gt;
+        &lt;booking_expires maximum_price="500" maximum_free_seconds_charged="600"/&gt;
+      &lt;/prices_per_bike&gt;
+    &lt;/booking_costs&gt;
+  &lt;/item&gt;
+&lt;/nextbike&gt;
+</pre></div><div id="bookingInfo"><h3>bookingInfo /  Reservation - Check available bike types at a certain place for a customer </h3><ul><li>Get the available bike types and relevant settings for reservation of bikes at the given place for a certain customer</li><li><a href="https://api.nextbike.net/api/bookingInfo.xml?apikey=REDACTED&amp;loginkey=REDACTED&amp;place=4660971">https://api.nextbike.net/api/bookingInfo.xml?apikey=REDACTED&amp;loginkey=REDACTED&amp;place=4660971</a></li></ul><h4>Response Example</h4><pre class="code">&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;nextbike version="1.0" server_time="1234567890"&gt;
+  &lt;place id="4660971" name="Karl-Heine-Str. 46/nextbike HQ" number="4051" domain="le" available="4" city_name="Leipzig" city_id="1" max_booking_time_before_rental_seconds="4200" bike_blocking_time_seconds="900"&gt;
+    &lt;bike_types&gt;
+      &lt;item id="71" name="ECObike (A) 2018" group_id="1" available="12"/&gt;
+    &lt;/bike_types&gt;
+  &lt;/place&gt;
+&lt;/nextbike&gt;
+</pre><table><thead><tr class="head"><th>Request-Parameter</th><th>Type</th><th>Description</th><th>Required</th></tr></thead><tbody><tr><td>apikey </td><td>String </td><td>Your API key </td><td>Required </td></tr><tr><td>place  </td><td>Int </td><td>id of the place where bikes should be booked </td><td>Required </td></tr><tr><td>loginkey </td><td>String </td><td>Login token of the customer, to check customer-specific availability (e.g. bike limits) </td><td>Required </td></tr></tbody></table><table><thead><tr class="head"><th>Node</th><th>Response-Parameter</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>place </td><td>id </td><td>Int </td><td>Id of the requested place </td></tr><tr><td></td><td>name </td><td>String </td><td>Name of the place </td></tr><tr><td></td><td>number </td><td>Int </td><td>Station Number of the place </td></tr><tr><td></td><td>domain </td><td>String </td><td>short code of the nextbike brand of the place </td></tr><tr><td></td><td>city_id </td><td>Int </td><td>Id of the city of the of the place </td></tr><tr><td></td><td>city_name </td><td>String </td><td>Name of the city of the place </td></tr><tr><td></td><td>available </td><td>Int </td><td>Amount of bikes that the customer can book at the given place. It depends on the place AND the customer </td></tr><tr><td></td><td>max_booking_time_before_rental_seconds </td><td>Int </td><td>Time in seconds that a booking can be made in advance </td></tr><tr><td></td><td>bike_blocking_time_seconds </td><td>Int </td><td>Time in seconds until the booking expires and the bike will be available to other customers again" </td></tr><tr><td></td><td>free_of_charge </td><td>Bool </td><td>Whether bookings at the place are free of charge in general. If false, bookingCost API should be called to get a detailed overview of fees that could occur. </td></tr><tr><td>bike_types </td><td>id </td><td>Int </td><td>Id of the bike type </td></tr><tr><td></td><td>name </td><td>String </td><td>Name of the bike type </td></tr><tr><td></td><td>group_id </td><td>Int </td><td>Id of the bike type group of the bike type </td></tr><tr><td></td><td>available </td><td>Int </td><td>Amount of the bikes of that type that can be reserved </td></tr></tbody></table></div><div id="cancelBooking"><h3>cancelBooking /  Reservation - Cancel a booking </h3><ul><li>Cancel a running booking</li><li><a href="https://api.nextbike.net/api/cancelBooking.xml?apikey=REDACTED&amp;loginkey=REDACTED&amp;booking_id=123">https://api.nextbike.net/api/cancelBooking.xml?apikey=REDACTED&amp;loginkey=REDACTED&amp;booking_id=123</a></li></ul><h4>Response Example</h4><pre class="code xml">&lt;nextbike version="1.0"&gt;
+  &lt;booking id="12345" canceled="1" /&gt;
+&lt;/nextbike&gt;
+</pre><table><thead><tr class="head"><th>Request-Parameter</th><th>Type</th><th>Description</th><th>Required</th></tr></thead><tbody><tr><td>apikey </td><td>String </td><td>Your API key </td><td>Required </td></tr><tr><td>version </td><td>Float </td><td>API version </td><td>optional (default latest) </td></tr><tr><td>loginkey </td><td>String </td><td>Login token of the customer </td><td>Required </td></tr><tr><td>booking_id </td><td>Int </td><td>Reservation UID </td><td>Required </td></tr></tbody></table><table><thead><tr class="head"><th>Node</th><th>Response-Parameter</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>booking </td><td>id </td><td>Int </td><td>Reservation UID </td></tr><tr><td></td><td>canceled </td><td>Boolean </td><td>confirmation that the reservation has successfully been canceled </td></tr></tbody></table></div><div id="cancelSubscription"><h3>cancelSubscription /  cancelSubscription </h3><table><thead><tr class="head"><th>Request-Parameter</th><th>Type</th><th>Description</th><th>Required</th></tr></thead><tbody><tr><td>apikey </td><td>String </td><td>Your API key </td><td>Required </td></tr><tr><td>version </td><td>Float </td><td>API version </td><td>optional (default latest) </td></tr><tr><td>loginkey </td><td>String </td><td>Login token of the customer </td><td>Required </td></tr><tr><td>redeem_id </td><td>Int </td><td>Which subscription to cancel </td><td>Required </td></tr><tr><td>immediate </td><td>Bool </td><td>Set 1 to immediately cancel the subscription (only for controlling partners) </td><td>optional </td></tr><tr><td>refund_amount </td><td>Int </td><td>Refund amount for immediate cancellation (only for controlling partners) </td><td>optional </td></tr><tr><td>valid_thru </td><td>Int </td><td>Set specific end time (UNIX timestamp) for end of subscription (only for controlling partners) </td><td>optional </td></tr></tbody></table><table><thead><tr class="head"><th>Node</th><th>Response-Parameter</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>successful </td><td></td><td>Bool </td><td>Whether the cancellation was successful </td></tr></tbody></table></div><div id="checkAgreement"><h3>checkAgreement /  Check Agreement </h3><ul><li>Checks if User accepted an agreement</li><li><a href="https://api.nextbike.net/api/checkAgreement.xml?apikey=REDACTED&amp;loginkey=REDACTED&amp;agreement_id=X">https://api.nextbike.net/api/checkAgreement.xml?apikey=REDACTED&amp;loginkey=REDACTED&amp;agreement_id=X</a></li></ul><table><thead><tr class="head"><th>Request-Parameter</th><th>Type</th><th>Description</th><th>Required</th></tr></thead><tbody><tr><td>agreement_id </td><td>Integer </td><td>Specific Agreement UID (You get that with getAgreementDataForDomain) </td><td>Required </td></tr></tbody></table><h4>Response Example</h4><pre class="code">&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;nextbike version="1.0" server_time="1234567890"&gt;
+  &lt;agreement status="1" valid="1"/&gt;
+&lt;/nextbike&gt;
+</pre></div><div id="createCoupon"><h3>createCoupon /  create a Coupon </h3>  *
+ * <a href="https://api.nextbike.net/api/createCoupon.json?apikey=REDACTED&amp;coupon_id=ID&amp;coupon_credits=1200&amp;coupon_name=NAME">https://api.nextbike.net/api/createCoupon.json?apikey=REDACTED&amp;coupon_id=ID&amp;coupon_credits=1200&amp;coupon_name=NAME
+</a>  *
+<table><thead><tr class="head"><th>Request-Parameter</th><th>Type</th><th>Description</th><th>Required</th></tr></thead><tbody><tr><td>apikey </td><td>String </td><td>Your API key </td><td>Required </td></tr><tr><td>version </td><td>Float </td><td>API version </td><td>optional (default latest) </td></tr><tr><td>coupon_id </td><td>String </td><td>The uid of an already existing coupon which should used as a template </td><td>Required </td></tr><tr><td>coupon_name </td><td>String </td><td>The name of the coupon </td><td>Optional </td></tr><tr><td>coupon_credits </td><td>Integer </td><td>The amount of benefit </td><td>Optional </td></tr><tr><td>start_date </td><td>Integer </td><td>The start date of the coupon </td><td>Optional (default now) </td></tr><tr><td>end_date </td><td>Integer </td><td>The end date of the coupon </td><td>Optional (default 3 years from start_date) </td></tr></tbody></table></div><div id="createCouponItem"><h3>createCouponItem /  create a CouponItem </h3>  *
+ * <a href="https://api.nextbike.net/api/createCouponItem.json?apikey=REDACTED&amp;coupon_id=ID&amp;coupon_credits=1200&amp;coupon_name=NAME">https://api.nextbike.net/api/createCouponItem.json?apikey=REDACTED&amp;coupon_id=ID&amp;coupon_credits=1200&amp;coupon_name=NAME
+</a>  *
+<table><thead><tr class="head"><th>Request-Parameter</th><th>Type</th><th>Description</th><th>Required</th></tr></thead><tbody><tr><td>apikey </td><td>String </td><td>Your API key </td><td>Required </td></tr><tr><td>version </td><td>Float </td><td>API version </td><td>optional (default latest) </td></tr><tr><td>coupon_id </td><td>String </td><td>The uid of an already existing coupon </td><td>Required </td></tr><tr><td>coupon_item_code </td><td>String </td><td>Future coupon code </td><td>Required </td></tr></tbody></table></div><div id="deleteCouponItem"><h3>deleteCouponItem /  Delete a coupon item </h3><ul><li><a href="https://api.nextbike.net/api/deleteCouponItem.json?apikey=REDACTED&amp;coupon_item_code=CODE">https://api.nextbike.net/api/deleteCouponItem.json?apikey=REDACTED&amp;coupon_item_code=CODE</a></li></ul><table><thead><tr class="head"><th>Request-Parameter</th><th>Type</th><th>Description</th><th>Required</th></tr></thead><tbody><tr><td>apikey </td><td>String </td><td>Your API key </td><td>Required </td></tr><tr><td>version </td><td>Float </td><td>API version </td><td>optional (default latest) </td></tr><tr><td>coupon_item_code </td><td>String </td><td>The voucher code </td><td>Required </td></tr></tbody></table></div><div id="echo"><h3>echo</h3>!use EchoAction
+</div><div id="getAgreementDataForDomain"><h3>getAgreementDataForDomain /  Get Agreement Data For Domain </h3><ul><li>Get all agreements infos for a specific domain</li><li><a href="https://api.nextbike.net/api/getAgreementDataForDomain.xml?apikey=REDACTED&amp;domain=de">https://api.nextbike.net/api/getAgreementDataForDomain.xml?apikey=REDACTED&amp;domain=de</a></li></ul><table><thead><tr class="head"><th>Request-Parameter</th><th>Type</th><th>Description</th><th>Required</th></tr></thead><tbody><tr><td>domain </td><td>String </td><td>Two Digit domain code </td><td>Optional </td></tr><tr><td>loginkey </td><td>String </td><td>Session ID of user (to user domain of user) </td><td>Optional </td></tr></tbody></table><h4>Response Example</h4><pre class="code">&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;nextbike version="1.0" server_time="1234567890"&gt;
+  &lt;agreementdata&gt;
+    &lt;agreement uid="32" tstamp="1458151061" crdate="1458151061" country_id="89" agreement_url="http://www.lodzkirowerpubliczny.pl/regulamin/" agreement_url_old="http://www.nextbike.pl/regulamin.html" valid_from="1461846375" valid_from_old="1458151061" agreement_type="terms"/&gt;
+    &lt;agreement uid="236" tstamp="1459438775" crdate="1458151061" country_id="89" agreement_url="https://nextbike.pl/wp-content/uploads/2016/04/dane-os_%C%81RP_.pdf" agreement_url_old="TESTURL" valid_from="1461846274" valid_from_old="1459438775" agreement_type="privacy_policy"/&gt;
+  &lt;/agreementdata&gt;
+&lt;/nextbike&gt;
+</pre></div><div id="getApiErrorList"><h3>getApiErrorList /  Check phone number for existence </h3><ul><li><a href="https://api.nextbike.net/api/getApiErrorList.xml?apikey=REDACTED">https://api.nextbike.net/api/getApiErrorList.xml?apikey=REDACTED"head"><th>Request-Parameter</th><th>Type</th><th>Meaning</th><th>Required</th></tr></thead><tbody><tr><td>apikey </td><td>String </td><td>API-key of your application </td><td>required </td></tr></tbody></table></div><div id="getApplicableCoupons"><h3>getApplicableCoupons /  getApplicapleCoupons </h3>  *
+ * <a href="https://api.nextbike.net/api/getApplicableCoupons.json?rental_id=5034&amp;show_errors=1&amp;api_key=TR6EHaaNTSFGFmMt&amp;loginkey=REDACTED">https://api.nextbike.net/api/getApplicableCoupons.json?rental_id=5034&amp;show_errors=1&amp;api_key=TR6EHaaNTSFGFmMt&amp;loginkey=REDACTED"getBikeList"><h3>getBikeList</h3><ul><li>Provides information about the availability of bikes (rented, active, not active) at a station</li><li>Optional in dependency of the user. Some bikes are not available for every user (because of reservation)</li><li><a href="https://api.nextbike.net/api/getBikeList.xml?apikey=REDACTED&amp;version=1.0&amp;station=1001">https://api.nextbike.net/api/getBikeList.xml?apikey=REDACTED&amp;version=1.0&amp;station=1001</a></li></ul><h4>Response Example</h4><pre class="code xml">&lt;nextbike version="1.0"&gt;
+  &lt;bike number="55554" state="ok" bike_type="4"/&gt;
+  &lt;bike number="55555" state="ok" bike_type="4"/&gt;
+&lt;/nextbike&gt;
+</pre><table><thead><tr class="head"><th>Request-Parameter</th><th>Type</th><th>Description</th><th>Required</th></tr></thead><tbody><tr><td>apikey </td><td>String </td><td>API-key of your application </td><td>required </td></tr><tr><td>version </td><td>float </td><td>API-version </td><td>optional (default latest) </td></tr><tr><td>loginkey </td><td>String </td><td>Login-Token of the customer </td><td>optional </td></tr><tr><td>station </td><td>String </td><td>4-digit station number </td><td>optional </td></tr></tbody></table><ul><li>See bike states and types at getBikeState</li></ul></div><div id="getBikeState"><h3>getBikeState</h3><ul><li>Provides information about the availability of bikes (rented, active, not active)</li><li>Optional in dependency of the user. Some bikes are not available for every user (because of reservation)</li><li>See getBikeTypes for infos about bike type</li><li><a href="https://api.nextbike.net/api/getBikeState.xml?apikey=REDACTED&amp;version=1.0&amp;bike=10000">https://api.nextbike.net/api/getBikeState.xml?apikey=REDACTED&amp;version=1.0&amp;bike=10000</a></li></ul><table><thead><tr class="head"><th>Request-Parameter</th><th>Type</th><th>Description</th><th>Required</th></tr></thead><tbody><tr><td>apikey </td><td>String </td><td>API-key of your application </td><td>required </td></tr><tr><td>version </td><td>float </td><td>API-version </td><td>optional (default latest) </td></tr><tr><td>loginkey </td><td>String </td><td>Login-Token of the customer </td><td>optional </td></tr><tr><td>bike </td><td>String </td><td>bike number (5 or more digits) </td><td>optional </td></tr><tr><td>boardcomputer </td><td>Int </td><td>Serial number of board computer </td><td>Optional (replaces bike) </td></tr><tr><td>qr_code </td><td>String </td><td>Content of the QR code sticker </td><td>Optional (replaces bike) </td></tr><tr><td>imei </td><td>int </td><td>IMEI of the IoT device </td><td>Optional (replaces bike) </td></tr><tr><td>vehicle_id </td><td>String </td><td>Vehicle UUID </td><td>Optional (replaces bike) </td></tr><tr><td>bluetooth_mac </td><td>String </td><td>MAC of the Bluetooth module </td><td>Optional (replaces bike) </td></tr><tr><td>gbfs_vehicle_id </td><td>String </td><td>Vehicle ID from GBFS feed </td><td>Optional (replaces bike) </td></tr></tbody></table><h4>Response Example</h4><pre class="code">&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;nextbike version="1.0" server_time="1234567890"&gt;
+  &lt;bike number="10900" language="de" boardcomputer="7551004163" battery="145" snap="0" target_firmware="190805E0" target_configuration="18020106" electric_lock="1" gps_tracking="0" rfid="0" rfid_uid="0" bluetooth_mac="B4A82805A42D" state="ok_but_unknown_number" bike_type="4" lock_types="frame_lock,dls" active="1" app_campaign_picture="https://websites.nextbike.net/media/campaigns/business-bike-werbung.png" app_campaign_picture_link="https://www.nextbike.net/businessbike/" app_campaign_uid="2531" campaign_name="App-Kampagne" pedelec="0" pedelec_battery="" place_id="9364216" city_id="685" bike_domain="dx" domain="dx" rate_id="123" gbfs_pricing_plan_id="Rate0123" place_name="BIKE 10900" place_address="" place_type="12" is_free_floating="1"&gt;
+    &lt;texts&gt;
+      &lt;text type="biketype_name"&gt;
+ComfortEn
+&lt;/text&gt;
+      &lt;text type="info"&gt;
+
+&lt;/text&gt;
+      &lt;text type="warning"&gt;
+
+&lt;/text&gt;
+      &lt;text type="biketype_description"&gt;
+- Tiefer Einstieg
+- Shimano 3-Gang oder 7-Gang-Nabenschaltung
+- Nabendynamo
+- Korbausstattung
+&lt;/text&gt;
+    &lt;/texts&gt;
+  &lt;/bike&gt;
+&lt;/nextbike&gt;
+</pre><table><thead><tr class="head"><th>State</th><th>Meaning</th></tr></thead><tbody><tr><td>ok </td><td>Bike is available to rent </td></tr><tr><td>ok_but_unknown_number </td><td>Bike may available to rent, but unknown customer information </td></tr><tr><td>unknown </td><td>bike is not existent </td></tr><tr><td>return </td><td>return (by providing loginkey) </td></tr><tr><td>return_but_unknown_number </td><td>return (without providing loginkey) </td></tr><tr><td>locked </td><td>user is not active </td></tr><tr><td>limit </td><td>too many bikes </td></tr><tr><td>occupied </td><td>occupied/rented (without providing loginkey) </td></tr><tr><td>recently_returned </td><td>recently returned </td></tr><tr><td>low_credits </td><td>credits less than 0, Top up! (Customer account got locked - applies to customers without valid payment information (credit card, etc.)) </td></tr><tr><td>ok_but_foreign </td><td>different provider - there are different terms and conditions </td></tr><tr><td>ok_but_foreign_terms </td><td>different provider, customer has not accepted these terms and conditions </td></tr><tr><td>not_available_over_night </td><td>bike not lendable or bookable at night </td></tr><tr><td>no_roaming </td><td>different provider - user can not rent bikes there but should create a local account </td></tr><tr><td>service </td><td>bike is not available for renting </td></tr></tbody></table></div><div id="getBikeTrackingLocations"><h3>getBikeTrackingLocations /  Get Bike Tracking Locations </h3><ul><li>Get all tracked positions for a bike</li><li>will return 404 if the bike is not found or no positions are known or 401 is the user is not found or not allowed</li><li><a href="https://api.nextbike.net/api/getBikeTrackingLocations.xml?apikey=REDACTED&amp;loginkey=REDACTED&amp;bike=12345&amp;limit=15&amp;days_ago=4&amp;geojson=1">https://api.nextbike.net/api/getBikeTrackingLocations.xml?apikey=REDACTED&amp;loginkey=REDACTED&amp;bike=12345&amp;limit=15&amp;days_ago=4&amp;geojson=1</a></li><li>see <a href="https://github.com/mapbox/simplestyle-spec">https://github.com/mapbox/simplestyle-spec</a></li></ul><table><thead><tr class="head"><th>Request-Parameter</th><th>Type</th><th>Description</th><th>Required</th></tr></thead><tbody><tr><td>bike </td><td>Integer </td><td>Bike Name </td><td>Required </td></tr><tr><td>loginkey </td><td>String </td><td>Login token of the employee </td><td>Required </td></tr><tr><td>limit </td><td>Integer </td><td>Number of Locations you want to get back (default 20, max 100) </td><td>Optional </td></tr><tr><td>days_ago </td><td>Integer </td><td>Maximum days for that the locations are returned (default 2, max 30) </td><td>Optional </td></tr><tr><td>geojson </td><td>Integer </td><td>If set to 1 the return will contain a simplestyled GeoJSON FeatureCollection instead of a list of BikeTrackingEntities (default 0) </td><td>Optional </td></tr></tbody></table><h4>Response Example</h4><pre class="code">&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;nextbike version="1.0" server_time="1234567890"&gt;
+  &lt;item bike_name="21095"&gt;
+    &lt;geojson&gt;
+{"type":"FeatureCollection","features":[{"type":"Feature","geometry":{"type":"Point","coordinates":[11.578632,48.166605]},"properties":{"title":"Current bike place","marker-symbol":"b","marker-color":"#000000","marker-size":"large"}},{"type":"Feature","geometry":{"type":"Point","coordinates":[11.578632,48.166605]},"properties":{"title":"2019-06-19 17:12:26","hours_ago":19,"precise":true,"marker-symbol":19,"marker-color":"#FF0000","marker-size":"medium"},"id":130076289},{"type":"Feature","geometry":{"type":"Point","coordinates":[11.189057,48.119593]},"properties":{"title":"2019-06-19 03:24:26","hours_ago":33,"precise":false,"marker-symbol":33,"marker-color":"#A9A9A9","marker-size":"small"},"id":130076287},{"type":"Feature","geometry":{"type":"LineString","coordinates":[[11.578632,48.166605],[11.189057,48.119593]]},"properties":null}]}
+&lt;/geojson&gt;
+  &lt;/item&gt;
+&lt;/nextbike&gt;
+</pre><h4>Response Example</h4><pre class="code">&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;nextbike version="1.0" server_time="1234567890"&gt;
+  &lt;item bike_name="21095"&gt;
+    &lt;bike_trackings&gt;
+      &lt;item uid="130076289" tstamp="1560957146" bikeId="29758" lat="48.166605" lng="11.578632" lendingId="5029"/&gt;
+      &lt;item uid="130076287" tstamp="1560907466" bikeId="29758" lat="48.119593" lng="11.189057" comments="E" lendingId="5028"/&gt;
+    &lt;/bike_trackings&gt;
+  &lt;/item&gt;
+&lt;/nextbike&gt;
+</pre></div><div id="getBikeTypeGroups"><h3>getBikeTypeGroups /  Get Bike Type Groups </h3><ul><li>Bike types can be grouped by their properties</li><li>Reserved for some API-keys</li><li><a href="https://api.nextbike.net/api/getBikeTypeGroups.xml?apikey=REDACTED&amp;language=en">https://api.nextbike.net/api/getBikeTypeGroups.xml?apikey=REDACTED&amp;language=en</a></li></ul><h4>Response Example</h4><pre class="code xml">&lt;nextbike version="1.0" server_time="1458134606"&gt;
+&lt;bikeTypeGroup uid="0" name="Unknown" bike_types="7,8,9,18"/&gt;
+&lt;bikeTypeGroup uid="1" name="Bike with low step" bike_types="1,2,3,4,14,15"/&gt;
+&lt;bikeTypeGroup uid="2" name="Classic bike" bike_types="5,13"/&gt;
+&lt;bikeTypeGroup uid="3" name="Pedelec" bike_types="6,17"/&gt;
+&lt;bikeTypeGroup uid="4" name="Accessories" bike_types="10,11,12"/&gt;
+&lt;bikeTypeGroup uid="5" name="Bike parking spot" bike_types="16"/&gt;
+&lt;/nextbike&gt;
+</pre><table><thead><tr class="head"><th>Request-Parameter</th><th>Type</th><th>Description</th><th>Required</th></tr></thead><tbody><tr><td>apikey </td><td>String </td><td>Your API key </td><td>Required </td></tr><tr><td>version </td><td>float </td><td>API version </td><td>optional (default latest) </td></tr><tr><td>language </td><td>String </td><td>ISO-Code of the language the group name should be shown in </td><td>optional(default english) </td></tr></tbody></table><table><thead><tr class="head"><th>Node</th><th>Response-Parameter</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>bikeTypeGroup </td><td>uid </td><td>Intger </td><td>ID of the bike type group </td></tr><tr><td></td><td>name </td><td>String </td><td>Name of the Bike type group in chosen language </td></tr><tr><td></td><td>bike_types </td><td>String </td><td>Comma separated list of bike types that belong to this group </td></tr></tbody></table></div><div id="getBikeTypes"><h3>getBikeTypes /  Get Bike Types </h3><ul><li>Bike are separated in bike types</li><li>Every bike type belongs to a more general "bike type group" (see getBikeTypeGroups)</li><li>Bike types can be grouped into a hierarchy using parent_biketype_id</li><li><a href="https://api.nextbike.net/api/getBikeTypes.xml?apikey=REDACTED&amp;language=en">https://api.nextbike.net/api/getBikeTypes.xml?apikey=REDACTED&amp;language=en</a></li></ul><h4>Response Example</h4><pre class="code">&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;nextbike version="1.0" server_time="1234567890"&gt;
+  &lt;bikeType uid="4" biketype_group="1" formfactor_code="Co" parent_biketype_id="0" name="Comfort" description="- Tiefer Einstieg- Shimano 3-Gang oder 7-Gang-Nabenschaltung- Nabendynamo- Korbausstattung"/&gt;
+  &lt;bikeType uid="5" biketype_group="2" formfactor_code="Cl" parent_biketype_id="0" name="Classic" description="- Shimano 3-Gang oder 7-Gang-Nabenschaltung- Nabendynamo- Korbausstattung- besonders bequem f&amp;#xFC;r gro&amp;#xDF;e Menschen"/&gt;
+  &lt;bikeType uid="14" biketype_group="1" formfactor_code="Co" parent_biketype_id="0" name="Comfort 2" description="- Tiefer Einstieg- Shimano 3-Gang oder 7-Gang-Nabenschaltung- Nabendynamo- Korbausstattung- verst&amp;#xE4;rktes Sattelrohr- verst&amp;#xE4;rkter Vorbau"/&gt;
+  &lt;bikeType uid="15" biketype_group="1" formfactor_code="Co" parent_biketype_id="0" name="SmartBike 1.0" description="- Tiefer Einstieg- Shimano 3-Gang oder 7-Gang-Nabenschaltung- Nabendynamo- Korbausstattung- verst&amp;#xE4;rktes Sattelrohr- verst&amp;#xE4;rkter Vorbau- mit Boardcomputer"/&gt;
+&lt;/nextbike&gt;
+</pre><table><thead><tr class="head"><th>Request-Parameter</th><th>Type</th><th>Description</th><th>Required</th></tr></thead><tbody><tr><td>apikey </td><td>String </td><td>Your API key </td><td>Required </td></tr><tr><td>version </td><td>float </td><td>API version </td><td>optional (default latest) </td></tr><tr><td>language </td><td>String </td><td>ISO-Code of the language the bike type name should be shown in </td><td>optional(default none) </td></tr></tbody></table><table><thead><tr class="head"><th>Node</th><th>Response-Parameter</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>bikeType </td><td>uid </td><td>Intger </td><td>ID of the bike type </td></tr><tr><td></td><td>name </td><td>String </td><td>Name of the bike type in chosen language </td></tr><tr><td></td><td>biketype_group </td><td>Integer </td><td>ID of the bike type group the type belongs to </td></tr><tr><td></td><td>formfactor_code </td><td>String </td><td></td></tr><tr><td></td><td>parent_biketype_id </td><td>Integer </td><td>This is a sub-type of the parent bike type (for bike_type hierarchy </td></tr><tr><td></td><td>name </td><td>String </td><td>ID of the bike type group the type belongs to </td></tr><tr><td></td><td>description </td><td>String </td><td>Description text, may contain line breaks. But should not contain HTML </td></tr><tr><td></td><td>info </td><td>String </td><td>Info text, e.g. Please find the helmet under the seat. May contain line breaks. But should not contain HTML </td></tr><tr><td></td><td>warning </td><td>String </td><td>Info text, e.g. Only return to mobility hubs with cargo bike racks allowed! May contain line breaks. But should not contain HTML </td></tr></tbody></table></div><div id="getBoardcomputerHistory"><h3>getBoardcomputerHistory /  Retrieve the last communication of a boardcomputer </h3><table><thead><tr class="head"><th>Request-Parameter</th><th>Type</th><th>Description</th><th>Required</th></tr></thead><tbody><tr><td>apikey </td><td>String </td><td>Your API key </td><td>Required </td></tr><tr><td>version </td><td>Float </td><td>API version </td><td>optional (default latest) </td></tr><tr><td>loginkey </td><td>String </td><td>Login token of the employee </td><td>Required </td></tr><tr><td>boardcomputer </td><td>Integer </td><td>The serial number of the board computer </td><td>Optional </td></tr><tr><td>bike </td><td>String </td><td>Alternative to "boardcomputer", name of the bike </td><td>Optional </td></tr><tr><td>imei </td><td>String </td><td>Alternative to "boardcomputer", IMEI of the boardcomputer </td><td>Optional </td></tr><tr><td>short_imei </td><td>String </td><td>Alternative to "boardcomputer", short IMEI of the boardcomputer </td><td>Optional </td></tr><tr><td>limit </td><td>Integer </td><td>How many entries shall be returned at most </td><td>Optional </td></tr></tbody></table><h4>Response Example</h4><pre class="code">&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;nextbike version="1.0" server_time="1234567890"&gt;
+  &lt;data&gt;
+    &lt;item last_communication="1561975200" battery="80" firmware_version="19101500" configuration_version="19020006" channel="sim" reason="GPS"/&gt;
+    &lt;item last_communication="1561975200" battery="80" firmware_version="19101500" configuration_version="19020006" channel="sim" reason="GPS"/&gt;
+  &lt;/data&gt;
+&lt;/nextbike&gt;
+</pre></div><div id="getCouponItemStatus"><h3>getCouponItemStatus /  get the Status of a coupon item </h3>  *
+ * <a href="https://api.nextbike.net/api/getCouponItemstatus.json?apikey=REDACTED&amp;voucher_code=CODE">https://api.nextbike.net/api/getCouponItemstatus.json?apikey=REDACTED&amp;voucher_code=CODE
+</a>  *
+<table><thead><tr class="head"><th>Request-Parameter</th><th>Type</th><th>Description</th><th>Required</th></tr></thead><tbody><tr><td>apikey </td><td>String </td><td>Your API key </td><td>Required </td></tr><tr><td>version </td><td>Float </td><td>API version </td><td>optional (default latest) </td></tr><tr><td>voucher_code </td><td>String </td><td>The voucher code </td><td>Required </td></tr></tbody></table></div><div id="getErrorReports"><h3>getErrorReports</h3>!use GetCustomerErrorReportAction
+</div><div id="getErrorTreeAsJson"><h3>getErrorTreeAsJson /  Get Error Tree As Json </h3><ul><li>Gets the error tree as json</li><li><a href="https://api.nextbike.net/api/getErrorTreeAsJson.xml">https://api.nextbike.net/api/getErrorTreeAsJson.xml</a></li><li>*Deprecated* : Please use the enpoint getReportableProblems instead, and</li><li>include a reportable_problem_ids parameter to the call of sendErrorReport</li></ul></div><div id="getFlexzones"><h3>getFlexzones /  Get Flexzones </h3><ul><li>returns flexzone polygon geometries and properties (of a given domain) as GeoJSON and an corresponding hash or HTTP `304` (if `show_errors` is enabled)</li><li>consumers should save the hash and use it as parameter for the next request</li><li>if the flexzones did not change and the given hash reflects the latest version, the response will be HTTP `304 Not Modified` - please note that this requires enabled error codes (e.g. HTTP `GET` `show_errors=1`, see further below)</li><li>otherwise the complete dataset will be returned</li></ul><table><thead><tr class="head"><th>Category</th><th>Description</th></tr></thead><tbody><tr><td>free_return </td><td>Vehicles can be returned for free </td></tr><tr><td>force_free_return </td><td>Vehicles can be returned for free (overrides all other zones in the area) </td></tr><tr><td>chargeable_return </td><td>Return in the zone gets charged with a service fee </td></tr><tr><td>force_chargeable_return </td><td>Return in the zone gets charged with a service fee (overrides all other zones in the area) </td></tr><tr><td>active_ebike_zone </td><td>eBikes, pedelecs, scooters, eCargos (etc.) are active in this area, outside the motor support will be disabled </td></tr><tr><td>slow_go_zone </td><td>Areas where the speed of electric vehicles gets limited </td></tr><tr><td>service_zone </td><td>Internal service zone for rebalancing and operational pick-up/drop-off tasks </td></tr><tr><td>business_area </td><td>The operating area where the service is provided and vehicles can be used </td></tr></tbody></table><oas-input>
+@../types/getFlexzones-input.json
+</oas-input>
+<oas-output>
+@../types/getFlexzones-output.json
+</oas-output>
+</div><div id="getLocation"><h3>getLocation /  Get closest location </h3><ul><li>Find closest station for given IP or GeoData</li><li><a href="https://api.nextbike.net/api/getLocation.xml?apikey=REDACTED&amp;ip=82.23.123.23&amp;lat=52.323&amp;lng=43.212">https://api.nextbike.net/api/getLocation.xml?apikey=REDACTED&amp;ip=82.23.123.23&amp;lat=52.323&amp;lng=43.212</a></li><li>Response siehe Maps API</li></ul><h4>Response Example</h4><pre class="code xml">&lt;nextbike version="1.0"&gt;
+  &lt;country lat="51.3412" lng="12.3654" zoom="5" name="Germany" hotline="+493069205046" domain="de"&gt;
+    &lt;city uid="1" lat="51.3402" lng="12.3722" zoom="14" name="Leipzig"&gt;
+      &lt;place uid="125" lat="51.3396707275931" lng="12.3732796311378" name="Thomaskirchhof" spot="1" bikes="0"/&gt;
+    &lt;/city&gt;
+  &lt;/country&gt;
+&lt;/nextbike&gt;
+</pre><table><thead><tr class="head"><th>Request-Parameter</th><th>Type</th><th>Description</th><th>Required</th></tr></thead><tbody><tr><td>apikey </td><td>String </td><td>API-Schlüssel der Anwendung </td><td>Pflicht </td></tr><tr><td>version </td><td>float </td><td>API-Version </td><td>optional (default Neuste) </td></tr><tr><td>ip </td><td>String </td><td>IP address </td><td>optional </td></tr><tr><td>lat </td><td>Float </td><td>Latiude </td><td>optional </td></tr><tr><td>lng </td><td>Float </td><td>Longitude </td><td>optional </td></tr></tbody></table></div><div id="getLoginToken"><h3>getLoginToken /  Creates as short-living "login token" for a user to be shared with a different API key </h3><ul><li><a href="https://api.nextbike.net/api/getLoginToken.json?apikey=REDACTED&amp;version=1.0&amp;loginkey=REDACTED">https://api.nextbike.net/api/getLoginToken.json?apikey=REDACTED&amp;version=1.0&amp;loginkey=REDACTED"login token" that you can share with a different application to create a valid loginkey for their API key</li></ul><oas-input>
+@../types/getLoginToken-input.json
+</oas-input>
+<oas-output>
+@../types/getLoginToken-output.json
+</oas-output>
+</div><div id="getNews"><h3>getNews /  Get News </h3><ul><li>External applications can get nextbike news</li><li>returns only active news</li><li><a href="https://api.nextbike.net/api/getNews.json">https://api.nextbike.net/api/getNews.json</a></li></ul><table><thead><tr class="head"><th>Request-Parameter</th><th>Type</th><th>Description</th><th>Required</th></tr></thead><tbody><tr><td>version </td><td>Float </td><td>API version </td><td>Optional (default latest) </td></tr><tr><td>apikey </td><td>String </td><td>API-key of your application </td><td>Required </td></tr><tr><td>loginkey </td><td>String </td><td>Login token of the user </td><td>Required or domain and language </td></tr><tr><td>fallback_domain </td><td>String </td><td>Fallback domain, to use when no loginkey is provided </td><td>Optional or loginkey </td></tr><tr><td>language </td><td>String </td><td>Language of the news, overriding the account language </td><td>Optional or loginkey </td></tr><tr><td>limit </td><td>Integer </td><td>Number of news you want to get back </td><td>Optional </td></tr><tr><td>offset </td><td>Integer </td><td>Leave out number of news - use for pagination  </td><td>Optional </td></tr></tbody></table><h4>Response Example</h4><pre class="code json">{
+    "server_time": 1519719953,
+    "news_collection": [
+        {
+            "node": "news",
+            "uid": 4,
+            "title": "News Example 1",
+            "created_time": 1519719948,
+            "updated_time": 1519719948,
+            "featured_image": "https://websites.nextbike.net/media/480/example-image-1.png",
+            "teaser_text": "That's a very nice article. Click me!",
+            "cities": [
+                "Warszawa",
+                "Milton Keynes"
+            ]
+            "order": 0,
+            "url_webview": "https://appnews.nextbike.net/en/news/news-example-1/",
+        },
+        {
+            "node": "news",
+            "uid": 3,
+            "title": "News Example 2",
+            "created_time": 1519634347,
+            "updated_time": 1519637706,
+            "featured_image": "https://websites.nextbike.net/media/480/example-image-2.png",
+            "teaser_text": "That's the best article ever.",
+            "cities": [
+                "München",
+                "Leipzig"
+            ]
+            "order": 1,
+            "url_webview": "https://appnews.nextbike.net/en/news/news-example-2/",
+        }
+    ]
+}
+</pre></div><div id="getNewsDetails"><h3>getNewsDetails /  Get News Details</h3><ul><li>External applications can get nextbike news</li><li>returns the details of one news translated in the given language (or default language, if the translation is not available)</li><li><a href="https://api.nextbike.net/api/getNewsDetails.json">https://api.nextbike.net/api/getNewsDetails.json</a></li></ul><table><thead><tr class="head"><th>Request-Parameter</th><th>Type</th><th>Description</th><th>Required</th></tr></thead><tbody><tr><td>version </td><td>Float </td><td>API version </td><td>Optional (default latest) </td></tr><tr><td>apikey </td><td>String </td><td>API-key of your application </td><td>Required </td></tr><tr><td>loginkey </td><td>String </td><td>Login token of the user </td><td>Required or fallback_domain and language </td></tr><tr><td>news_id </td><td>int </td><td>id of the news </td><td>Required </td></tr><tr><td>fallback_domain </td><td>String </td><td>Fallback domain, to use when no loginkey is provided </td><td>Optional or loginkey </td></tr><tr><td>language </td><td>String </td><td>Language of the news, overriding the account language </td><td>Optional or loginkey </td></tr></tbody></table><h4>Response Example</h4><pre class="code">&lt;?xml version="1.0" encoding="utf-8"?&gt;
+</pre></div><div id="getNotifications"><h3>getNotifications /  Get notifications </h3><ul><li>Limited to special API keys</li><li><a href="https://api.nextbike.net/api/getNotifications.xml">https://api.nextbike.net/api/getNotifications.xml</a></li></ul><oas-input>
+@../types/getNotifications-input.json
+</oas-input>
+<oas-output>
+@../types/getNotifications-output.json
+</oas-output>
+</div><div id="getPaymentLinks"><h3>getPaymentLinks /  Get Payment Links </h3><ul><li><a href="https://api.nextbike.net/api/getPaymentLinks.xml?apikey=REDACTED&amp;loginkey=REDACTED&amp;amount=100&amp;payment=wp&amp;success_url=http://www.nextbike.net&amp;failure_url=http://www.nextbike.net&amp;tickets=123456,234567">https://api.nextbike.net/api/getPaymentLinks.xml?apikey=REDACTED&amp;loginkey=REDACTED&amp;amount=100&amp;payment=wp&amp;success_url=http://www.nextbike.net&amp;failure_url=http://www.nextbike.net&amp;tickets=123456,234567</a></li><li>This function is limited to a few API keys</li><li>Provides simple links that can be used to open WebView or pass to browser via normal GET method - no POST required</li></ul><table><thead><tr class="head"><th>Request-Parameter</th><th>Type</th><th>Description</th><th>Required</th></tr></thead><tbody><tr><td>apikey </td><td>String </td><td>Your API key </td><td>required </td></tr><tr><td>version </td><td>float </td><td>API version </td><td>optional (default latest) </td></tr><tr><td>loginkey </td><td>String </td><td>Login-Token of customer for accounting </td><td>required </td></tr><tr><td>amount </td><td>int </td><td>Amount in cent </td><td>optional (default maximum of subscription fee and sum of ticket prices) </td></tr><tr><td>language </td><td>String </td><td>2-letter ISO code of preferred language (default: user language) </td><td>optional </td></tr><tr><td>tickets </td><td>String </td><td>Comma separated list of coupon codes of tickets bought with this payment </td><td>optional </td></tr><tr><td>ticket_ids </td><td>String </td><td>Comma separated list of ids of tickets bought with this payment </td><td>optional </td></tr><tr><td>success_url </td><td>String </td><td>URL to go to after successful payment / could be "close" to automatically close the tab/browser after successful payment </td><td>optional (effect only for payment=wp) </td></tr><tr><td>failure_url </td><td>String </td><td>URL to go to after failed payment </td><td>optional (effect only for payment=wp) </td></tr><tr><td>oneclick </td><td>bool </td><td>Press the "submit" button automatically to proceed to final payment form (works only, if oneclick is supported - see attribute in payment link) </td></tr></tbody></table><h4>Response Example</h4><pre class="code xml">&lt;nextbike version="1.0"&gt;
+  &lt;paymentlinks&gt;
+    &lt;paymentlink option="credit_card" payment="cc" title="Kreditkarte" link_url="https://securepay.nextbike.net/pay/credit_card/de/49123456789/3ca686cbd9266d9e2e8cac3d0d748590?amount=100&amp;amp;tickets=123456" is_current_payment="1" oneclick="0" amount="100" /&gt;
+    &lt;paymentlink option="direct_debit" payment="dd" title="Bankeinzug" link_url="https://securepay.nextbike.net/pay/direct_debit/de/49123456789/5fc99ad818e6212d8cba5614d1795074?amount=100&amp;amp;tickets=123456" oneclick="0" amount="100" /&gt;
+  &lt;/paymentlinks&gt;
+&lt;/nextbike&gt;
+</pre></div><div id="getPlaceDetails"><h3>getPlaceDetails /  Get place details </h3><ul><li>Limited to special API keys</li><li><a href="https://api.nextbike.net/api/getPlaceDetails.xml">https://api.nextbike.net/api/getPlaceDetails.xml</a></li></ul><table><thead><tr class="head"><th>Request-Parameter</th><th>Type</th><th>Description</th><th>Required</th></tr></thead><tbody><tr><td>apikey </td><td>String </td><td>Your API key </td><td>Required </td></tr><tr><td>version </td><td>float </td><td>API version </td><td>optional (default latest) </td></tr><tr><td>loginkey </td><td>String </td><td>Login token of the employee </td><td>Optional </td></tr><tr><td>station </td><td>Int </td><td>Station number </td><td>Required OR place </td></tr><tr><td>place </td><td>Int </td><td>Associated place id </td><td>Required OR station </td></tr></tbody></table><table><thead><tr class="head"><th>Node</th><th>Response-Parameter</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>booking </td><td>id </td><td>Int </td><td>UID of a active Reservation </td></tr><tr><td></td><td>bike_types </td><td>String (JSON) </td><td>Types of the reserved bikes </td></tr><tr><td></td><td>biketypes </td><td>String (JSON) </td><td>Types of the reserved bikes - deprecated, will be removed in the future, use bike_types instead </td></tr><tr><td></td><td>place_id </td><td>Int </td><td>UID of the Place for the Reservation </td></tr><tr><td></td><td>place_name </td><td>string </td><td>human readable name of the Place for the Reservation </td></tr><tr><td></td><td>lat </td><td>Float </td><td>Latitude of the Place for the Reservation </td></tr><tr><td></td><td>lng </td><td>Float </td><td>Longitude of the Place for the Reservation </td></tr><tr><td></td><td>spot </td><td>Boolean </td><td>if the reservation is at an official stage </td></tr><tr><td></td><td>start_time </td><td>Int </td><td>Unixtime of the desired start time for rental (can also be the time difference from now until start of the booking in seconds, if lower than 160000000) </td></tr><tr><td></td><td>end_time </td><td>Int </td><td>Unixtime of the desired end time for rental (only relevant for UsedomRad) </td></tr><tr><td></td><td>num_bikes </td><td>Int </td><td>Number of booked bikes </td></tr><tr><td></td><td>booked </td><td>Int </td><td>Number of booked bikes </td></tr><tr><td></td><td>state_id </td><td>Int </td><td>state ID of the Reservation </td></tr><tr><td></td><td>state </td><td>String </td><td>human readable state of the Reservation </td></tr><tr><td></td><td>max_bookingtime_before_rental </td><td>Int </td><td>minimum count of minutes which has to pass between booking and rental begin </td></tr><tr><td></td><td>cust_id </td><td>Int </td><td>User ID </td></tr><tr><td></td><td>booking_code </td><td>? </td><td>the booking code which is to be entered on fetching the bike </td></tr><tr><td></td><td>price </td><td>Int </td><td>Price in cents that was charged </td></tr><tr><td></td><td>price_service </td><td>Service charge in cents </td></tr><tr><td></td><td>confirm </td><td>Boolean </td><td>if the booking was confirmed by the system </td></tr><tr><td></td><td>used_free_seconds </td><td>amount of free seconds that were used to "pay" </td></tr><tr><td></td><td>bike_blocking_time_seconds </td><td>amount of seconds of bike blocking time </td></tr><tr><td></td><td>max_bookingtime_before_rental_in_s </td><td>same as max_bookingtime_before_rental but in seconds instead minutes </td></tr><tr><td></td><td>domain </td><td>String </td><td>short code of the nextbike brand of the place </td></tr><tr><td></td><td>station_number </td><td>String </td><td>Station number of the start place </td></tr></tbody></table><table><thead><tr class="head"><th>Node</th><th>Response-Parameter</th><th>Type</th><th>Meaning</th></tr></thead><tbody><tr><td>bike </td><td>number </td><td>String </td><td>bike number </td></tr><tr><td></td><td>state </td><td>String </td><td>Status </td></tr><tr><td></td><td>bike_type </td><td>integer </td><td>id of the bike type </td></tr><tr><td></td><td>number </td><td>integer </td><td>id of the bike  </td></tr></tbody></table><table><thead><tr class="head"><th>State</th><th>Meaning</th></tr></thead><tbody><tr><td>ok </td><td>Bike is available to rent </td></tr><tr><td>ok_but_unknown_number </td><td>Bike may available to rent, but unknown customer information </td></tr><tr><td>unknown </td><td>bike is not existent </td></tr><tr><td>return </td><td>return (by providing loginkey) </td></tr><tr><td>return_but_unknown_number </td><td>return (without providing loginkey) </td></tr><tr><td>locked </td><td>user is not active </td></tr><tr><td>limit </td><td>too many bikes </td></tr><tr><td>occupied </td><td>occupied/rented (without providing loginkey) </td></tr><tr><td>recently_returned </td><td>recently returned </td></tr><tr><td>low_credits </td><td>credits less than 0, Top up! (Customer account got locked - applies to customers without valid payment information (credit card, etc.)) </td></tr><tr><td>ok_but_foreign </td><td>different provider - there are different terms and conditions </td></tr><tr><td>ok_but_foreign_terms </td><td>different provider, customer has not accepted these terms and conditions </td></tr><tr><td>not_available_over_night </td><td>bike not lendable or bookable at night </td></tr></tbody></table><table><thead><tr class="head"><th>bike type id</th><th>bike type</th></tr></thead><tbody><tr><td>1 </td><td>26″ - Touring bike </td></tr><tr><td>2 </td><td>28″ - Touring bike </td></tr><tr><td>3 </td><td>UseBike </td></tr><tr><td>4 </td><td>Comfort </td></tr><tr><td>5 </td><td>Classic </td></tr><tr><td>6 </td><td>Pedelec </td></tr><tr><td>7 </td><td>20″ - Kids bike </td></tr><tr><td>8 </td><td>24″ - Kids bike </td></tr><tr><td>9 </td><td>Tandem (Usedom) </td></tr><tr><td>10 </td><td>Bike trailer </td></tr><tr><td>11 </td><td>child's seat </td></tr><tr><td>12 </td><td>Bike helmet </td></tr><tr><td>13 </td><td>UseBike Classic </td></tr><tr><td>14 </td><td>Comfort 1 1/8″ </td></tr><tr><td>15 </td><td>Comfort 1 1/8″ with onboard computer </td></tr><tr><td>16 </td><td>Rack/Parking spot </td></tr><tr><td>17 </td><td>eBike </td></tr><tr><td>18 </td><td>Tandem (Poland) </td></tr></tbody></table><h4>Response Example</h4><pre class="code">&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;nextbike version="1.0" server_time="1234567890"&gt;
+  &lt;place uid="16337" number="4024" name="Hauptbahnhof/LVB-Mobilit&amp;#xE4;tszentrale" address="" bike_racks="0" lat="51.343658438648" lng="12.378786206245" spot="1" city_name="Leipzig" place_type="0" domain="de" free_racks="0" broken_racks="0" terminal_type="7inch" maintenance="0" bike="0" bike_numbers="10655,10337" bike_types="[]" num_booked_bikes="0" available_bikes="2" bikes_available_to_book="1"&gt;
+    &lt;bikes&gt;
+      &lt;bike number="10655" language="de" boardcomputer="0" battery="0" snap="0" electric_lock="0" gps_tracking="0" rfid="0" state="ok" bike_type="4" active="1" app_campaign_uid="0" campaign_name="nextbike Leipzig" pedelec="0" pedelec_battery="0" time_to_charge="0" place_id="16337" city_id="1" bike_domain="de"/&gt;
+      &lt;bike number="10337" language="de" boardcomputer="0" battery="0" snap="0" electric_lock="0" gps_tracking="0" rfid="0" state="ok" bike_type="5" active="1" app_campaign_uid="0" campaign_name="Capita Europe" pedelec="0" pedelec_battery="0" time_to_charge="0" place_id="16337" city_id="1" bike_domain="de"/&gt;
+    &lt;/bikes&gt;
+  &lt;/place&gt;
+&lt;/nextbike&gt;
+</pre></div><div id="getRentalDetails"><h3>getRentalDetails /  Return </h3><ul><li><a href="https://api.nextbike.net/api/getRentalDetails.xml?apikey=REDACTED&amp;loginkey=REDACTED&amp;rental=123456">https://api.nextbike.net/api/getRentalDetails.xml?apikey=REDACTED&amp;loginkey=REDACTED&amp;rental=123456</a></li></ul><table><thead><tr class="head"><th>Request-Parameter</th><th>Type</th><th>Description</th><th>Required</th></tr></thead><tbody><tr><td>apikey </td><td>String </td><td>API-key of your application </td><td>required </td></tr><tr><td>version </td><td>float </td><td>API-version </td><td>optional (default latest) </td></tr><tr><td>loginkey </td><td>String </td><td>Login-Token of the customer </td><td>required </td></tr><tr><td>rental </td><td>Int </td><td>ID of the rental </td><td>required </td></tr></tbody></table><h4>Response Example</h4><pre class="code">&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;nextbike version="1.0" server_time="1234567890"&gt;
+  &lt;rental id="111127648" show_close_lock_info="0" invalid="0" return_via_app="0" return_to_official_only="0" city_id="685" city="Dresden" domain="dx" bike="930875" boardcomputer="7551060121" customer_comment="" electric_lock="1" biketype="150" lock_types="frame_lock,dls" code="6151" start_place="40524016" start_place_lat="51.069124444444" start_place_lng="13.751143333333" start_place_name="BIKE 930875" start_place_type="12" start_rack="0" end_place="40537295" end_place_lat="51.070555555556" end_place_lng="13.753884444444" end_place_name="BIKE 930875" end_place_type="12" start_time="1609165076" end_time="1609165199" price="0" price_service="0" completed="1" rfid_uid="0" review_state="0" trip_type="0" app_campaign_uid="0" break="0" rating="0" used_free_seconds="0" distance="0" start_channel="264"&gt;
+    &lt;transactions&gt;
+      &lt;item amount="-100" id="81293923" comment="Rental, original base price" category="baseprice_original" timestamp="1609165199"/&gt;
+      &lt;item id="81293924" amount="0" comment="Rental, original service fee" category="servicefee_original" timestamp="1609165199"/&gt;
+      &lt;item id="82345678" amount="100" comment="Decrease rental base price, because rental is invalid" category="baseprice_adjustment" timestamp="1612345678"/&gt;
+    &lt;/transactions&gt;
+    &lt;invoices&gt;
+      &lt;item invoice_id="81293923" amount="100" type="invoice" timestamp="1609165199"/&gt;
+      &lt;item invoice_id="82345678" amount="-100" type="credit_note" timestamp="1612345678"/&gt;
+    &lt;/invoices&gt;
+  &lt;/rental&gt;
+&lt;/nextbike&gt;
+</pre><table><thead><tr class="head"><th>PlacetypeId</th><th>Meaning</th></tr></thead><tbody><tr><td>0 </td><td>STANDARD_PLACE </td></tr><tr><td>1 </td><td>MISSED_BIKES </td></tr><tr><td>2 </td><td>STOLEN_BIKES </td></tr><tr><td>3 </td><td>NEXTBIKE_STORAGE </td></tr><tr><td>4 </td><td>NEXTBIKE_FACTORY </td></tr><tr><td>5 </td><td>NEXTBIKE_OFFICE </td></tr><tr><td>6 </td><td>STATION_WITH_EMPLOYEE </td></tr><tr><td>7 </td><td>HOTEL </td></tr><tr><td>8 </td><td>TOURIST_INFORMATION </td></tr><tr><td>9 </td><td>COMPANY </td></tr><tr><td>10 </td><td>SHOP </td></tr><tr><td>11 </td><td>MISSED_BIKES_ARCHIVE </td></tr><tr><td>12 </td><td>INDIVIDUAL_BIKE </td></tr><tr><td>13 </td><td>SERVICE_CAR </td></tr><tr><td>14 </td><td>E_BIKE_STATION </td></tr><tr><td>15 </td><td>KIDS_BIKE_STATION </td></tr><tr><td>16 </td><td>STATION_WITH_FURNITURE </td></tr><tr><td>17 </td><td>VIRTUAL_STATION </td></tr><tr><td>18 </td><td>MOBILITY_HUB </td></tr><tr><td>19 </td><td>VIRTUAL_STATION_WITH_ROAD_MARKING </td></tr><tr><td>20 </td><td>INDIVIDUAL_E_BIKE </td></tr><tr><td>21 </td><td>CARGO_BIKE_STATION </td></tr><tr><td>22 </td><td>INDIVIDUAL_CARGO_BIKE </td></tr><tr><td>23 </td><td>E_CARGO_BIKE_STATION </td></tr><tr><td>24 </td><td>INDIVIDUAL_E_CARGO_BIKE </td></tr><tr><td>25 </td><td>PLACE_WITH_SPECIAL_OFFER </td></tr><tr><td>26 </td><td>NEXTBIKE_WORKSHOP_E_BIKE_CHARGING </td></tr><tr><td>27 </td><td>STATION_WITH_DISCOUNT </td></tr><tr><td>28 </td><td>STATION_WITH_ELECTRIC_INSERTION_LOCK </td></tr><tr><td>29 </td><td>SCRAPPED_BIKES </td></tr><tr><td>30 </td><td>INDIVIDUAL_SCOOTER </td></tr><tr><td>31 </td><td>INDIVIDUAL_MOPED </td></tr><tr><td>32 </td><td>ESCOOTER_STATION </td></tr><tr><td>33 </td><td>E_BIKE_STATION_WITH_DISCOUNT </td></tr></tbody></table></div><div id="getRentalPdf"><h3>getRentalPdf /  Get a PDF of current overview, associated invoices and credit notes for a rental </h3><ul><li><a href="https://api.nextbike.net/api/getRentalPdf.xml?apikey=REDACTED&amp;loginkey=REDACTED&amp;rental=123456">https://api.nextbike.net/api/getRentalPdf.xml?apikey=REDACTED&amp;loginkey=REDACTED&amp;rental=123456</a></li><li>See invoice_id in invoices attribute of "getRentalDetails" (after receiving "complete" callback - or "completed" Flag is set)</li><li>If rental is not yet "completed" it will always fall back to "overview_only"</li></ul><table><thead><tr class="head"><th>Request-Parameter</th><th>Type</th><th>Description</th><th>Required</th></tr></thead><tbody><tr><td>apikey </td><td>String </td><td>API-key of your application </td><td>required </td></tr><tr><td>version </td><td>float </td><td>API-version </td><td>optional (default latest) </td></tr><tr><td>loginkey </td><td>String </td><td>Login-Token of the customer </td><td>required (or invoice_token) </td></tr><tr><td>invoice_token </td><td>String </td><td>Temporary access token for this invoice </td><td>optional </td></tr><tr><td>rental </td><td>Int </td><td>ID of the rental </td><td>required </td></tr><tr><td>invoice_id </td><td>Int </td><td>ID of a specific invoice and credit note (default: combined PDF of all invoices and credit notes to date), ignored, if overview_only is set </td><td>optional </td></tr><tr><td>overview_only </td><td>bool </td><td>Only return an overview (w/o invoice number) of all associated transactions to date </td><td>optional </td></tr></tbody></table></div><div id="getServiceCases"><h3>getServiceCases /  Service cases </h3><ul><li><a href="https://api.nextbike.net/api/getServiceCases.xml?apikey=REDACTED&amp;domains=le">https://api.nextbike.net/api/getServiceCases.xml?apikey=REDACTED&amp;domains=le</a></li></ul><h4>Response Example</h4><pre class="code xml">&lt;nextbike version="1.0"&gt;
+    &lt;service-cases&gt;
+        &lt;service-case uid="16" item="flexzone_return" domain="le" fee="100" free_trials="1" currency="EUR" /&gt;
+    &lt;/service-cases&gt;
+&lt;/nextbike&gt;
+</pre><table><thead><tr class="head"><th>Request-Parameter</th><th>Type</th><th>Description</th><th>Required</th></tr></thead><tbody><tr><td>apikey </td><td>String </td><td>API-key of your application </td><td>required </td></tr><tr><td>domains </td><td>String </td><td>Comma separated list of domains of the service cases </td><td>optional (default "all") </td></tr><tr><td>service_cases </td><td>String </td><td>Comma separated list of service case IDs  </td><td>optional (default "all") </td></tr></tbody></table></div><div id="getTranslations"><h3>getTranslations /  Get translations </h3><ul><li>Limited to special API keys</li><li><a href="https://api.nextbike.net/api/getTranslations.xml">https://api.nextbike.net/api/getTranslations.xml</a></li></ul><table><thead><tr class="head"><th>Request-Parameter</th><th>Type</th><th>Description</th><th>Required</th></tr></thead><tbody><tr><td>apikey </td><td>String </td><td>Your API key </td><td>Required </td></tr><tr><td>version </td><td>float </td><td>API version </td><td>optional (default latest) </td></tr><tr><td>type </td><td>String </td><td>The translation type, like 'app-webview' </td><td>Required</td></tr><tr><td>language </td><td>String </td><td>The requested language </td><td>Required</td></tr><tr><td>format </td><td>String </td><td>json </td><td>Required</td></tr></tbody></table></div><div id="getUserDetails"><h3>getUserDetails /  Get user details </h3><ul><li>Limited to special API keys</li><li><a href="https://api.nextbike.net/api/getUserDetails.xml">https://api.nextbike.net/api/getUserDetails.xml</a></li></ul><table><thead><tr class="head"><th>Request-Parameter</th><th>Type</th><th>Description</th><th>Required</th></tr></thead><tbody><tr><td>apikey </td><td>String </td><td>Your API key </td><td>Required </td></tr><tr><td>version </td><td>float </td><td>API version </td><td>optional (default latest) </td></tr><tr><td>loginkey </td><td>String </td><td>Login token of the employee </td><td>Required </td></tr></tbody></table><table><thead><tr class="head"><th>Node</th><th>Response-Parameter</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>user </td><td>mobile </td><td>String </td><td>Mobile phone number </td></tr><tr><td></td><td>active </td><td>Boolean </td><td>Customer is unlocked (e.g. private trips not paid / no private payment method set) </td></tr><tr><td></td><td>email </td><td>String </td><td>Email address </td></tr><tr><td></td><td>forename </td><td>String </td><td>First name </td></tr><tr><td></td><td>name </td><td>String </td><td>Last name </td></tr><tr><td></td><td>zip </td><td>String </td><td>ZIP </td></tr><tr><td></td><td>address </td><td>String </td><td>Street + Number </td></tr><tr><td></td><td>city </td><td>String </td><td>City </td></tr><tr><td></td><td>payment </td><td>String </td><td>Payment method (see below) </td></tr><tr><td></td><td>iban </td><td>String </td><td>IBAN of bank account </td></tr><tr><td></td><td>bic </td><td>String </td><td>BIC of bank account </td></tr><tr><td></td><td>language </td><td>String </td><td>2-letter ISO language code </td></tr><tr><td></td><td>country </td><td>String </td><td>2-letter ISO country code </td></tr><tr><td></td><td>newsletter </td><td>Bool </td><td>Subscribe to newsletter </td></tr><tr><td></td><td>domain </td><td>String </td><td>Code of the nextbike brand </td></tr><tr><td></td><td>currency </td><td>String </td><td>Currency </td></tr><tr><td></td><td>team_owner </td><td>bool </td><td>Is the team / company owner (and can access administrative team-functions) </td></tr></tbody></table></div><div id="getUserInfo"><h3>getUserInfo /  getUserInfo </h3><table><thead><tr class="head"><th>Request-Parameter</th><th>Type</th><th>Description</th><th>Required</th></tr></thead><tbody><tr><td>apikey </td><td>String </td><td>Your API key </td><td>Required </td></tr><tr><td>version </td><td>Float </td><td>API version </td><td>optional (default latest) </td></tr><tr><td>loginkey </td><td>String </td><td>Login token of the customer </td><td>Required </td></tr></tbody></table><table><thead><tr class="head"><th>Node</th><th>Response-Parameter</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>user </td><td></td><td>Array </td><td>customer node </td></tr></tbody></table></div><div id="getWorkshops"><h3>getWorkshops /  getWorkshops </h3><table><thead><tr class="head"><th>Request-Parameter</th><th>Type</th><th>Description</th><th>Required</th></tr></thead><tbody><tr><td>apikey </td><td>String </td><td>Your API key </td><td>Required </td></tr><tr><td>version </td><td>float </td><td>API version </td><td>optional (default latest) </td></tr><tr><td>loginkey </td><td>String </td><td>Login token of the customer </td><td>Required </td></tr><tr><td>brand_id </td><td>Int </td><td>Id of the brand </td><td>Optional </td></tr></tbody></table>Response
+<table><tbody><tr></tr></tbody></table></div><div id="list"><h3>list /  Customer account </h3><ul><li>lists recent activities of a customer</li></ul><oas-input>
+@../types/list-input.json
+</oas-input>
+<oas-output>
+@../types/list-output.json
+</oas-output>
+</div><div id="login"><h3>login /  Check phone number for existence </h3><ul><li><a href="https://api.nextbike.net/api/login.xml?apikey=REDACTED&amp;version=1.0&amp;mobile=491238234123">https://api.nextbike.net/api/login.xml?apikey=REDACTED&amp;version=1.0&amp;mobile=491238234123</a></li><li>Checks phone number for existence and provides information about language and nextbike brand</li></ul><h4>Response Example</h4><pre class="code xml">&lt;nextbike version="1.0"&gt;
+  &lt;user mobile="491238234123" lang="de" domain="de" /&gt;
+&lt;/nextbike&gt;
+</pre><table><thead><tr class="head"><th>Request-Parameter </th><th>Condensed </th><th>Type   </th><th>Meaning                                       </th><th>Required                  </th></tr></thead><tbody><tr><td>apikey            </td><td>k        </td><td>String </td><td>API-key of your application                   </td><td>required                  </td></tr><tr><td>version           </td><td>v        </td><td>Float  </td><td>API-version                                   </td><td>optional (default latest) </td></tr><tr><td>mobile            </td><td>m        </td><td>String </td><td>Phone number in international format (+49...) </td><td>required (or bike number) </td></tr></tbody></table><table><thead><tr class="head"><th>Node     </th><th>Condensed </th><th>Response-Parameter </th><th>Condensed </th><th>Typ    </th><th>Description                          </th></tr></thead><tbody><tr><td>nextbike </td><td>nb       </td><td>version            </td><td>v         </td><td>Float  </td><td>API-Version                          </td></tr><tr><td>user     </td><td>u        </td><td>mobile             </td><td>m         </td><td>String </td><td>Phone number                         </td></tr><tr><td></td><td></td><td>lang               </td><td>l         </td><td>String </td><td>Language of the customer (e.g. de)   </td></tr><tr><td></td><td></td><td>domain             </td><td>d         </td><td>String </td><td>Code of the nextbike brand (z.B. de) </td></tr><tr><td></td><td></td><td>bikes              </td><td></td><td>String </td><td>Comma separated list of bike numbers </td></tr></tbody></table><h3>login /  Login </h3><ul><li>Logs in a customer to the system by Phone number or bike number and PIN.</li><li><a href="https://api.nextbike.net/api/login.xml?apikey=REDACTED&amp;version=1.0&amp;mobile=491238234123&amp;pin=123456">https://api.nextbike.net/api/login.xml?apikey=REDACTED&amp;version=1.0&amp;mobile=491238234123&amp;pin=123456</a></li><li><strong>Do not save the PIN locally!</strong></li><li>Later authentication of the customer by loginkey</li><li>The loginkey in combination with your API-Key is valid as long as you wish, until the user or nextbike blocks your application (e.g. by a new PIN)</li><li>Reading the phone number from UserDefaults causes AppStore rejection</li><li>If you provide a loginkey of a valid employee, you can access all customers in the employee domains without providing a PIN. If customers have "PIN check" enabled or are also employees, you still have to provide the PIN.</li><li>Attribute required_actions are actions required by the customer to have a proper or unlocked account, e.g.</li><li>update_name, update_email, update_{field} - Customer needs to provide or update a customer account data field</li><li>verify_email - Click on the verification link sent by email</li><li>provide_payment - Set a valid payment method, to activate account - call getPaymentOptions</li><li>activate_account - Select an unlockOption, to activate account by payment, partner, voucher code, email, etc. - call getUnlockOptions</li></ul><h4>Response Example</h4><pre class="code xml">&lt;nextbike version="1.0"&gt;
+  &lt;user mobile="491238234123" loginkey="s4dfjSDF3243" active="1" lang="de" domain="de" currency="EUR" /&gt;
+&lt;/nextbike&gt;
+</pre><oas-input>
+@../types/login-input.json
+</oas-input>
+<oas-output>
+@../types/login-output.json
+</oas-output>
+<table><thead><tr class="head"><th>Payment key </th><th>Description                         </th></tr></thead><tbody><tr><td>cs          </td><td>Cash / Prepaid                      </td></tr><tr><td>dd          </td><td>Direct debit (SEPA)                 </td></tr><tr><td>cc          </td><td>WorldPay Business                   </td></tr><tr><td>no          </td><td>No payment                          </td></tr><tr><td>in          </td><td>Invoice                             </td></tr><tr><td>cp          </td><td>CorvusPay (Croatia/Bosnia)          </td></tr><tr><td>dl          </td><td>DVB Logpay                          </td></tr><tr><td>pp          </td><td>PayPal                              </td></tr><tr><td>ap          </td><td>ApcoPay (Malta)                     </td></tr><tr><td>lp          </td><td>LiqPay (Ukraine)                    </td></tr><tr><td>ty          </td><td>TPay card register (Poland, Cyprus) </td></tr><tr><td>wc          </td><td>WorldPay Corporate                  </td></tr><tr><td>wp          </td><td>WorldPay Online (UK)                </td></tr></tbody></table></div><div id="loginByLoginToken"><h3>loginByLoginToken /  Login using a "login token" for a user </h3><ul><li><a href="https://api.nextbike.net/api/loginByLoginToken.json?apikey=REDACTED&amp;version=1.0&amp;login_token=fHpJnfApSgAYxP1t">https://api.nextbike.net/api/loginByLoginToken.json?apikey=REDACTED&amp;version=1.0&amp;login_token=fHpJnfApSgAYxP1t</a></li><li>Creates a user session (loginkey) based on a "login token" that you received from a different API key by getLoginToken or in a "rent_url"</li></ul><table><thead><tr class="head"><th>Request-Parameter</th><th>Type</th><th>Description</th><th>Required</th></tr></thead><tbody><tr><td>apikey </td><td>String </td><td>API-key of your application </td><td>required </td></tr><tr><td>version </td><td>float </td><td>API-version </td><td>optional (default latest) </td></tr><tr><td>login_token </td><td>String </td><td>Login token received by getLoginToken or in a "rent_url" </td><td>required </td></tr></tbody></table></div><div id="logout"><h3>logout /  Logout </h3><ul><li>Delete session(s) of the customer</li><li>Default usage (without scope parameter): delete only the session with used loginkey</li><li><a href="https://api.nextbike.net/api/logout.xml?apikey=REDACTED&amp;loginkey=REDACTED&amp;scope=apikey">https://api.nextbike.net/api/logout.xml?apikey=REDACTED&amp;loginkey=REDACTED&amp;scope=apikey</a></li></ul><table><thead><tr class="head"><th>Request-Parameter</th><th>Type</th><th>Description</th><th>Required</th></tr></thead><tbody><tr><td>apikey </td><td>String </td><td>API-key of your application </td><td>required </td></tr><tr><td>version </td><td>float </td><td>API-version </td><td>optional (default latest) </td></tr><tr><td>loginkey </td><td>String </td><td>Login-Token of the customer </td><td>required </td></tr><tr><td>scope </td><td>String </td><td>'all': delete all sessions of customer or 'apikey': delete sessions with same apikey </td><td>optional </td></tr><tr><td>device_id </td><td>String </td><td>the device that you are logging out </td><td>optional </td></tr><tr><td>os_type </td><td>String </td><td>operating system type </td><td>optional </td></tr><tr><td>cloud_messenger </td><td>String </td><td>cloud messenger type </td><td>optional </td></tr><tr><td>message_token </td><td>String </td><td>fcm message token </td><td>optional </td></tr></tbody></table></div><div id="openHelmetBox"><h3>openHelmetBox /  Open the helmet box of a vehicle </h3><ul><li><a href="https://api.nextbike.net/api/openLock.json">https://api.nextbike.net/api/openLock.json</a></li><table><thead><tr class="head"><th>Request-Parameter</th><th>Type</th><th>Description</th><th>Required</th></tr></thead><tbody><tr><td>version </td><td>Float </td><td>API version </td><td>Optional (default latest) </td></tr><tr><td>apikey </td><td>String </td><td>API-key of your application </td><td>Required </td></tr><tr><td>loginkey </td><td>String </td><td>Login token of the user </td><td>Required </td></tr><tr><td>rental </td><td>Int </td><td>ID of the rental </td><td>required, or bike </td></tr><tr><td>bike </td><td>Int </td><td>bike number (00000-99999) </td><td>required, or rental </td></tr></tbody></table></ul></div><div id="openLock"><h3>openLock /  Open a bike lock </h3><ul><li><a href="https://api.nextbike.net/api/openLock.json">https://api.nextbike.net/api/openLock.json</a></li><table><thead><tr class="head"><th>Request-Parameter</th><th>Type</th><th>Description</th><th>Required</th></tr></thead><tbody><tr><td>version </td><td>Float </td><td>API version </td><td>Optional (default latest) </td></tr><tr><td>apikey </td><td>String </td><td>API-key of your application </td><td>Required </td></tr><tr><td>loginkey </td><td>String </td><td>Login token of the user </td><td>Required </td></tr><tr><td>rental </td><td>Int </td><td>ID of the rental </td><td>required, or bike </td></tr><tr><td>bike </td><td>Int </td><td>bike number (00000-99999) </td><td>required, or rental </td></tr><tr><td>just_open </td><td>Bool </td><td>if set to 1 only open lock and don't execute other (pedelec-specific) steps </td></tr></tbody></table></ul></div><div id="orderRfidCard"><h3>orderRfidCard</h3>!use OrderRfidCardAction
+</div><div id="partner"><h3>partner /  Partner - Get the details of a Partner </h3><ul><li>Get the details of a Partner</li><li><a href="https://api.nextbike.net/api/partner.xml?apikey=REDACTED&amp;loginkey=REDACTED&amp;partner_id=xxxx">https://api.nextbike.net/api/partner.xml?apikey=REDACTED&amp;loginkey=REDACTED&amp;partner_id=xxxx</a></li></ul><h4>Response Example</h4><pre class="code">&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;nextbike version="1.0" server_time="1234567890"&gt;
+  &lt;item server_time="1566881394"&gt;
+    &lt;partner uid="367" partner_name="PartnerMe" partner_number="Zugangsnummer" partner_number2="BenefitCard" domain="fr" verification_type="number" description_conditions="Abc" description_details="Abc" description_hint="Abc" category="university_1" is_connected="1" user_number="123-44-55"/&gt;
+  &lt;/item&gt;
+&lt;/nextbike&gt;
+</pre><table><thead><tr class="head"><th>Request-Parameter</th><th>Type</th><th>Description</th><th>Required</th></tr></thead><tbody><tr><td>partner_id       </td><td>Integer </td><td>Internal Partner UID </td><td>Required </td></tr><tr><td>apikey    </td><td>String </td><td>Your API key </td><td>Required </td></tr><tr><td>version   </td><td>Float  </td><td>API version </td><td>optional (default latest) </td></tr><tr><td>loginkey  </td><td>String </td><td>Login token of the customer, to check customer-specific availability (e.g. bike limits) </td><td>Required </td></tr></tbody></table><table><thead><tr class="head"><th>Node</th><th>Response-Parameter</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>partner </td><td>partner </td><td>Node </td><td>Detailed description of the given partner </td></tr><tr><td></td><td>uid          </td><td>int    </td><td>Internal id of the partner </td></tr><tr><td></td><td>partner_name </td><td>string </td><td>Name of the partner </td></tr><tr><td></td><td>domain       </td><td>string </td><td>Domain of the partner </td></tr><tr><td></td><td>verification_type </td><td>string </td><td>Connection path ("number", "mail", "link", "foreign_system") </td></tr><tr><td></td><td>description_conditions </td><td>string/null </td><td>a textual description of the conditions of the partner </td></tr><tr><td></td><td>description_details </td><td>string/null </td><td>a textual description of the details of the partner </td></tr><tr><td></td><td>description_hint </td><td>string/null </td><td>an additional hint for the partner </td></tr><tr><td></td><td>category </td><td>string/null </td></tr><tr><td></td><td>partner_number  </td><td>string </td><td>First number identifier to connect with the partner (only if verification_type "number") </td></tr><tr><td></td><td>partner_number2 </td><td>string/null </td><td>Second identifier to connect with the partner (only if verification_type "number") </td></tr><tr><td></td><td>is_connected </td><td>boolean </td><td>whether the customer requesting is connected to the partner </td></tr><tr><td></td><td>user_number  </td><td>string/null </td><td>First identifier used to connect to the partner (only if verification_type "number" and is_connected is true) </td></tr><tr><td></td><td>user_number2 </td><td>string/null </td><td>Second identifier used to connect to the partner (only if verification_type "number" and is_connected is true) </td></tr><tr><td></td><td>link </td><td>String </td><td>url to external verification service (only if verification_type "link") </td></tr></tbody></table></div><div id="partnerLogin"><h3>partnerLogin /  Login for nextbike partners </h3><ul><li><a href="https://api.nextbike.net/api/partnerLogin.xml?apikey=REDACTED&amp;version=1.0&amp;partner_number=1234556&amp;partner_number2=ABcdEF12">https://api.nextbike.net/api/partnerLogin.xml?apikey=REDACTED&amp;version=1.0&amp;partner_number=1234556&amp;partner_number2=ABcdEF12</a></li><li>Get a loginkey for one of your customers using the partner connection data</li></ul><oas-input>
+@../types/partnerLogin-input.json
+</oas-input>
+</div><div id="partnerTokenLogin"><h3>partnerTokenLogin</h3>!use PartnerTokenLoginAction
+</div><div id="payBlik"><h3>payBlik /  Pay with BLIK </h3>Make a BLIK payment (popular local payment method in Poland)
+<ul><li><a href="https://api.nextbike.net/api/payBlik.xml?apikey=REDACTED&amp;loginkey=REDACTED&amp;amount=1000&amp;description=Top-up&amp;code=123456">https://api.nextbike.net/api/payBlik.xml?apikey=REDACTED&amp;loginkey=REDACTED&amp;amount=1000&amp;description=Top-up&amp;code=123456</a></li></ul><h4>Response Example</h4><pre class="code">&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;nextbike version="1.0" server_time="1234567890"&gt;
+  &lt;blikpayment amount="1000" description="Top-up" code="123456" success="1"/&gt;
+&lt;/nextbike&gt;
+</pre><table><thead><tr class="head"><th>Request-Parameter</th><th>Type</th><th>Description</th><th>Required</th></tr></thead><tbody><tr><td>apikey </td><td>String </td><td>API-Key of the application </td><td>Required </td></tr><tr><td>version </td><td>float </td><td>API-Version </td><td>Optional (default: newest) </td></tr><tr><td>loginkey </td><td>String </td><td>Login-Token of the customer </td><td>required </td></tr><tr><td>code </td><td>String </td><td>BLIK code </td><td>Required </td></tr><tr><td>amount </td><td>int </td><td>Amount in cent </td><td>Optional </td></tr><tr><td>description </td><td>String </td><td>Transaction description (only A-Za-z0-9 characters + space) </td><td>Optional </td></tr></tbody></table></div><div id="pinRecover"><h3>pinRecover /  Reset PIN </h3><ul><li>Sends a text message with the PIN to the phone number</li><li><a href="https://api.nextbike.net/api/pinRecover.xml?apikey=REDACTED&amp;version=1.0&amp;mobile=491238234123">https://api.nextbike.net/api/pinRecover.xml?apikey=REDACTED&amp;version=1.0&amp;mobile=491238234123</a></li><li>Response like "Check phone number for existence"</li></ul><table><thead><tr class="head"><th>Request-Parameter</th><th>Type</th><th>Description</th><th>Required</th></tr></thead><tbody><tr><td>apikey </td><td>String </td><td>API-key of your application </td><td>required </td></tr><tr><td>version </td><td>float </td><td>API-version </td><td>optional (default latest) </td></tr><tr><td>mobile </td><td>String </td><td>Phone number in international format (+49...) </td><td>required </td></tr></tbody></table></div><div id="register"><h3>register /  Registration / Signup </h3><ul><li>Only for terminals and nextbike partners</li><li><a href="https://api.nextbike.net/api/register.xml">https://api.nextbike.net/api/register.xml</a></li></ul><table><thead><tr class="head"><th>Request-Parameter</th><th>Type</th><th>Description</th><th>Required</th></tr></thead><tbody><tr><td>apikey </td><td>String </td><td>API key of the application </td><td>required </td></tr><tr><td>version </td><td>float </td><td>API version </td><td>optional (default 1.0) </td></tr><tr><td>domain </td><td>String </td><td>short code of the nextbike brand the customer shall be registered in </td></tr><tr><td>mobile </td><td>String </td><td>Mobile phone number (if not in international format, default country prefix of user domain will be prepended), will be used for login / as username </td><td>optional </td></tr><tr><td>sms_mobile </td><td>String </td><td>Mobile phone number to send SMS to </td><td>optional </td></tr><tr><td>email </td><td>String </td><td>Email address </td><td>optional </td></tr><tr><td>forename </td><td>String </td><td>First name </td><td>optional </td></tr><tr><td>name </td><td>String </td><td>Last name </td><td>optional </td></tr><tr><td>birthday </td><td>String </td><td>Date of birth </td><td>optional </td></tr><tr><td>id_number </td><td>String </td><td>ID/Passport number </td><td>optional </td></tr><tr><td>zip </td><td>String </td><td>ZIP </td><td>optional </td></tr><tr><td>address </td><td>String </td><td>Street + Number </td><td>optional </td></tr><tr><td>city </td><td>String </td><td>City </td><td>optional </td></tr><tr><td>language </td><td>String </td><td>2-letter ISO language code </td><td>optional </td></tr><tr><td>newsletter </td><td>Bool </td><td>Subscribe to newsletter </td><td>optional </td></tr><tr><td>rfid_uid </td><td>String </td><td>RFID UID of customer card (uint64) </td><td>optional </td></tr><tr><td>partner_number </td><td>String </td><td>Identification key of partner </td><td>optional </td></tr><tr><td>partner_number_2 </td><td>String </td><td>Additional identification key of partner </td><td>optional </td></tr><tr><td>rfid_card </td><td>String </td><td>Order customer card? </td><td>optional </td></tr><tr><td>pesel </td><td>String </td><td>Polish personal identification number </td><td>optional </td></tr><tr><td>gender </td><td>String </td><td>Abbreviation for male (m), female (f) or other (o) </td><td>optional </td></tr><tr><td>data_{yourkey} </td><td>String </td><td>Additional fields </td><td>optional </td></tr><tr><td>benefit_card_number </td><td>String </td><td>Benefit card number </td><td>optional </td></tr><tr><td>app_hash </td><td>String </td><td>Android App hash [<a href="https://developers.google.com/identity/sms-retriever/verify#computing_your_apps_hash_string]">https://developers.google.com/identity/sms-retriever/verify#computing_your_apps_hash_string]</a> for verification SMS </td><td>optional </td></tr></tbody></table><ul><li>Response like login</li><li><b>Attention</b>: Depending on "domain", the response may differ and returns no loginkey. In this case the user must use the PIN sent to the given mobile to login. See example below.</li><li>"mobile" is not required for partners, but a "login / username" is relevant for system, thus a virtual phone number will be automatically created</li></ul>Example for response without loginkey
+<h4>Response Example</h4><pre class="code">&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;nextbike version="1.0" server_time="1234567890"&gt;
+  &lt;user mobile="6356510154731" lang="SV" domain="zg"/&gt;
+&lt;/nextbike&gt;
+</pre></div><div id="rent"><h3>rent /  Rental </h3><ul><li><a href="https://api.nextbike.net/api/rent.xml?apikey=REDACTED&amp;loginkey=REDACTED&amp;bike=12345">https://api.nextbike.net/api/rent.xml?apikey=REDACTED&amp;loginkey=REDACTED&amp;bike=12345</a></li><li>Callback events: These states represent a typical life cycle of a rental</li></ul><table><thead><tr class="head"><th>Callback event</th><th>Description</th></tr></thead><tbody><tr><td>rent </td><td>bike has been rented (though makes no sense, if you trigger "rent", but could be used for strictly event-based architectures or if a booking turns into a rental)  </td></tr><tr><td>unlock </td><td>the lock has been opened (only available for specific bike types) </td></tr><tr><td>pause_start </td><td>the rental is in "pause" / "break" state, closing the lock will not return the bike </td></tr><tr><td>lock </td><td>the lock has been closed (only available for specific bike types) - could be during pause or to return the bike </td></tr><tr><td>pause_end </td><td>an active break has ended; if the rental is still running, the next closing of the lock will return the bike </td></tr><tr><td>return </td><td>bike returned has been registered successfully, but price calculation may not be completed yet </td></tr><tr><td>service_case </td><td>A "service case" has been triggered, e.g. additional fees for returning outside of flex zone, a free warning about this, a bonus for returning to an empty station </td></tr><tr><td>complete </td><td>Our typical price calculations are completed, we received a good GPS position and applied all service fees, if required </td></tr><tr><td>price </td><td>The price of the rental changed. This happen during return (if price &gt; 0) or completed, but also if customer service invalidates a rental or adjusts its price later </td></tr><tr><td>comment </td><td>The "comments for customer" changed, e.g. including infos from customer service or feedback regarding the rental </td></tr><tr><td>resume </td><td>the same bike has been rented again by the same customer, without another customer renting it in between and it would be cheaper for the customer to have one continuous rental instead of two separate. (E.g. after service fee for return outside of flex zone has been applied and customer wants to bring it back to an official station). Rental ID remains the same, time between original return and resume will be converted into a rental pause / break. All paid fees will be credited to the customer account and a new price calculation will take place with next return. You may turn of resume by setting "no_resume" (though it could be resumed through another channel) </td></tr><tr><td>overtime </td><td>The rental takes longer than typical rentals (feature is enabled for a few brands, "typical" rental duration set by brands). Can trigger multiple times (e.g. after 2, 12, 24, 36, 48 hours) </td></tr><tr><td>distance </td><td>The distance of the rental has been calculated (happen 15mns after the bike has been returned) </td></tr></tbody></table><ul><li>Most integrators are happy with the "return" callback to indicate a successful return and "complete" + consecutive "price" to trigger the factoring and debt purchase.</li><li>The "resume" event is the trickiest, because it uses the same rental ID and may shake up already factored rentals. You can disable the feature in your integration, by setting "no_resume", but customer may hate you for this.</li></ul><oas-input>
+@../types/rent-input.json
+</oas-input>
+<oas-output>
+@../types/rent-output.json
+</oas-output>
+</div><div id="rentMultipleBikes"><h3>rentMultipleBikes /  Rental </h3><ul><li><a href="https://api.nextbike.net/api/rent.xml?apikey=REDACTED&amp;loginkey=REDACTED&amp;number_of_bikes=3&amp;place=142871">https://api.nextbike.net/api/rent.xml?apikey=REDACTED&amp;loginkey=REDACTED&amp;number_of_bikes=3&amp;place=142871</a></li></ul><h4>Response Example</h4><pre class="code xml">&lt;nextbike version="1.0" server_time="1493197695"&gt;
+    &lt;rentals&gt;
+        &lt;rental id="12345678" show_close_lock_info="0" invalid="0" return_via_app="1" city_id="1" city="Leipzig" domain="de" bike="12345" biketype="4" code="3210" start_place="888844" start_place_lat="51.0" start_place_lng="12.0" start_place_name="Mussterstr. / Musterkreuzstr." end_place="0" end_place_lat="0" end_place_lng="0" end_place_name="" start_time="1493197694" end_time="0" price="100" price_service="0" /&gt;
+        &lt;rental id="12345679" show_close_lock_info="0" invalid="0" return_via_app="1" city_id="1" city="Leipzig" domain="de" bike="12346" biketype="5" code="1023" start_place="888844" start_place_lat="51.0" start_place_lng="12.0" start_place_name="Mussterstr. / Musterkreuzstr." end_place="0" end_place_lat="0" end_place_lng="0" end_place_name="" start_time="1493197695" end_time="0" price="100" price_service="0" /&gt;
+    &lt;/rentals&gt;
+&lt;/nextbike&gt;
+</pre><table><thead><tr class="head"><th>Request-Parameter</th><th>Type</th><th>Description</th><th>Required</th></tr></thead><tbody><tr><td>apikey </td><td>String </td><td>API-key of your application </td><td>required </td></tr><tr><td>version </td><td>float </td><td>API-version </td><td>optional (default latest) </td></tr><tr><td>loginkey </td><td>String </td><td>Login-Token of the customer </td><td>required </td></tr><tr><td>place </td><td>Int </td><td>ID of the start place for rental </td><td>optional*² </td></tr><tr><td>station </td><td>String </td><td>Station number of the start place for rental </td><td>optional*² </td></tr><tr><td>rfid </td><td>Int </td><td>Rfid Uid </td><td>optional </td></tr><tr><td>number_of_bikes </td><td>Int </td><td>Number of bikes to rent </td><td>optional*³ </td></tr><tr><td>bike_numbers </td><td>String </td><td>List with comma seperated bike numbers </td><td>optional*³ </td></tr><tr><td>callback_rent </td><td>String </td><td>Callback URL for bike rental (hostname of Callback URL has to be whitelisted in brand config, e.g. "website" host in maps XML, callback will be sent as HTTP POST) </td><td>optional </td></tr><tr><td>callback_return </td><td>String </td><td>Callback URL for bike return </td><td>optional </td></tr></tbody></table>*² one of these parameter have to be set, but not both
+*³ one of these parameter have to be set, but not both
+</div><div id="rentalBreak"><h3>rentalBreak /  Parking </h3><ul><li>User can park the bike by making rentalBreak</li><li>Start parking without parameter 'end'</li><li>Start example: <a href="https://api.nextbike.net/api/rentalBreak.xml?apikey=REDACTED&amp;loginkey=REDACTED&amp;rental=123456&amp;lat=52.323001&amp;lng=43.212223">https://api.nextbike.net/api/rentalBreak.xml?apikey=REDACTED&amp;loginkey=REDACTED&amp;rental=123456&amp;lat=52.323001&amp;lng=43.212223</a></li><li>Response includes the rental node with the attribute "break"</li><li>If "break" is true, then the rental is in pause mode</li><li>User have to close the lock manually (starts a return request)</li><li>API cancels the return process because the rental is in break</li><li>Starting a break sends pause_start before the lock is closed</li><li>Closing the lock during a break sends lock and does not return the bike</li><li>Opening the lock or ending the break sends pause_end</li><li>Returning a bike during a break ends the break and sends pause_end and return</li><li>End parking with parameter 'end'</li><li>End example: <a href="https://api.nextbike.net/api/rentalBreak.xml?apikey=REDACTED&amp;loginkey=REDACTED&amp;rental=123456&amp;end=1">https://api.nextbike.net/api/rentalBreak.xml?apikey=REDACTED&amp;loginkey=REDACTED&amp;rental=123456&amp;end=1</a></li><li>Response parameter "break" will be false</li><li>If the customer already returned the bike, starting a new rentalBreak is the same like rent with start_paused=1&amp;resume=1 (previous rental will be resumed and directly set to break mode)</li></ul><h4>Response Example</h4><pre class="code json">{
+    "server_time": 1537880582,
+    "rental": {
+        "id": 59751851,
+        "show_close_lock_info": false,
+        "invalid": false,
+        [...]
+        "break": true,
+        "rating": 0
+    }
+}
+</pre><table><thead><tr class="head"><th>Request-Parameter</th><th>Type</th><th>Description</th><th>Required</th></tr></thead><tbody><tr><td>apikey </td><td>String </td><td>API-key of your application </td><td>required </td></tr><tr><td>version </td><td>float </td><td>API-version </td><td>optional (default latest) </td></tr><tr><td>loginkey </td><td>String </td><td>Login-Token of the customer </td><td>required </td></tr><tr><td>rental </td><td>Int </td><td>ID of the rental </td><td>required </td></tr><tr><td>end </td><td>Boolean </td><td>Flag to end the break </td><td>required to end the current break </td></tr><tr><td>lat </td><td>Float </td><td>Latitude by start </td><td>optional </td></tr><tr><td>lng </td><td>Float </td><td>Longitude by start </td><td>optional </td></tr></tbody></table></div><div id="rentals"><h3>rentals /  Get Open and closed rentals </h3><ul><li><a href="https://api.nextbike.net/api/rentals.xml?apikey=REDACTED&amp;loginkey=REDACTED">https://api.nextbike.net/api/rentals.xml?apikey=REDACTED&amp;loginkey=REDACTED"head"><th>Request-Parameter</th><th>Type</th><th>Description</th><th>Required</th></tr></thead><tbody><tr><td>apikey </td><td>String </td><td>API-key of your application </td><td>required </td></tr><tr><td>version </td><td>float </td><td>API-version </td><td>optional (default latest) </td></tr><tr><td>loginkey </td><td>String </td><td>Login-Token of the customer </td><td>required </td></tr><tr><td>limit </td><td>Int </td><td>length of the account list </td><td>optional (default 20) all open rentals are always shown </td></tr><tr><td>offset </td><td>Int </td><td>start of the list </td><td>optional (default 0) </td></tr></tbody></table><ul><li>Responses see list</li></ul></div><div id="return"><h3>return /  Return </h3><ul><li><a href="https://api.nextbike.net/api/return.xml?apikey=REDACTED&amp;loginkey=REDACTED&amp;rental=123456&amp;bike=12345&amp;place=123&amp;lat=52.323&amp;lng=43.212&amp;place_name=R%C3%BCckgabe+ort&amp;comment=hat+spa%C3%9F+gemacht">https://api.nextbike.net/api/return.xml?apikey=REDACTED&amp;loginkey=REDACTED&amp;rental=123456&amp;bike=12345&amp;place=123&amp;lat=52.323&amp;lng=43.212&amp;place_name=Rückgabe+ort&amp;comment=hat+spaß+gemacht</a></li></ul><h4>Response Example</h4><pre class="code xml">&lt;nextbike version="1.0"&gt;
+  &lt;rental id="123456" bike="12345" code="1234" start_place="123" end_place="123" start_time="123483434" end_time="123234234" price="100" price_service="500" /&gt;
+&lt;/nextbike&gt;
+</pre><table><thead><tr class="head"><th>Request-Parameter</th><th>Type</th><th>Description</th><th>Required</th></tr></thead><tbody><tr><td>apikey </td><td>String </td><td>API-key of your application </td><td>required </td></tr><tr><td>version </td><td>float </td><td>API-version </td><td>optional (default latest) </td></tr><tr><td>loginkey </td><td>String </td><td>Login-Token of the customer </td><td>required </td></tr><tr><td>rental </td><td>Int </td><td>ID of the rental </td><td>required, or bike </td></tr><tr><td>bike </td><td>Int </td><td>bike number (00000-99999) </td><td>required, or rental </td></tr><tr><td>place </td><td>Int </td><td>ID of return place </td><td>required, or lat and lng </td></tr><tr><td>lat </td><td>Float </td><td>Latitude </td><td>optional </td></tr><tr><td>lng </td><td>Float </td><td>Longitude </td><td>optional </td></tr><tr><td>comment </td><td>String </td><td>Return comment </td><td>optional </td></tr><tr><td>rating </td><td>Int </td><td>0-5 (5 is good) </td><td>optional </td></tr><tr><td>return_code </td><td>Int </td><td>Return confirmation code displayed by the boardcomputer </td><td>optional </td></tr><tr><td>do_calc_auto_service_fee </td><td>Boolean </td><td>Customer has accepted the automatic service fee for return bike outside of official place and flexzone </td><td>optional </td></tr><tr><td>force </td><td>Boolean </td><td>If set skip some checks and force return. </td><td>optional </td></tr></tbody></table><ul><li>Response-Parameter like #list</li></ul></div><div id="revokeAgreement"><h3>revokeAgreement /  Revoke Agreement </h3><ul><li>Revokes an agreement</li><li><a href="https://api.nextbike.net/api/revokeAgreement.xml?apikey=REDACTED&amp;loginkey=REDACTED&amp;agreement_id=X">https://api.nextbike.net/api/revokeAgreement.xml?apikey=REDACTED&amp;loginkey=REDACTED&amp;agreement_id=X</a></li></ul><table><thead><tr class="head"><th>Request-Parameter</th><th>Type</th><th>Description</th><th>Required</th></tr></thead><tbody><tr><td>apikey </td><td>String </td><td>API-Key of the application </td><td>required </td></tr><tr><td>loginkey </td><td>String </td><td>Login-Token of customer </td><td>required </td></tr><tr><td>agreement_id </td><td>Integer </td><td>Specific Agreement UID (You get that with getAgreementDataForDomain) </td><td>Required </td></tr><tr><td>version </td><td>Number </td><td>API-Version </td><td>optional (default: newest) </td></tr></tbody></table></div><div id="sendErrorReport"><h3>sendErrorReport /  Send Error Report </h3><ul><li>Sends an error report</li><li><a href="https://api.nextbike.net/api/sendErrorReport.xml?apikey=REDACTED&amp;loginkey=REDACTED&amp;maincategory=XXXX&amp;number=XXXX&amp;date=XXXX&amp;rack=XXXX&amp;lng=XX.XXX&amp;lat=XX.XXX&amp;message=XXX">https://api.nextbike.net/api/sendErrorReport.xml?apikey=REDACTED&amp;loginkey=REDACTED&amp;maincategory=XXXX&amp;number=XXXX&amp;date=XXXX&amp;rack=XXXX&amp;lng=XX.XXX&amp;lat=XX.XXX&amp;message=XXX</a></li></ul><h4>Response Example</h4><pre class="code xml">&lt;nextbike version="1.0" server_time="1580391084"&gt;
+&lt;errorReport uid="60" /&gt;
+&lt;errorReport uid="61" /&gt;
+&lt;/nextbike&gt;
+</pre><h4>Response Example</h4><pre class="code json">{
+  "server_time": 1580391196,
+  "errorReports": [
+    {
+      "errorReport": {
+        "uid": 62
+      }
+    },
+    {
+      "errorReport": {
+        "uid": 63
+      }
+    }
+  ]
+}
+</pre><table><thead><tr class="head"><th>Request-Parameter</th><th>Type</th><th>Description</th><th>Required</th></tr></thead><tbody><tr><td>loginkey  </td><td>String </td><td>Login token of the customer </td><td>Required, optional for problems of category system if 'reportable_problem_ids' are set </td></tr><tr><td>apikey    </td><td>String </td><td>Your API key </td><td>Required </td></tr><tr><td>maincategory </td><td>String </td><td>Main category of error report (in: bikes, rentals, stations, message) </td><td>Required OR reportable_problem_ids </td></tr><tr><td>number    </td><td>Integer </td><td>Bike number or station number or rental id for main category 'bikes', 'stations', 'rentals' (for category 'rentals' number is interpreted as bike number if reportable_problem_ids is not set) </td><td>Optional </td></tr><tr><td>object_id </td><td>Integer </td><td>Internal bike or place UID for main category 'bikes' or 'stations' (ignored, when 'number' is given) </td><td>Optional </td></tr><tr><td>message   </td><td>String </td><td>The content of your error report </td><td>Optional </td></tr><tr><td>reports   </td><td>String </td><td>The subcategories as json encoded object, like: {"1":{"1":"ad","2":"pl","3":"cl"}}. You get the subcategories with: getErrorTreeAsJson.xml</td><td>Optional </td></tr><tr><td>date      </td><td>String </td><td>The time you have found out the problem in format: 'd.m.y' (17.05.2016) </td><td>Optional </td></tr><tr><td>lat       </td><td>String </td><td>The latitude coordinate from the problem report </td><td>Optional </td></tr><tr><td>lng       </td><td>String </td><td>The longitude coordinate from the problem report </td><td>Optional </td></tr><tr><td>image     </td><td>File </td><td>JPG or PNG image file (e.g. screenshot or photo of the problem), max. 10 MB file size </td><td>Optional </td></tr><tr><td>callback  </td><td>String </td><td>URL that will be called when error is fixed, has to be whitelisted </td><td>Optional for maincategory bikes </td></tr><tr><td>reportable_problem_ids </td><td>String </td><td>comma seperated list of uids of the reportable problems (see getReportableProblems) </td><td>Required OR maincategory </td></tr><tr><td>extras </td><td>String </td><td>Extra information, e.g. stack trace - must be JSON encoded </td><td>optional </td></tr><tr><td>domain </td><td>String </td><td>short code of the nextbike brand, is used only for reports in maincategory system </td><td>Optional, required if maincategory 'system' </td></tr></tbody></table><table><thead><tr class="head"><th>Node</th><th>Response-Parameter</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>errorReports </td><td></td><td>Node </td><td></td></tr><tr><td>errorReport  </td><td></td><td>Node </td><td></td></tr><tr><td></td><td>uid  </td><td>int  </td><td>Internal id the saved error report </td></tr></tbody></table></div><div id="setAdId"><h3>setAdId /  stores the advertisement-id for a given device &amp; user </h3><ul><li><a href="https://api.nextbike.net/api/setAdId.xml?apikey=REDACTED&amp;os_type=ios&amp;ad_id=jksdfsdf&amp;device_id=24234234">https://api.nextbike.net/api/setAdId.xml?apikey=REDACTED&amp;os_type=ios&amp;ad_id=jksdfsdf&amp;device_id=24234234</a></li></ul><h4>Response Example</h4><pre class="code xml"></pre><table><thead><tr class="head"><th>Request-Parameter</th><th>Type</th><th>Description</th><th>Required</th></tr></thead><tbody><tr><td>apikey </td><td>String </td><td>API-key of your application </td><td>required </td></tr><tr><td>loginkey </td><td>String </td><td>login-token of the customer </td><td>required </td></tr><tr><td>ad_id </td><td>String </td><td>the advertisement-id </td><td>required </td></tr><tr><td>device_id </td><td>String </td><td>the unique device-id the ad-id belongs to </td><td>required </td></tr><tr><td>os_type </td><td>String </td><td>operating system type: supported: ios or android </td><td>required </td></tr></tbody></table></div><div id="tariffs"><h3>tariffs /  Tariffs </h3>Get all tariffs of a specified domain:
+<ul><li><a href="https://api.nextbike.net/api/tariffs.xml?apikey=REDACTED&amp;domain=bu">https://api.nextbike.net/api/tariffs.xml?apikey=REDACTED&amp;domain=bu</a></li></ul><h4>Response Example</h4><pre class="code">&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;nextbike version="1.0" server_time="1234567890"&gt;
+  &lt;country name="BelfastBikes" domain="bu" subscription_fee="500" rfid_card_fee="0" ticket_required="1" vat="0"/&gt;
+  &lt;tariff uid="1090" name="3 day account" domain="bu" brand="BelfastBikes" price="500" currency="GBP" code="590959" valid_days="3" partner_id="0" terms_url="https://www.nextbike.de/de/agb/" withdrawal_policy_url="https://www.nextbike.de/de/widerrufsbelehrung"/&gt;
+  &lt;tariff uid="1089" name="annual account" domain="bu" brand="BelfastBikes" price="2000" currency="GBP" code="937693" valid_days="365" partner_id="0" terms_url="https://www.nextbike.de/de/agb/" withdrawal_policy_url="https://www.nextbike.de/de/widerrufsbelehrung"/&gt;
+&lt;/nextbike&gt;
+</pre>Get single tariff by uid or code:
+<ul><li><a href="https://api.nextbike.net/api/tariffs.xml?apikey=REDACTED&amp;uid=1090">https://api.nextbike.net/api/tariffs.xml?apikey=REDACTED&amp;uid=1090</a></li></ul><h4>Response Example</h4><pre class="code">&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;nextbike version="1.0" server_time="1234567890"&gt;
+  &lt;tariff uid="1090" name="3 day account" domain="bu" brand="BelfastBikes" price="500" currency="GBP" code="590959" valid_days="3" partner_id="0" terms_url="https://www.nextbike.de/de/agb/" withdrawal_policy_url="https://www.nextbike.de/de/widerrufsbelehrung"/&gt;
+&lt;/nextbike&gt;
+</pre><table><thead><tr class="head"><th>Request-Parameter</th><th>Type</th><th>Description</th><th>Required</th></tr></thead><tbody><tr><td>apikey </td><td>String </td><td>API-Key of the application </td><td>Required </td></tr><tr><td>version </td><td>float </td><td>API-Version </td><td>Optional (default: newest) </td></tr><tr><td>domain </td><td>String </td><td>Get all tariffs of this domain </td><td>Optional </td></tr><tr><td>language </td><td>String </td><td>Language code to display texts (if available) </td><td>Optional </td></tr><tr><td>code </td><td>String </td><td>Unique code of the tariff </td><td>Optional </td></tr><tr><td>uid </td><td>String </td><td>Unique ID of the tariff </td><td>Optional </td></tr><tr><td>loginkey </td><td>String </td><td>Loginkey of customer (to use customer language, customer domain) </td><td>Optional </td></tr></tbody></table></div><div id="tpayDirectSale"><h3>tpayDirectSale</h3>!use TpayDirectSaleAction
+</div><div id="transfer"><h3>transfer</h3>!use TransferAction
+</div><div id="triggerBikeAlarm"><h3>triggerBikeAlarm</h3>!use TriggerBikeAlarmAction
+</div><div id="updateRentalPrice"><h3>updateRentalPrice</h3>!use UpdateRentalPriceAction
+</div><div id="updateUser"><h3>updateUser /  Update user </h3><ul><li>Limited to special API keys</li><li><a href="https://api.nextbike.net/api/updateUser.xml">https://api.nextbike.net/api/updateUser.xml</a></li></ul><table><thead><tr class="head"><th>Request-Parameter</th><th>Type</th><th>Description</th><th>Required</th></tr></thead><tbody><tr><td>apikey </td><td>String </td><td>Your API key </td><td>Required </td></tr><tr><td>version </td><td>float </td><td>API version </td><td>optional (default latest) </td></tr><tr><td>loginkey </td><td>String </td><td>Login token of the employee </td><td>Required </td></tr><tr><td>mobile </td><td>String </td><td>Mobile phone number (if not in international format, default country prefix of user domain will be prepended) </td><td>optional </td></tr><tr><td>sms_mobile </td><td>String </td><td>Mobile phone number to send SMS to </td><td>optional </td></tr><tr><td>email </td><td>String </td><td>Email address </td><td>optional </td></tr><tr><td>forename </td><td>String </td><td>First name </td><td>optional </td></tr><tr><td>name </td><td>String </td><td>Last name </td><td>optional </td></tr><tr><td>birthday </td><td>String </td><td>Date of birth </td><td>optional </td></tr><tr><td>id_number </td><td>String </td><td>ID/Passport number </td><td>optional </td></tr><tr><td>zip </td><td>String </td><td>ZIP </td><td>optional </td></tr><tr><td>address </td><td>String </td><td>Street + Number </td><td>optional </td></tr><tr><td>city </td><td>String </td><td>City </td><td>optional </td></tr><tr><td>payment </td><td>String </td><td>Payment method (see below) </td><td>optional </td></tr><tr><td>iban </td><td>String </td><td>IBAN of bank account </td><td>optional </td></tr><tr><td>bic </td><td>String </td><td>BIC of bank account </td><td>optional </td></tr><tr><td>language </td><td>String </td><td>2-letter ISO language code </td><td>optional </td></tr><tr><td>country </td><td>String </td><td>2-letter ISO country code </td><td>optional </td></tr><tr><td>newsletter </td><td>Bool </td><td>Subscribe to newsletter </td><td>optional </td></tr><tr><td>active </td><td>Bool </td><td>Set to 0 to lock the account (activation is not possible) </td><td>optional </td></tr><tr><td>forbid_rentals </td><td>Bool </td><td>Set to 1 to disable rentals for the account - regardless of activation state (deactivation is not possible) - only for special API keys </td><td>optional </td></tr><tr><td>comment </td><td>String </td><td>add an comment to customer account </td><td>optional </td></tr><tr><td>pesel </td><td>String </td><td>Polish personal identification number </td><td>optional </td></tr><tr><td>gender </td><td>String </td><td>Abbreviation for male (m), female (f) or other (o) </td><td>optional </td></tr><tr><td>data_{yourkey} </td><td>String </td><td>Additional fields </td><td>optional </td></tr><tr><td>benefit_card_number </td><td>String </td><td>Benefit card number </td><td>optional </td></tr><tr><td>callback_{event} </td><td>String </td><td>Callback URL for user events (callback will be sent as HTTP POST) - see "Callback events"</td><td>optional </td></tr></tbody></table><ul><li>Callback events:</li></ul><table><thead><tr class="head"><th>Callback event</th><th>Description</th></tr></thead><tbody><tr><td>detected_nfc </td><td>Rfid/eTicket detected and related customer is known to us. We will send eTicket data, customer loginkey and bike number to be able to rent directly afterwards. </td></tr><tr><td>notification </td><td>We sent a notification (email, sms, push) to the user that can be retrieved via getNotifications API </td></tr><tr><td>notification_email </td><td>As 'notification' but limited to emails </td></tr><tr><td>notification_sms </td><td>As 'notification' but limited to sms </td></tr><tr><td>notification_push </td><td>As 'notification' but limited to push notifications </td></tr><tr><td>user </td><td>The user object has changed, e.g. activation, credits, details or benefits like partner connections </td></tr><tr><td>user_details </td><td>The user details changed (everything that is not in the other types) </td></tr><tr><td>user_credits </td><td>Credits changed, e.g. by usage or payment </td></tr><tr><td>user_activation </td><td>Active status changed, e.g. after being activated or banned from renting vehicles </td></tr><tr><td>user_deleted </td><td>The user has requested account deletion or the user has been deleted finally </td></tr><tr><td>user_benefits </td><td>A partner connection has been established or released. Subscription expiry is not yet included </td></tr></tbody></table><ul><li>Payment methods:</li></ul><table><thead><tr class="head"><th>Code</th><th>Description</th></tr></thead><tbody><tr><td>cc </td><td>Credit card (WorldPay) </td></tr><tr><td>cp </td><td>CorvusPay </td></tr><tr><td>cs </td><td>Cash / Prepaid </td></tr><tr><td>dd </td><td>Direct Debit (SEPA) </td></tr><tr><td>in </td><td>Invoice (can not be set by user) </td></tr><tr><td>pp </td><td>PayPal </td></tr><tr><td>ep </td><td>External-Provider </td></tr></tbody></table><ul><li>Response like #getUserDetails</li></ul></div><div id="voucher"><h3>voucher /  Redeem vouchers / coupons </h3><ul><li><a href="https://api.nextbike.net/api/voucher.xml?apikey=REDACTED&amp;loginkey=REDACTED&amp;code=1234567890">https://api.nextbike.net/api/voucher.xml?apikey=REDACTED&amp;loginkey=REDACTED&amp;code=1234567890</a></li></ul><h4>Response Example</h4><pre class="code">&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;nextbike version="1.0" server_time="1234567890"&gt;
+  &lt;voucher amount="0" code="867867" currency="EUR" date="12367234" description="Using the voucher you get EUR 1 bonus for a ride." price="100" text="Voucher: #867867 EUR 1"/&gt;
+&lt;/nextbike&gt;
+</pre><table><thead><tr class="head"><th>Request-Parameter</th><th>Type</th><th>Description</th><th>Required</th></tr></thead><tbody><tr><td>apikey </td><td>String </td><td>API-Key of the application </td><td>required </td></tr><tr><td>version </td><td>float </td><td>API-Version </td><td>optional (default: newest) </td></tr><tr><td>loginkey </td><td>String </td><td>Login-Token of customer </td><td>required </td></tr><tr><td>code </td><td>String </td><td>Voucher code; 6- or 10-digit or alphanumeric, can be comma-separated </td><td>conditionally required </td></tr><tr><td>ticket_id </td><td>Int </td><td>Internal ticket_id (can replace code) </td><td>optional </td></tr><tr><td>start_time </td><td>Int </td><td>Set specific time (UNIX timestamp) for start of subscription </td><td>optional </td></tr><tr><td>description </td><td>String </td><td>Text to be stored in customer account along with the voucher description </td><td>optional </td></tr><tr><td>callback_due_renew </td><td>String </td><td>Callback URL for notification about planned renewal </td><td>optional </td></tr><tr><td>callback_used </td><td>String </td><td>Callback URL for notification about an applied voucher (e.g. used to decrease a rental price) </td><td>optional </td></tr><tr><td>callback_canceled </td><td>String </td><td>Notification about an actively canceled subscription (not expired) - please note that the subscription can still be valid until the end of the period </td><td>optional </td></tr></tbody></table><table><thead><tr class="head"><th>Node</th><th>Response-Parameter</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>voucher </td><td>amount </td><td>number </td><td>Credit provided by voucher in cents </td></tr><tr><td></td><td>code </td><td>String </td><td>Voucher code redeemed </td></tr><tr><td></td><td>ticket_id </td><td>Number </td><td>ID of the voucher / ticket </td></tr><tr><td></td><td>currency </td><td>String </td><td>Currency of price and amount </td></tr><tr><td></td><td>date </td><td>Number </td><td>Current timestamp </td></tr><tr><td></td><td>description </td><td>String </td><td>Description on redeemed voucher </td></tr><tr><td></td><td>price </td><td>String </td><td>Costs </td></tr><tr><td></td><td>text </td><td>String </td><td>Tiny voucher description </td></tr></tbody></table></div>
+
+</div></body></html>
