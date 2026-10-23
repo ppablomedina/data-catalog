@@ -13,6 +13,12 @@
     relation,
     status: "pending",
   });
+  const confirmed = (name, href, relation) => ({
+    name,
+    href: href || null,
+    relation,
+    status: "confirmed",
+  });
   const nextbike = (relation, query) =>
     linked(
       query ? `Nextbike · Consulta ${query}` : "Nextbike",
@@ -27,11 +33,10 @@
   const incidents = (relation) =>
     linked("Incidencias", "#/moxsi/fuente/moxsi-incidencias", relation, "proposed");
   const inventory = (relation) =>
-    linked(
+    confirmed(
       "Inventario VMP histórico",
-      "#/moxsi/fuente/moxsi-inventario-vmp-historico",
+      "#/documents/moxsi-inventario-vmp-historico",
       relation,
-      "proposed",
     );
   const qucit = (relation) => linked("qucit", "#/moxsi/fuente/qucit", relation, "proposed");
   const navision = (relation) =>
@@ -50,6 +55,7 @@
     description: options.description || "",
     note: options.note || "",
     pending: options.pending || [],
+    value: options.value || null,
   });
 
   window.DOCUMENT_LIBRARY = [
@@ -90,19 +96,19 @@
         {
           title: "Información del servicio",
           metrics: [
-            metric("Empresa / Entidad", "Valor declarado", "A 31/12", [pending("Ficha corporativa de Moxsi", "Nombre legal de la empresa o entidad")], { pending: ["Confirmar la razón social que debe declararse a ATUC."] }),
-            metric("Sistema que opera", "Valor declarado", "A 31/12", [pending("Ficha del servicio", "Nombre comercial y tipología del sistema")], { pending: ["Confirmar el texto oficial del sistema."] }),
-            metric("Municipio o área en la que opera", "Valor declarado", "A 31/12", [pending("Ficha del servicio", "Ámbito geográfico cubierto")], { pending: ["Confirmar si se declara municipio, isla o área concesional."] }),
+            metric("Empresa / Entidad", "Valor declarado", "No aplica (NA)", [confirmed("Dato facilitado para la encuesta", null, "Identificación de la entidad operadora")], { value: "Sagulpa" }),
+            metric("Sistema que opera", "Valor declarado", "No aplica (NA)", [confirmed("Dato facilitado para la encuesta", null, "Nombre del sistema operado")], { value: "Moxsi" }),
+            metric("Municipio o área en la que opera", "Valor declarado", "No aplica (NA)", [confirmed("Dato facilitado para la encuesta", null, "Ámbito geográfico del sistema")], { value: "Las Palmas de Gran Canaria" }),
           ],
         },
         {
           title: "Flota",
           note: "La plantilla indica que no debe incluirse la flota en stock.",
           metrics: [
-            metric("Número de bicicletas eléctricas", "Conteo de bicicletas eléctricas en servicio, sin stock", "A 31/12", [inventory("Inventario y tipo de vehículo"), apiNextbike("Estado de flota en la fecha de corte")], { pending: ["Validar qué estados de vehículo se consideran «en servicio»."] }),
-            metric("Número medio de bicicletas eléctricas operativas", "Media de los conteos diarios de bicicletas eléctricas operativas", "Media anual", [apiNextbike("Estados diarios de la flota"), inventory("Clasificación de bicicleta eléctrica")], { pending: ["Confirmar estados operativos y frecuencia exacta del muestreo."] }),
-            metric("Número de bicicletas mecánicas", "Conteo de bicicletas mecánicas en servicio, sin stock", "A 31/12", [inventory("Inventario y tipo de vehículo"), apiNextbike("Estado de flota en la fecha de corte")], { pending: ["Validar qué estados de vehículo se consideran «en servicio»."] }),
-            metric("Número medio de bicicletas mecánicas operativas", "Media de los conteos diarios de bicicletas mecánicas operativas", "Media anual", [apiNextbike("Estados diarios de la flota"), inventory("Clasificación de bicicleta mecánica")], { pending: ["Confirmar estados operativos y frecuencia exacta del muestreo."] }),
+            metric("Número de bicicletas eléctricas", "Eléctricas en estaciones físicas + eléctricas en almacén + eléctricas para reparar + eléctricas arregladas", "A 31/12", [inventory("Columnas de eléctricas de la hoja histórica"), confirmed("Nextbike · Consulta 3", "#/moxsi/fuente/nextbike/consultas", "Fuente de origen del inventario: bloqueos de cuadro y ordenadores de bicicleta por ciudad")], { note: "Las bicicletas eléctricas robadas quedan excluidas del cálculo.", pending: ["Calcular el valor con la fila correspondiente al 31/12 del año evaluado."] }),
+            metric("Número medio de bicicletas eléctricas operativas", "Media anual de eléctricas en estaciones físicas", "Media anual", [inventory("Serie anual de eléctricas en estaciones físicas"), confirmed("Nextbike · Consulta 3", "#/moxsi/fuente/nextbike/consultas", "Fuente de origen de la serie histórica")], { pending: ["Calcular la media con todas las observaciones del año y documentar el tratamiento de días sin registro."] }),
+            metric("Número de bicicletas mecánicas", "Mecánicas en estaciones físicas + mecánicas en almacén + mecánicas para reparar + mecánicas arregladas", "A 31/12", [inventory("Columnas de mecánicas de la hoja histórica"), confirmed("Nextbike · Consulta 3", "#/moxsi/fuente/nextbike/consultas", "Fuente de origen del inventario: bloqueos de cuadro y ordenadores de bicicleta por ciudad")], { note: "Las bicicletas mecánicas robadas quedan excluidas del cálculo.", pending: ["Calcular el valor con la fila correspondiente al 31/12 del año evaluado."] }),
+            metric("Número medio de bicicletas mecánicas operativas", "Media anual de mecánicas en estaciones físicas", "Media anual", [inventory("Serie anual de mecánicas en estaciones físicas"), confirmed("Nextbike · Consulta 3", "#/moxsi/fuente/nextbike/consultas", "Fuente de origen de la serie histórica")], { pending: ["Calcular la media con todas las observaciones del año y documentar el tratamiento de días sin registro."] }),
           ],
         },
         {
@@ -257,6 +263,94 @@
       ],
       confidentialityNote:
         "La plantilla indica que la información se solicita para un análisis confidencial del sector y no se divulgarán datos individuales sin autorización.",
+    },
+    {
+      id: "moxsi-inventario-vmp-historico",
+      areaId: "moxsi",
+      areaName: "Moxsi",
+      organization: "Sagulpa",
+      type: "Archivo derivado",
+      title: "Inventario VMP histórico",
+      icon: "📗",
+      color: "green",
+      description:
+        "Hoja histórica producida a partir de la consulta de Nextbike sobre bloqueos de cuadro y ordenadores de bicicleta por ciudad.",
+      referencePeriod: "Histórico operativo disponible en la hoja",
+      frequency: "Por confirmar",
+      owner: null,
+      classification: null,
+      template: {
+        name: "Inventario VMP histórico",
+        url: "https://docs.google.com/spreadsheets/d/1-8FirPp5tr0Coiwe3BgR0f_5i0ypjiQp9C9KwCY_zpM/edit?gid=1473311831#gid=1473311831",
+        actionLabel: "Abrir Google Sheet",
+        eyebrow: "DOCUMENTO OPERATIVO",
+        description:
+          "Hoja vigente con el inventario diario y sus clasificaciones por ubicación, estado y tipo de vehículo.",
+      },
+      archive: [
+        {
+          year: "2026",
+          label: "Inventario VMP histórico",
+          url: "https://docs.google.com/spreadsheets/d/1-8FirPp5tr0Coiwe3BgR0f_5i0ypjiQp9C9KwCY_zpM/edit?gid=1473311831#gid=1473311831",
+          status: "available",
+          note: "Documento operativo actualmente enlazado.",
+        },
+      ],
+      pending: [
+        "Documentar quién genera, revisa y mantiene el inventario.",
+        "Confirmar la frecuencia de actualización y el histórico completo disponible.",
+        "Confirmar la clasificación y los permisos de acceso.",
+      ],
+      sections: [
+        {
+          title: "Indicadores derivados",
+          note:
+            "Las bicicletas robadas se conservan en columnas separadas y no entran en los totales solicitados por ATUC.",
+          metrics: [
+            metric("Bicicletas eléctricas computables", "Eléctricas en estaciones físicas + eléctricas en almacén + eléctricas para reparar + eléctricas arregladas", "Por fecha de inventario", [confirmed("Nextbike · Consulta 3", "#/moxsi/fuente/nextbike/consultas", "Bloqueos de cuadro y ordenadores de bicicleta por ciudad")], { note: "Las eléctricas robadas quedan excluidas." }),
+            metric("Media de bicicletas eléctricas operativas", "Media del periodo de eléctricas en estaciones físicas", "Periodo seleccionado", [confirmed("Inventario VMP histórico", null, "Serie de eléctricas en estaciones físicas")], { pending: ["Definir cómo se tratan los días sin observación."] }),
+            metric("Bicicletas mecánicas computables", "Mecánicas en estaciones físicas + mecánicas en almacén + mecánicas para reparar + mecánicas arregladas", "Por fecha de inventario", [confirmed("Nextbike · Consulta 3", "#/moxsi/fuente/nextbike/consultas", "Bloqueos de cuadro y ordenadores de bicicleta por ciudad")], { note: "Las mecánicas robadas quedan excluidas." }),
+            metric("Media de bicicletas mecánicas operativas", "Media del periodo de mecánicas en estaciones físicas", "Periodo seleccionado", [confirmed("Inventario VMP histórico", null, "Serie de mecánicas en estaciones físicas")], { pending: ["Definir cómo se tratan los días sin observación."] }),
+          ],
+        },
+      ],
+      exampleView: {
+        title: "Vista de ejemplo",
+        description:
+          "Estructura observada en el Google Sheet: inventario por fecha, ubicación virtual, tipo de vehículo y robos.",
+        note:
+          "Los valores reproducen las filas visibles en la captura facilitada y sirven para explicar la estructura de la hoja.",
+        columns: [
+          { key: "date", label: "Fecha", group: "Corte" },
+          { key: "physicalTotal", label: "Total", group: "Estaciones físicas" },
+          { key: "physicalMechanical", label: "Mecánicas", group: "Estaciones físicas" },
+          { key: "physicalElectric", label: "Eléctricas", group: "Estaciones físicas" },
+          { key: "totalWarehouse", label: "Almacén", group: "Virtuales · Total" },
+          { key: "totalRepair", label: "Para reparar", group: "Virtuales · Total" },
+          { key: "totalFixed", label: "Arregladas", group: "Virtuales · Total" },
+          { key: "mechanicalWarehouse", label: "Almacén", group: "Virtuales · Mecánicas" },
+          { key: "mechanicalRepair", label: "Para reparar", group: "Virtuales · Mecánicas" },
+          { key: "mechanicalFixed", label: "Arregladas", group: "Virtuales · Mecánicas" },
+          { key: "electricWarehouse", label: "Almacén", group: "Virtuales · Eléctricas" },
+          { key: "electricRepair", label: "Para reparar", group: "Virtuales · Eléctricas" },
+          { key: "electricFixed", label: "Arregladas", group: "Virtuales · Eléctricas" },
+          { key: "stolenTotal", label: "Total", group: "Robadas" },
+          { key: "stolenMechanical", label: "Mecánicas", group: "Robadas" },
+          { key: "stolenElectric", label: "Eléctricas", group: "Robadas" },
+          { key: "sum", label: "Suma", group: "Control" },
+          { key: "grossSum", label: "Suma bruto", group: "Control" },
+        ],
+        rows: [
+          { date: "01/01/2026", physicalTotal: 340, physicalMechanical: 267, physicalElectric: 73, totalWarehouse: 102, totalRepair: 66, totalFixed: 22, mechanicalWarehouse: 2, mechanicalRepair: 27, mechanicalFixed: 14, electricWarehouse: 100, electricRepair: 39, electricFixed: 8, stolenTotal: 3, stolenMechanical: 3, stolenElectric: 0, sum: 533, grossSum: 533 },
+          { date: "02/01/2026", physicalTotal: 334, physicalMechanical: 263, physicalElectric: 71, totalWarehouse: 102, totalRepair: 70, totalFixed: 24, mechanicalWarehouse: 2, mechanicalRepair: 30, mechanicalFixed: 15, electricWarehouse: 100, electricRepair: 40, electricFixed: 9, stolenTotal: 3, stolenMechanical: 3, stolenElectric: 0, sum: 533, grossSum: 533 },
+          { date: "03/01/2026", physicalTotal: 341, physicalMechanical: 268, physicalElectric: 73, totalWarehouse: 102, totalRepair: 63, totalFixed: 24, mechanicalWarehouse: 2, mechanicalRepair: 24, mechanicalFixed: 16, electricWarehouse: 100, electricRepair: 39, electricFixed: 8, stolenTotal: 3, stolenMechanical: 3, stolenElectric: 0, sum: 533, grossSum: 533 },
+          { date: "05/01/2026", physicalTotal: 335, physicalMechanical: 263, physicalElectric: 72, totalWarehouse: 102, totalRepair: 71, totalFixed: 22, mechanicalWarehouse: 2, mechanicalRepair: 32, mechanicalFixed: 13, electricWarehouse: 100, electricRepair: 39, electricFixed: 9, stolenTotal: 3, stolenMechanical: 3, stolenElectric: 0, sum: 533, grossSum: 533 },
+          { date: "07/01/2026", physicalTotal: 318, physicalMechanical: 247, physicalElectric: 71, totalWarehouse: 102, totalRepair: 86, totalFixed: 24, mechanicalWarehouse: 2, mechanicalRepair: 45, mechanicalFixed: 16, electricWarehouse: 100, electricRepair: 41, electricFixed: 8, stolenTotal: 3, stolenMechanical: 3, stolenElectric: 0, sum: 533, grossSum: 533 },
+          { date: "08/01/2026", physicalTotal: 335, physicalMechanical: 263, physicalElectric: 72, totalWarehouse: 102, totalRepair: 70, totalFixed: 23, mechanicalWarehouse: 2, mechanicalRepair: 33, mechanicalFixed: 12, electricWarehouse: 100, electricRepair: 37, electricFixed: 11, stolenTotal: 3, stolenMechanical: 3, stolenElectric: 0, sum: 533, grossSum: 533 },
+          { date: "09/01/2026", physicalTotal: 346, physicalMechanical: 267, physicalElectric: 79, totalWarehouse: 101, totalRepair: 57, totalFixed: 25, mechanicalWarehouse: 2, mechanicalRepair: 21, mechanicalFixed: 19, electricWarehouse: 99, electricRepair: 36, electricFixed: 6, stolenTotal: 3, stolenMechanical: 3, stolenElectric: 0, sum: 532, grossSum: 532 },
+          { date: "11/01/2026", physicalTotal: 339, physicalMechanical: 260, physicalElectric: 79, totalWarehouse: 101, totalRepair: 66, totalFixed: 23, mechanicalWarehouse: 2, mechanicalRepair: 30, mechanicalFixed: 17, electricWarehouse: 99, electricRepair: 36, electricFixed: 6, stolenTotal: 3, stolenMechanical: 3, stolenElectric: 0, sum: 532, grossSum: 532 },
+        ],
+      },
     },
   ];
 })();

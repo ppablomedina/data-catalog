@@ -376,6 +376,8 @@ window.CATALOG = {
               "Para obtener el total de usuarios activos en una fecha de evaluación hay que consultar desde el inicio del servicio, 06/03/2018, hasta esa fecha y contar los registros cuyo active sea 1.",
             activeCaveat:
               "active refleja el estado de la cuenta en el momento de ejecutar la consulta, no en la fecha de registro.",
+            retentionRule:
+              "Es imprescindible guardar cada resultado con su fecha de extracción. Si una persona elimina su cuenta, deja de aparecer en las consultas posteriores; sin un histórico propio se pierde la trazabilidad del registro y de su estado active.",
             activeExample: [
               {
                 date: "Alta",
@@ -950,60 +952,6 @@ window.CATALOG = {
         "Confirmar desde qué fecha mantiene la hoja el Jefe de Servicio de Moxsi.",
         "Registrar la fecha efectiva del traspaso a SOS cuando se produzca.",
         "Documentar la frecuencia de actualización y los permisos de acceso.",
-      ],
-    },
-    {
-      id: "moxsi-inventario-vmp-historico",
-      departmentId: "moxsi",
-      serviceIds: ["sitycleta-mecanica", "sitycleta-electrica", "sityneta"],
-      name: "Inventario VMP histórico",
-      logoIcon: "sheet",
-      initials: "IH",
-      color: "green",
-      category: "Inventario histórico",
-      icon: "sheet",
-      description:
-        "Inventario histórico de VMP generado a partir de la consulta 305 de Nextbike.",
-      itemLabel: "recursos",
-      contentTitle: "Documento y origen",
-      contentDescription:
-        "La hoja conserva el inventario histórico y la consulta de Nextbike documenta su fuente de origen.",
-      datasets: [
-        {
-          name: "Inventario VMP histórico",
-          description:
-            "Hoja histórica con información de inventario de los VMP de Moxsi.",
-          icon: "sheet",
-          url: "https://docs.google.com/spreadsheets/d/1-8FirPp5tr0Coiwe3BgR0f_5i0ypjiQp9C9KwCY_zpM/edit?gid=1473311831#gid=1473311831",
-          linkLabel: "Abrir hoja",
-        },
-        {
-          name: "Consulta Nextbike 305",
-          description:
-            "Consulta de Nextbike utilizada como origen para generar el inventario histórico.",
-          icon: "database",
-          url: "https://my.nextbike.net/office/queries/view/305",
-          linkLabel: "Abrir consulta",
-        },
-      ],
-      api: {
-        status: "direct",
-        url: null,
-        note: "El acceso se realiza mediante Google Sheets y la consulta 305 de Nextbike.",
-      },
-      accessLabel: "Hoja de Google Sheets",
-      website:
-        "https://docs.google.com/spreadsheets/d/1-8FirPp5tr0Coiwe3BgR0f_5i0ypjiQp9C9KwCY_zpM/edit?gid=1473311831#gid=1473311831",
-      websiteNote:
-        "Documento histórico generado a partir de datos consultados en Nextbike.",
-      repository: null,
-      storage: null,
-      owner: null,
-      responsibilityHistory: [],
-      pending: [
-        "Documentar quién genera y mantiene el inventario histórico.",
-        "Confirmar la periodicidad de generación desde Nextbike.",
-        "Registrar las fechas de responsabilidad cuando se identifique al equipo responsable.",
       ],
     },
     {

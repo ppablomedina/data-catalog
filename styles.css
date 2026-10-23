@@ -4692,3 +4692,174 @@ a.metric-source:hover { border-color: #a9cadb; }
   .annual-file-card { grid-template-columns: 56px minmax(0, 1fr); }
   .cloud-pending { grid-column: 1 / -1; justify-content: center; }
 }
+
+/* Linaje confirmado, resultados y vistas documentales */
+.query-retention-warning {
+  display: flex;
+  align-items: flex-start;
+  gap: 11px;
+  margin: 13px 0 18px;
+  padding: 14px 16px;
+  border: 1px solid #e8c86b;
+  border-radius: 8px;
+  background: #fff9df;
+  color: #705813;
+}
+.query-retention-warning > svg {
+  width: 18px;
+  height: 18px;
+  margin-top: 1px;
+  flex-shrink: 0;
+}
+.query-retention-warning strong {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 11px;
+}
+.query-retention-warning p {
+  font-size: 10px;
+  line-height: 1.7;
+}
+.legend-dot.confirmed { background: var(--green); }
+.metric-source.confirmed {
+  border-color: #cfe0bd;
+  background: #f7fbf3;
+}
+.metric-source.confirmed > span:first-child {
+  background: #eaf4df;
+  color: var(--green);
+}
+.metric-source.confirmed em { color: #4f8427; }
+.metric-value-preview {
+  max-width: 250px;
+  overflow: hidden;
+  color: var(--green);
+  font-size: 10px;
+  font-weight: 700;
+  text-align: right;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.metric-result {
+  display: grid;
+  grid-template-columns: 145px minmax(0, 1fr);
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 9px;
+  padding: 13px 15px;
+  border: 1px solid #cfe0bd;
+  border-radius: 7px;
+  background: #f3f9ec;
+}
+.metric-result span {
+  color: #57892f;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+.metric-result strong {
+  color: #365e19;
+  font-family: Manrope, sans-serif;
+  font-size: 13px;
+}
+.document-example-section { margin-top: 5px; }
+.document-example-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  margin-bottom: 12px;
+  padding: 11px 13px;
+  border-left: 3px solid var(--primary);
+  background: #edf5f9;
+  color: #527080;
+  font-size: 9px;
+  line-height: 1.65;
+}
+.document-example-note svg {
+  width: 14px;
+  height: 14px;
+  color: var(--primary);
+}
+.document-example-table-wrap {
+  max-width: 100%;
+  overflow-x: auto;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: #fff;
+}
+.document-example-table {
+  min-width: 1850px;
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 10px;
+}
+.document-example-table th,
+.document-example-table td {
+  padding: 11px 12px;
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  text-align: right;
+  white-space: nowrap;
+}
+.document-example-table th:first-child,
+.document-example-table td:first-child { text-align: left; }
+.document-example-table th {
+  position: sticky;
+  top: 0;
+  background: #edf4f8;
+  color: #264d63;
+  font-weight: 700;
+}
+.document-example-table th small {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--primary);
+  font-size: 7px;
+  letter-spacing: 0.45px;
+  text-transform: uppercase;
+}
+.document-example-table tbody tr:nth-child(even) { background: #f8fafb; }
+.document-example-table tr:last-child td { border-bottom: 0; }
+.annual-file-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--primary);
+  font-size: 9px;
+  font-weight: 650;
+  white-space: nowrap;
+}
+.annual-file-link svg { width: 13px; height: 13px; }
+
+:root[data-theme="dark"] .query-retention-warning {
+  border-color: #625727;
+  background: #29291e;
+  color: #ead784;
+}
+:root[data-theme="dark"] .metric-source.confirmed,
+:root[data-theme="dark"] .metric-result {
+  border-color: #405b35;
+  background: #1b3025;
+}
+:root[data-theme="dark"] .metric-source.confirmed > span:first-child {
+  background: #29452d;
+}
+:root[data-theme="dark"] .metric-result span,
+:root[data-theme="dark"] .metric-result strong { color: #a6d681; }
+:root[data-theme="dark"] .document-example-note,
+:root[data-theme="dark"] .document-example-table th {
+  background: #193744;
+  color: #b9d7e7;
+}
+:root[data-theme="dark"] .document-example-table-wrap {
+  background: #122631;
+}
+:root[data-theme="dark"] .document-example-table tbody tr:nth-child(even) {
+  background: #162c38;
+}
+
+@media (max-width: 600px) {
+  .metric-value-preview { display: none; }
+  .metric-result { grid-template-columns: 1fr; }
+}
