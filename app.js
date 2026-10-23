@@ -396,18 +396,41 @@
     } else {
       renderedValue = esc(value);
     }
-    const frequency = (guide.frequentValues?.[column.key] || []).find(
-      (item) => String(item.value) === String(value),
-    );
-    return `<span class="sample-cell-value">${renderedValue}${frequency ? `<small title="Porcentaje estimado y redondeado">≈${Math.round(Number(frequency.share))}%</small>` : ""}</span>`;
+    return `<span class="sample-cell-value">${renderedValue}</span>`;
+  }
+  function displayedFrequentValues(guide, columnKey) {
+    const hiddenColumns = ["uid", "registrationDate", "lastName", "firstName"];
+    return hiddenColumns.includes(columnKey)
+      ? []
+      : guide.frequentValues?.[columnKey] || [];
+  }
+  function formatFieldReferences(value, guide) {
+    let output = esc(value);
+    const fields = [
+      ...new Set(guide.columns.flatMap((column) => [column.label, column.key])),
+    ].sort((a, b) => b.length - a.length);
+    fields.forEach((field) => {
+      const escapedField = field.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+      const matcher = new RegExp(
+        `(?<![A-Za-z0-9_])(${escapedField})(?![A-Za-z0-9_])`,
+        "gi",
+      );
+      output = output.replace(
+        matcher,
+        '<strong class="field-reference">$1</strong>',
+      );
+    });
+    return output;
   }
   function renderQueryGuide(guide) {
     const roundedPercentage = (value) => Math.round(Number(value));
-    const frequentValues = (column) =>
-      (guide.frequentValues?.[column.key] || []).length
-        ? `<div class="frequent-values"><em>Valores frecuentes · estimación</em><div>${guide.frequentValues[column.key].map((item) => `<span><b>${esc(item.value)}</b><small>≈${roundedPercentage(item.share)}%</small></span>`).join("")}</div></div>`
+    const frequentValues = (column) => {
+      const values = displayedFrequentValues(guide, column.key);
+      return values.length
+        ? `<div class="frequent-values"><em>Valores frecuentes · estimación</em><div>${values.map((item) => `<span><b>${esc(item.value)}</b><small>≈${roundedPercentage(item.share)}%</small></span>`).join("")}</div></div>`
         : "";
-    return `<details class="query-guide"><summary><span class="query-guide-icon">${icon("database")}</span><span><strong>Ejemplo de datos y reglas de uso</strong><small>Parámetros, cálculo de usuarios activos, 10 registros sintéticos y calidad de columnas</small></span><span class="badge available"><i></i>Documentado</span><span class="endpoint-chevron">⌄</span></summary><div class="query-guide-body"><div class="sample-disclaimer">${icon("info")}<div><strong>Muestra sintética, no clientes reales</strong><p>La muestra combina de forma ficticia los valores frecuentes suministrados y datos de ejemplo. Cada fila se ha construido para representar la estructura y distribución aproximada; no corresponde a un cliente real.</p></div></div><section class="query-guide-section"><div class="query-guide-heading"><span>01</span><div><h3>Parámetros de entrada</h3><p>La consulta filtra por la fecha en que se registró cada cuenta.</p></div></div><div class="query-input-grid">${guide.inputs.map((input) => `<div><span>${icon("clock")}</span><strong>${esc(input.name)}</strong><p>${esc(input.description)}</p></div>`).join("")}</div></section><section class="query-guide-section"><div class="query-guide-heading"><span>02</span><div><h3>Cómo interpretar active</h3><p>Regla utilizada actualmente para el seguimiento de usuarios.</p></div></div><div class="active-rule-grid"><article><span class="active-value enabled">1</span><div><strong>Cuenta activada</strong><p>Tiene un método de usuario activado.</p></div></article><article><span class="active-value disabled">0</span><div><strong>Cuenta no activada</strong><p>No tiene un método de usuario activado.</p></div></article></div><div class="calculation-callout"><div><span class="eyebrow">TOTAL DE USUARIOS ACTIVOS EN UNA FECHA</span><strong>06/03/2018 → fecha de evaluación</strong><p>${esc(guide.currentUsersRule)}</p></div><code>contar(active = 1)</code></div><p class="rule-note">${icon("info")}${esc(guide.activeRule)} ${esc(guide.activeCaveat)}</p><div class="active-timeline">${guide.activeExample.map((step) => `<div><span>${esc(step.date)}</span><p>${esc(step.text)}</p></div>`).join("")}</div></section><section class="query-guide-section"><div class="query-guide-heading"><span>03</span><div><h3>Vista de ejemplo</h3><p>Consulta simulada desde ${esc(guide.samplePeriod.from)} hasta ${esc(guide.samplePeriod.to)}. Los porcentajes son estimaciones redondeadas a la unidad.</p></div></div><div class="sample-table-wrap"><table class="sample-data-table"><thead><tr>${guide.columns.map((column) => `<th>${esc(column.label)}</th>`).join("")}</tr></thead><tbody>${guide.sampleRows.map((row) => `<tr>${guide.columns.map((column) => `<td>${querySampleCell(row[column.key], column, guide)}</td>`).join("")}</tr>`).join("")}</tbody></table></div><p class="table-scroll-hint">Desplázate horizontalmente para consultar todas las columnas.</p></section><section class="query-guide-section"><div class="query-guide-heading"><span>04</span><div><h3>Canales de alta</h3><p>Traducción operativa del campo channel.</p></div></div><div class="channel-map">${Object.entries(
+    };
+    return `<details class="query-guide"><summary><span class="query-guide-icon">${icon("database")}</span><span><strong>Ejemplo de datos y reglas de uso</strong><small>Parámetros, cálculo de usuarios activos, 10 registros sintéticos y calidad de columnas</small></span><span class="badge available"><i></i>Documentado</span><span class="endpoint-chevron">⌄</span></summary><div class="query-guide-body"><div class="sample-disclaimer">${icon("info")}<div><strong>Muestra sintética, no clientes reales</strong><p>La muestra combina de forma ficticia los valores frecuentes suministrados y datos de ejemplo. Cada fila se ha construido para representar la estructura y distribución aproximada; no corresponde a un cliente real.</p></div></div><details class="query-guide-section" open><summary class="query-guide-section-summary"><div class="query-guide-heading"><span>01</span><div><h3>Parámetros de entrada</h3><p>La consulta filtra por la fecha en que se registró cada cuenta.</p></div></div><span class="section-chevron">⌄</span></summary><div class="query-input-grid">${guide.inputs.map((input) => `<div><span>${icon("clock")}</span><strong>${esc(input.name)}</strong><p>${esc(input.description)}</p></div>`).join("")}</div></details><details class="query-guide-section" open><summary class="query-guide-section-summary"><div class="query-guide-heading"><span>02</span><div><h3>Cómo interpretar ${formatFieldReferences("active", guide)}</h3><p>Regla utilizada actualmente para el seguimiento de usuarios.</p></div></div><span class="section-chevron">⌄</span></summary><div class="active-rule-grid"><article><span class="active-value enabled">1</span><div><strong>Cuenta activada</strong><p>Tiene un método de usuario activado.</p></div></article><article><span class="active-value disabled">0</span><div><strong>Cuenta no activada</strong><p>No tiene un método de usuario activado.</p></div></article></div><div class="calculation-callout"><div><span class="eyebrow">TOTAL DE USUARIOS ACTIVOS EN UNA FECHA</span><strong>06/03/2018 → fecha de evaluación</strong><p>${formatFieldReferences(guide.currentUsersRule, guide)}</p></div><code>contar(${formatFieldReferences("active", guide)} = 1)</code></div><p class="rule-note">${icon("info")}<span>${formatFieldReferences(`${guide.activeRule} ${guide.activeCaveat}`, guide)}</span></p><div class="active-timeline">${guide.activeExample.map((step) => `<div><span>${esc(step.date)}</span><p>${formatFieldReferences(step.text, guide)}</p></div>`).join("")}</div></details><details class="query-guide-section" open><summary class="query-guide-section-summary"><div class="query-guide-heading"><span>03</span><div><h3>Vista de ejemplo</h3><p>Consulta simulada desde ${esc(guide.samplePeriod.from)} hasta ${esc(guide.samplePeriod.to)}.</p></div></div><span class="section-chevron">⌄</span></summary><div class="sample-table-wrap"><table class="sample-data-table"><thead><tr>${guide.columns.map((column) => `<th>${esc(column.label)}</th>`).join("")}</tr></thead><tbody>${guide.sampleRows.map((row) => `<tr>${guide.columns.map((column) => `<td>${querySampleCell(row[column.key], column, guide)}</td>`).join("")}</tr>`).join("")}</tbody></table></div><p class="table-scroll-hint">Desplázate horizontalmente para consultar todas las columnas.</p></details><details class="query-guide-section" open><summary class="query-guide-section-summary"><div class="query-guide-heading"><span>04</span><div><h3>Canales de alta</h3><p>Traducción operativa del campo ${formatFieldReferences("channel", guide)}.</p></div></div><span class="section-chevron">⌄</span></summary><div class="channel-map">${Object.entries(
       guide.channelMap,
     )
       .map(
@@ -416,7 +439,7 @@
       )
       .join(
         "",
-      )}<span><strong>Resto</strong>Otros</span></div></section><details class="column-dictionary"><summary><span>${icon("layers")}Diccionario y estimación de nulos</span><strong>${guide.columns.length} columnas</strong></summary><div class="estimate-note">${icon("info")}Los porcentajes de nulos y de valores frecuentes son estimaciones y se muestran redondeados a la unidad.</div><div class="column-profile-grid">${guide.columns.map((column) => `<article><div><strong>${esc(column.label)}</strong><span>≈${roundedPercentage(column.nullRate)}% nulos</span></div><p>${esc(column.note)}</p><div class="coverage-track" title="≈${roundedPercentage(100 - column.nullRate)}% con dato"><i style="width:${100 - column.nullRate}%"></i></div>${frequentValues(column)}</article>`).join("")}</div></details><div class="future-improvement"><span>💡</span><div><strong>Línea futura de mejora</strong><p>${esc(guide.futureImprovement)}</p></div></div></div></details>`;
+      )}<span><strong>Resto</strong>Otros</span></div></details><details class="column-dictionary"><summary><span>${icon("layers")}Diccionario y estimación de nulos</span><strong>${guide.columns.length} columnas</strong></summary><div class="estimate-note">${icon("info")}Los porcentajes de nulos y de valores frecuentes son estimaciones y se muestran redondeados a la unidad.</div><div class="column-profile-grid">${guide.columns.map((column) => `<article><div><strong>${esc(column.label)}</strong><span>≈${roundedPercentage(column.nullRate)}% nulos</span></div><p>${formatFieldReferences(column.note, guide)}</p><div class="coverage-track" title="≈${roundedPercentage(100 - column.nullRate)}% con dato"><i style="width:${100 - column.nullRate}%"></i></div>${frequentValues(column)}</article>`).join("")}</div></details><div class="future-improvement"><span>💡</span><div><strong>Línea futura de mejora</strong><p>${formatFieldReferences(guide.futureImprovement, guide)}</p></div></div></div></details>`;
   }
   function detail(d, s) {
     const applicableServices = s.serviceIds
@@ -457,7 +480,7 @@
         el.innerHTML = `<section class="panel"><h2>${esc(s.contentTitle || "Conjuntos de datos")}</h2><p>${esc(s.contentDescription || "Información identificada en esta fuente. El esquema, formato y frecuencia de actualización están pendientes de documentar.")}</p>${s.datasets
           .map((x) => {
             const safeUrl = x.url && /^https?:\/\//i.test(x.url);
-            return `<div class="dataset-row"><span class="stat-icon blue">${icon(x.icon)}</span><div>${x.queryNumber ? `<span class="query-number">Consulta ${esc(x.queryNumber)}</span>` : ""}<h3>${esc(x.name)}</h3><p>${esc(x.description)}</p></div><div class="dataset-actions">${x.status ? `<span class="badge pending"><i></i>${esc(x.status)}</span>` : ""}${safeUrl ? `<a class="access-link" href="${esc(x.url)}" target="_blank" rel="noopener noreferrer">${esc(x.linkLabel || "Abrir consulta")} ${icon("external")}</a>` : s.apiLibraryId ? `<a class="access-link" href="#/apis/${esc(s.apiLibraryId)}">Ver documentación ${icon("arrow")}</a>` : '<span class="badge neutral">Esquema pendiente</span>'}</div></div>${x.queryGuide ? renderQueryGuide(x.queryGuide) : ""}`;
+            return `<div class="dataset-row"><span class="stat-icon blue">${icon(x.icon)}</span><div>${x.queryNumber ? `<span class="query-number">Consulta ${esc(x.queryNumber)}</span>` : ""}<h3>${esc(x.name)}</h3><p>${x.queryGuide ? formatFieldReferences(x.description, x.queryGuide) : esc(x.description)}</p></div><div class="dataset-actions">${x.status ? `<span class="badge pending"><i></i>${esc(x.status)}</span>` : ""}${safeUrl ? `<a class="access-link" href="${esc(x.url)}" target="_blank" rel="noopener noreferrer">${esc(x.linkLabel || "Abrir consulta")} ${icon("external")}</a>` : s.apiLibraryId ? `<a class="access-link" href="#/apis/${esc(s.apiLibraryId)}">Ver documentación ${icon("arrow")}</a>` : '<span class="badge neutral">Esquema pendiente</span>'}</div></div>${x.queryGuide ? renderQueryGuide(x.queryGuide) : ""}`;
           })
           .join("")}</section>`;
       if (tab === "access") {

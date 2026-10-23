@@ -1477,8 +1477,8 @@ footer {
   width: 17px;
   flex-shrink: 0;
 }
-.sample-disclaimer strong,
-.future-improvement strong {
+.sample-disclaimer > div > strong,
+.future-improvement > div > strong {
   display: block;
   font-size: 10px;
 }
@@ -1491,6 +1491,32 @@ footer {
 .query-guide-section {
   padding: 22px 0;
   border-bottom: 1px solid var(--line);
+}
+.query-guide-section > summary {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  list-style: none;
+}
+.query-guide-section > summary::-webkit-details-marker {
+  display: none;
+}
+.query-guide-section[open] > summary {
+  margin-bottom: 14px;
+}
+.query-guide-section .query-guide-heading {
+  flex: 1;
+  margin-bottom: 0;
+}
+.section-chevron {
+  flex-shrink: 0;
+  color: var(--primary);
+  font-size: 16px;
+  transition: transform 0.2s ease;
+}
+.query-guide-section:not([open]) .section-chevron {
+  transform: rotate(-90deg);
 }
 .query-guide-heading {
   display: flex;
@@ -1591,21 +1617,26 @@ footer {
   background: #0b537f;
   color: #fff;
 }
+.calculation-callout > div {
+  flex: 1;
+  min-width: 0;
+}
 .calculation-callout .eyebrow {
   color: #a9d8f2;
   font-size: 7px;
 }
-.calculation-callout strong {
+.calculation-callout > div > strong {
   display: block;
   margin-top: 5px;
   font-size: 13px;
 }
 .calculation-callout p {
-  max-width: 680px;
+  max-width: none;
   margin-top: 5px;
   color: #c3dfed;
   font-size: 9px;
   line-height: 1.6;
+  white-space: nowrap;
 }
 .calculation-callout code {
   padding: 9px 11px;
@@ -1631,6 +1662,22 @@ footer {
 .rule-note svg {
   width: 14px;
   flex-shrink: 0;
+}
+.rule-note > span {
+  flex: 1;
+}
+.query-guide .field-reference {
+  color: #0b6d9e;
+  font-weight: 800;
+}
+.calculation-callout .field-reference {
+  color: #ffe27a;
+}
+:root[data-theme="dark"] .query-guide .field-reference {
+  color: #79caef;
+}
+:root[data-theme="dark"] .calculation-callout .field-reference {
+  color: #ffe27a;
 }
 .active-timeline {
   position: relative;
@@ -1792,7 +1839,13 @@ footer {
 }
 .column-dictionary > summary svg {
   width: 15px;
+  flex-shrink: 0;
   color: var(--primary);
+}
+.column-dictionary > summary > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
 }
 .column-dictionary > summary strong {
   margin-left: auto;
@@ -3728,6 +3781,9 @@ footer {
   .calculation-callout {
     align-items: flex-start;
     flex-direction: column;
+  }
+  .calculation-callout p {
+    white-space: normal;
   }
   .column-profile-grid p {
     min-height: 0;
