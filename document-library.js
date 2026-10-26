@@ -91,6 +91,55 @@
         "Confirmar la persona responsable de preparar, revisar y remitir la encuesta.",
         "Confirmar la clasificación y los permisos de acceso.",
         "Añadir la ruta de Cloud Storage de cada entrega anual.",
+        "Unificar los procesos de Flota e Indisponibilidad para que Nextbike Consulta 3 sea la única fuente de datos principal.",
+      ],
+      processes: [
+        {
+          id: "calculo-indisponibilidad",
+          title: "Cálculo de indisponibilidad",
+          functionName: "add_unavailable_columns(df)",
+          repositoryName: "moxsi-stats-pipeline · processes/inventory.py",
+          repositoryUrl:
+            "https://github.com/ppablomedina/moxsi-stats-pipeline/blob/main/processes/inventory.py",
+          sourceName: "Inventario VMP histórico",
+          sourceUrl: "#/documents/moxsi-inventario-vmp-historico",
+          description:
+            "La función genera para cada registro diario los recuentos indisponibles y sus porcentajes por tipo de vehículo y para el total de la flota.",
+          formulas: [
+            {
+              name: "Mecánicas indisponibles",
+              expression:
+                "virtual_stations_mechanical_warehouse + virtual_stations_mechanical_to_repair + virtual_stations_mechanical_repaired + stolen_mechanical",
+            },
+            {
+              name: "Eléctricas indisponibles",
+              expression:
+                "virtual_stations_electrical_warehouse + virtual_stations_electrical_to_repair + virtual_stations_electrical_repaired + stolen_electrical",
+            },
+            {
+              name: "Total indisponible",
+              expression:
+                "unavailable_mechanical + unavailable_electrical",
+            },
+            {
+              name: "Porcentaje mecánicas",
+              expression:
+                "round(unavailable_mechanical / (physical_stations_mechanical + unavailable_mechanical) * 100, 2)",
+            },
+            {
+              name: "Porcentaje eléctricas",
+              expression:
+                "round(unavailable_electrical / (physical_stations_electrical + unavailable_electrical) * 100, 2)",
+            },
+            {
+              name: "Porcentaje de indisponibilidad total",
+              expression:
+                "round(unavailable_total / (physical_stations_total + unavailable_total) * 100, 2)",
+            },
+          ],
+          pending:
+            "Unificar este proceso y el de Flota para consumir directamente Nextbike Consulta 3 como única fuente principal.",
+        },
       ],
       sections: [
         {
@@ -105,19 +154,19 @@
           title: "Flota",
           note: "La plantilla indica que no debe incluirse la flota en stock.",
           metrics: [
-            metric("Número de bicicletas eléctricas", "Eléctricas en estaciones físicas + eléctricas en almacén + eléctricas para reparar + eléctricas arregladas", "A 31/12", [inventory("Columnas de eléctricas de la hoja histórica"), confirmed("Nextbike · Consulta 3", "#/moxsi/fuente/nextbike/consultas", "Fuente de origen del inventario: bloqueos de cuadro y ordenadores de bicicleta por ciudad")], { note: "Las bicicletas eléctricas robadas quedan excluidas del cálculo.", pending: ["Calcular el valor con la fila correspondiente al 31/12 del año evaluado."] }),
-            metric("Número medio de bicicletas eléctricas operativas", "Media anual de eléctricas en estaciones físicas", "Media anual", [inventory("Serie anual de eléctricas en estaciones físicas"), confirmed("Nextbike · Consulta 3", "#/moxsi/fuente/nextbike/consultas", "Fuente de origen de la serie histórica")], { pending: ["Calcular la media con todas las observaciones del año y documentar el tratamiento de días sin registro."] }),
-            metric("Número de bicicletas mecánicas", "Mecánicas en estaciones físicas + mecánicas en almacén + mecánicas para reparar + mecánicas arregladas", "A 31/12", [inventory("Columnas de mecánicas de la hoja histórica"), confirmed("Nextbike · Consulta 3", "#/moxsi/fuente/nextbike/consultas", "Fuente de origen del inventario: bloqueos de cuadro y ordenadores de bicicleta por ciudad")], { note: "Las bicicletas mecánicas robadas quedan excluidas del cálculo.", pending: ["Calcular el valor con la fila correspondiente al 31/12 del año evaluado."] }),
-            metric("Número medio de bicicletas mecánicas operativas", "Media anual de mecánicas en estaciones físicas", "Media anual", [inventory("Serie anual de mecánicas en estaciones físicas"), confirmed("Nextbike · Consulta 3", "#/moxsi/fuente/nextbike/consultas", "Fuente de origen de la serie histórica")], { pending: ["Calcular la media con todas las observaciones del año y documentar el tratamiento de días sin registro."] }),
+            metric("Número de bicicletas eléctricas", "Eléctricas en estaciones físicas + eléctricas en almacén + eléctricas para reparar + eléctricas arregladas", "A 31/12", [inventory("Columnas de eléctricas de la hoja histórica"), confirmed("Nextbike · Consulta 3", "#/moxsi/fuente/nextbike/consultas", "Fuente de origen del inventario: bloqueos de cuadro y ordenadores de bicicleta por ciudad")], { note: "Las bicicletas eléctricas robadas quedan excluidas del cálculo.", pending: ["Calcular el valor con la fila correspondiente al 31/12 del año evaluado.", "Unificar el proceso para consumir directamente Nextbike Consulta 3 como única fuente principal."] }),
+            metric("Número medio de bicicletas eléctricas operativas", "Media anual de eléctricas en estaciones físicas", "Media anual", [inventory("Serie anual de eléctricas en estaciones físicas"), confirmed("Nextbike · Consulta 3", "#/moxsi/fuente/nextbike/consultas", "Fuente de origen de la serie histórica")], { pending: ["Calcular la media con todas las observaciones del año y documentar el tratamiento de días sin registro.", "Unificar el proceso para consumir directamente Nextbike Consulta 3 como única fuente principal."] }),
+            metric("Número de bicicletas mecánicas", "Mecánicas en estaciones físicas + mecánicas en almacén + mecánicas para reparar + mecánicas arregladas", "A 31/12", [inventory("Columnas de mecánicas de la hoja histórica"), confirmed("Nextbike · Consulta 3", "#/moxsi/fuente/nextbike/consultas", "Fuente de origen del inventario: bloqueos de cuadro y ordenadores de bicicleta por ciudad")], { note: "Las bicicletas mecánicas robadas quedan excluidas del cálculo.", pending: ["Calcular el valor con la fila correspondiente al 31/12 del año evaluado.", "Unificar el proceso para consumir directamente Nextbike Consulta 3 como única fuente principal."] }),
+            metric("Número medio de bicicletas mecánicas operativas", "Media anual de mecánicas en estaciones físicas", "Media anual", [inventory("Serie anual de mecánicas en estaciones físicas"), confirmed("Nextbike · Consulta 3", "#/moxsi/fuente/nextbike/consultas", "Fuente de origen de la serie histórica")], { pending: ["Calcular la media con todas las observaciones del año y documentar el tratamiento de días sin registro.", "Unificar el proceso para consumir directamente Nextbike Consulta 3 como única fuente principal."] }),
           ],
         },
         {
           title: "Indisponibilidad",
           note: "La plantilla indica que no debe incluirse la flota en stock.",
           metrics: [
-            metric("Indisponibilidad media mensual máxima", "Máximo de las 12 medias mensuales de indisponibilidad", "Máxima media/mes del año", [apiNextbike("Estados y bloqueos de vehículos"), linked("Estado de batería / bloqueos / alquileres activos", "#/moxsi/fuente/inventario-54-estado-de-bateria-bloqueos-alquileres-activos", "Estados no disponibles", "proposed")], { pending: ["Definir numerador, denominador y estados que computan como indisponibles."] }),
-            metric("Indisponibilidad media mensual mínima", "Mínimo de las 12 medias mensuales de indisponibilidad", "Mínima media/mes del año", [apiNextbike("Estados y bloqueos de vehículos")], { pending: ["Definir numerador, denominador y estados que computan como indisponibles."] }),
-            metric("Indisponibilidad media anual", "Media anual del porcentaje de flota indisponible", "Media anual", [apiNextbike("Estados y bloqueos de vehículos")], { pending: ["Definir la granularidad temporal y el tratamiento de datos ausentes."] }),
+            metric("Indisponibilidad media mensual máxima", "Máximo de las medias mensuales del porcentaje diario de indisponibilidad total", "Máxima media/mes del año", [confirmed("Función add_unavailable_columns(df)", "https://github.com/ppablomedina/moxsi-stats-pipeline/blob/main/processes/inventory.py", "Calcula diariamente unavailable_total y unavailable_percentage_total"), inventory("Fuente utilizada por la función"), confirmed("Nextbike · Consulta 3", "#/moxsi/fuente/nextbike/consultas", "Fuente principal pendiente de integración directa")], { note: "Porcentaje diario = redondear(total indisponible ÷ (flota física total + total indisponible) × 100, 2).", pending: ["Unificar el proceso para consumir directamente Nextbike Consulta 3 como única fuente principal."] }),
+            metric("Indisponibilidad media mensual mínima", "Mínimo de las medias mensuales del porcentaje diario de indisponibilidad total", "Mínima media/mes del año", [confirmed("Función add_unavailable_columns(df)", "https://github.com/ppablomedina/moxsi-stats-pipeline/blob/main/processes/inventory.py", "Calcula diariamente unavailable_total y unavailable_percentage_total"), inventory("Fuente utilizada por la función"), confirmed("Nextbike · Consulta 3", "#/moxsi/fuente/nextbike/consultas", "Fuente principal pendiente de integración directa")], { note: "Porcentaje diario = redondear(total indisponible ÷ (flota física total + total indisponible) × 100, 2).", pending: ["Unificar el proceso para consumir directamente Nextbike Consulta 3 como única fuente principal."] }),
+            metric("Indisponibilidad media anual", "Media anual del porcentaje diario de indisponibilidad total", "Media anual", [confirmed("Función add_unavailable_columns(df)", "https://github.com/ppablomedina/moxsi-stats-pipeline/blob/main/processes/inventory.py", "Calcula diariamente unavailable_total y unavailable_percentage_total"), inventory("Fuente utilizada por la función"), confirmed("Nextbike · Consulta 3", "#/moxsi/fuente/nextbike/consultas", "Fuente principal pendiente de integración directa")], { note: "La función suma almacén, para reparar, arregladas y robadas; después divide el total indisponible entre la flota física más la indisponible.", pending: ["Confirmar el tratamiento de días sin registro.", "Unificar el proceso para consumir directamente Nextbike Consulta 3 como única fuente principal."] }),
           ],
         },
         {
@@ -276,9 +325,9 @@
       description:
         "Hoja histórica producida a partir de la consulta de Nextbike sobre bloqueos de cuadro y ordenadores de bicicleta por ciudad.",
       referencePeriod: "Histórico operativo disponible en la hoja",
-      frequency: "Por confirmar",
-      owner: null,
-      classification: null,
+      frequency: "Diaria",
+      owner: "Jefe de Moxsi",
+      classification: "Uso interno",
       template: {
         name: "Inventario VMP histórico",
         url: "https://docs.google.com/spreadsheets/d/1-8FirPp5tr0Coiwe3BgR0f_5i0ypjiQp9C9KwCY_zpM/edit?gid=1473311831#gid=1473311831",
@@ -297,9 +346,8 @@
         },
       ],
       pending: [
-        "Documentar quién genera, revisa y mantiene el inventario.",
-        "Confirmar la frecuencia de actualización y el histórico completo disponible.",
-        "Confirmar la clasificación y los permisos de acceso.",
+        "Confirmar el histórico completo disponible.",
+        "Documentar los permisos y perfiles de acceso.",
       ],
       sections: [
         {
