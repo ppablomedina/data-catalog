@@ -239,6 +239,116 @@ IF(
           pending:
             "Confirmar si la fuente de alquileres es válida para la definición de ATUC, ya que un usuario puede haber pagado una tarifa y no haber realizado ningún alquiler.",
         },
+        {
+          id: "abonados-suscripciones-activas",
+          title: "Abonados/as · suscripciones activas",
+          functionName: "Suscripciones Activas",
+          repositoryName: "Power BI · medida DAX",
+          repositoryUrl: null,
+          description:
+            "El indicador calcula el promedio anual del número de suscripciones vigentes al inicio de cada mes. El flujo parte de la consulta de membresías de Nextbike, normaliza las compras, las carga en BigQuery y aplica la medida en Power BI.",
+          flow: [
+            {
+              nodes: [
+                {
+                  icon: "database",
+                  type: "Fuente primaria",
+                  title: "Nextbike · Consulta 8",
+                  description: "Clientes con membresías por marca",
+                  href: "#/moxsi/fuente/nextbike/consulta/8",
+                },
+              ],
+            },
+            {
+              nodes: [
+                {
+                  icon: "code",
+                  type: "Limpieza y filtrado",
+                  title: "membership_purchases.py",
+                  description: "Repositorio moxsi-stats-pipeline",
+                  href: "https://github.com/ppablomedina/moxsi-stats-pipeline/blob/main/processes/membership_purchases.py",
+                },
+              ],
+            },
+            {
+              nodes: [
+                {
+                  icon: "database",
+                  type: "BigQuery · compras",
+                  title: "membership_purchases",
+                  description: "user_id · membership_id · date · price · validity",
+                  href: "https://console.cloud.google.com/bigquery?inv=1&invt=Abwmsw&project=bigdata-fase2&ws=!1m16!1m4!3m2!1sbigdata-fase2!2sparkings_datamart!23sWS_URL_PARAM!1m4!3m2!1sbigdata-fase2!2smoxsi_datamart!23sWS_URL_PARAM!1m5!4m3!1sbigdata-fase2!2smoxsi_datamart!3smembership_purchases!23sRESOURCE_LIST",
+                },
+                {
+                  icon: "database",
+                  type: "BigQuery · catálogo",
+                  title: "memberships",
+                  description: "id · name · name_norm",
+                  href: "https://console.cloud.google.com/bigquery?inv=1&invt=Abwmsw&project=bigdata-fase2&ws=!1m16!1m4!3m2!1sbigdata-fase2!2sparkings_datamart!23sWS_URL_PARAM!1m4!3m2!1sbigdata-fase2!2smoxsi_datamart!23sWS_URL_PARAM!1m5!4m3!1sbigdata-fase2!2smoxsi_datamart!3smemberships!23sTREE_NODE_SELECTION",
+                },
+              ],
+            },
+            {
+              nodes: [
+                {
+                  icon: "chart",
+                  type: "Visualización y cálculo",
+                  title: "Power BI",
+                  description: "Medida DAX · Suscripciones Activas",
+                  targetId: "dax-suscripciones-activas",
+                },
+              ],
+            },
+          ],
+          formulas: [
+            {
+              name: "Agrupación temporal",
+              expression: "Un registro de cálculo por año y mes de _DimFecha",
+            },
+            {
+              name: "Inicio del mes",
+              expression: "MIN(_DimFecha[Date]) en el contexto mensual",
+            },
+            {
+              name: "Fin del mes",
+              expression: "EOMONTH(InicioMes, 0) + 1",
+            },
+            {
+              name: "Suscripción vigente",
+              expression:
+                "membership_purchases[date] < FinMes y membership_purchases[validity] >= InicioMes",
+            },
+            {
+              name: "Conteo mensual",
+              expression: "COUNTROWS(membership_purchases)",
+            },
+            {
+              name: "Resultado anual",
+              expression: "AVERAGEX de los conteos mensuales",
+            },
+          ],
+          codeAnchor: "dax-suscripciones-activas",
+          codeLanguage: "DAX",
+          code: `Suscripciones Activas =
+AVERAGEX(
+    SUMMARIZE(
+        _DimFecha,
+        _DimFecha[YYYY],
+        _DimFecha[MesNum]
+    ),
+    VAR InicioMes =
+        CALCULATE(MIN(_DimFecha[Date]))
+    VAR FinMes =
+        EOMONTH(InicioMes, 0) + 1
+    RETURN
+        CALCULATE(
+            COUNTROWS(membership_purchases),
+            REMOVEFILTERS(_DimFecha),
+            membership_purchases[date] < FinMes,
+            membership_purchases[validity] >= InicioMes
+        )
+)`,
+        },
       ],
       sections: [
         {
@@ -272,7 +382,7 @@ IF(
           title: "Usuarios/as",
           metrics: [
             metric("Usuarios/as únicos", "DISTINCTCOUNT de rentals[user_id] en una ventana móvil de 12 meses cerrada en el último mes completo", "Últimos 12 meses", [confirmed("Nextbike · Consulta 2", "#/moxsi/fuente/nextbike/consultas", "Alquileres con datos de clientes por ciudad; fuente utilizada actualmente en Power BI")], { description: "Definición de ATUC: usuarios diferentes que en los últimos 12 meses han pagado una tarifa en el sistema.", note: "La medida limita el cálculo al último mes completo disponible, respeta el contexto temporal seleccionado y devuelve vacío cuando no existen datos válidos en el periodo.", pending: ["Preguntar a Fer si la fuente de alquileres es válida: un usuario puede haber pagado una tarifa sin haber alquilado nunca.", "Confirmar qué fuente registra el pago de tarifas para cubrir literalmente la definición de ATUC."], processIds: ["usuarios-unicos-12m"] }),
-            metric("Abonados/as", "Media de usuarios con abono o suscripción vigente", "Media anual", [nextbike("Clientes, suscripciones y último alquiler", 5), nextbike("Membresías por marca", 8)], { pending: ["Definir fechas de corte y qué productos cuentan como abono."] }),
+            metric("Abonados/as", "Promedio anual del número de suscripciones vigentes al inicio de cada mes", "Media anual", [confirmed("Nextbike · Consulta 8 · Clientes con membresías por marca", "#/moxsi/fuente/nextbike/consulta/8", "Fuente primaria del proceso")], { description: "La extracción de Nextbike se limpia y filtra con membership_purchases.py, se carga en las tablas membership_purchases y memberships de BigQuery y finalmente se agrega en Power BI.", note: "Una compra se considera vigente en un mes cuando date es anterior al final del mes y validity es igual o posterior al inicio del mes.", processIds: ["abonados-suscripciones-activas"] }),
             metric("Usuarios/as activos", "Media de cuentas con active = 1 en cada fecha de corte", "Media anual", [nextbike("Estado active calculado al ejecutar la consulta", 11)], { pending: ["Definir la periodicidad de las consultas que formarán la media anual."] }),
             metric("Usuarios/as bloqueados", "Conteo de cuentas bloqueadas", "A 31/12", [pending("Nextbike · estado de cliente", "Bloqueos de cuenta en la fecha de corte")], { pending: ["Identificar el campo o endpoint que representa el bloqueo."] }),
             metric("Usuarios/as de baja", "Conteo de bajas registradas durante el año", "Total anual", [pending("Nextbike · bajas de clientes", "Fecha y estado de baja")], { pending: ["Confirmar si Nextbike conserva fecha de baja y cómo se extrae."] }),

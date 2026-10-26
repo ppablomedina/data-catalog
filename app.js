@@ -916,6 +916,23 @@
       : `<div class="metric-source ${esc(source.status)}${source.status === "pending" ? " pending-source" : ""}">${content}</div>`;
   }
   function renderDocumentProcessList(processes) {
+    const renderProcessFlow = (flow) =>
+      `<div class="process-flow-diagram" aria-label="Flujo de datos">${flow
+        .map((stage, stageIndex) => {
+          const nodes = `<div class="process-flow-stage">${stage.nodes
+            .map((node) => {
+              const external = /^https?:\/\//i.test(node.href || "");
+              const content = `<span class="process-flow-icon">${icon(node.icon || "database")}</span><span class="process-flow-copy"><small>${esc(node.type)}</small><strong>${esc(node.title)}</strong><em>${esc(node.description)}</em></span><span class="process-flow-link">${icon(external ? "external" : "arrow")}</span>`;
+              return node.href
+                ? `<a class="process-flow-node" href="${esc(node.href)}"${external ? ' target="_blank" rel="noopener noreferrer"' : ""}>${content}</a>`
+                : node.targetId
+                  ? `<button class="process-flow-node" type="button" data-scroll-target="${esc(node.targetId)}">${content}</button>`
+                : `<div class="process-flow-node">${content}</div>`;
+            })
+            .join("")}</div>`;
+          return `${stageIndex ? `<span class="process-flow-arrow">${icon("arrow")}</span>` : ""}${nodes}`;
+        })
+        .join("")}</div>`;
     return `<div class="document-process-list">${processes
       .map((process) => {
         const repositoryAction = process.repositoryUrl
@@ -925,9 +942,15 @@
           ? `<a href="${esc(process.repositoryUrl)}" target="_blank" rel="noopener noreferrer"><span>${icon("code")}</span><div><small>TRANSFORMACIÓN</small><strong>${esc(process.repositoryName)}</strong></div>${icon("external")}</a>`
           : `<div class="process-lineage-item"><span>${icon("code")}</span><div><small>TRANSFORMACIÓN</small><strong>${esc(process.repositoryName)}</strong></div></div>`;
         const codeBlock = process.code
-          ? `<div class="process-code-block"><div><span>${esc(process.codeLanguage || "Código")}</span><strong>Medida completa</strong></div><pre><code>${esc(process.code)}</code></pre></div>`
+          ? `<div${process.codeAnchor ? ` id="${esc(process.codeAnchor)}"` : ""} class="process-code-block"><div><span>${esc(process.codeLanguage || "Código")}</span><strong>Medida completa</strong></div><pre><code>${esc(process.code)}</code></pre></div>`
           : "";
-        return `<article class="document-process-card"><div class="process-card-heading"><span class="process-code-icon">${icon("code")}</span><div><span class="eyebrow">FUNCIÓN DOCUMENTADA</span><h3>${esc(process.title)}</h3><code>${esc(process.functionName)}</code></div>${repositoryAction}</div><p>${esc(process.description)}</p><div class="process-lineage"><a href="${esc(process.sourceUrl)}"><span>${icon("database")}</span><div><small>FUENTE UTILIZADA</small><strong>${esc(process.sourceName)}</strong></div>${icon("arrow")}</a>${transformation}</div><div class="process-formulas">${process.formulas.map((formula) => `<div><span>${esc(formula.name)}</span><code>${esc(formula.expression)}</code></div>`).join("")}</div>${codeBlock}<div class="process-pending">${icon("clock")}<div><strong>${esc(process.pendingTitle || "Pendiente de unificación")}</strong><p>${esc(process.pending)}</p></div></div></article>`;
+        const lineage = process.flow
+          ? renderProcessFlow(process.flow)
+          : `<div class="process-lineage"><a href="${esc(process.sourceUrl)}"><span>${icon("database")}</span><div><small>FUENTE UTILIZADA</small><strong>${esc(process.sourceName)}</strong></div>${icon("arrow")}</a>${transformation}</div>`;
+        const pending = process.pending
+          ? `<div class="process-pending">${icon("clock")}<div><strong>${esc(process.pendingTitle || "Pendiente de unificación")}</strong><p>${esc(process.pending)}</p></div></div>`
+          : "";
+        return `<article class="document-process-card"><div class="process-card-heading"><span class="process-code-icon">${icon("code")}</span><div><span class="eyebrow">FUNCIÓN DOCUMENTADA</span><h3>${esc(process.title)}</h3><code>${esc(process.functionName)}</code></div>${repositoryAction}</div><p>${esc(process.description)}</p>${lineage}<div class="process-formulas">${process.formulas.map((formula) => `<div><span>${esc(formula.name)}</span><code>${esc(formula.expression)}</code></div>`).join("")}</div>${codeBlock}${pending}</article>`;
       })
       .join("")}</div>`;
   }

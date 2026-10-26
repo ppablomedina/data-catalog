@@ -5094,6 +5094,98 @@ a.metric-source:hover { border-color: #a9cadb; }
   font-size: 10px;
   line-height: 1.75;
 }
+.process-flow-diagram {
+  display: flex;
+  align-items: stretch;
+  gap: 8px;
+  margin-bottom: 15px;
+}
+.process-flow-stage {
+  display: grid;
+  grid-auto-rows: 1fr;
+  flex: 1 1 0;
+  min-width: 0;
+  gap: 8px;
+}
+.process-flow-arrow {
+  display: grid;
+  place-items: center;
+  flex: 0 0 18px;
+  color: #8fb1c2;
+}
+.process-flow-arrow svg {
+  width: 15px;
+  height: 15px;
+}
+.process-flow-node {
+  appearance: none;
+  width: 100%;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 9px;
+  padding: 11px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #f8fafb;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s, transform 0.15s;
+}
+.process-flow-node:hover {
+  border-color: #8fbdd3;
+  background: #f1f7fa;
+  transform: translateY(-1px);
+}
+.process-flow-icon {
+  display: grid;
+  place-items: center;
+  width: 31px;
+  height: 31px;
+  border-radius: 7px;
+  background: #e7f2f7;
+  color: var(--primary);
+}
+.process-flow-icon svg,
+.process-flow-link svg {
+  width: 14px;
+  height: 14px;
+}
+.process-flow-copy {
+  min-width: 0;
+}
+.process-flow-copy small,
+.process-flow-copy strong,
+.process-flow-copy em {
+  display: block;
+}
+.process-flow-copy small {
+  margin-bottom: 4px;
+  color: var(--primary);
+  font-size: 7px;
+  font-weight: 750;
+  letter-spacing: 0.55px;
+  text-transform: uppercase;
+}
+.process-flow-copy strong {
+  color: var(--ink);
+  font-size: 9px;
+  line-height: 1.35;
+}
+.process-flow-copy em {
+  margin-top: 4px;
+  overflow: hidden;
+  color: var(--muted);
+  font-size: 7px;
+  font-style: normal;
+  line-height: 1.4;
+  text-overflow: ellipsis;
+}
+.process-flow-link {
+  color: var(--primary);
+}
 .process-lineage {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -5221,6 +5313,16 @@ a.metric-source:hover { border-color: #a9cadb; }
 
 :root[data-theme="dark"] .document-process-card { background: #122631; }
 :root[data-theme="dark"] .embedded-processes { background: #162c38; }
+:root[data-theme="dark"] .process-flow-node {
+  background: #162c38;
+}
+:root[data-theme="dark"] .process-flow-node:hover {
+  border-color: #47758b;
+  background: #193542;
+}
+:root[data-theme="dark"] .process-flow-icon {
+  background: #193744;
+}
 :root[data-theme="dark"] .process-lineage-item { background: #162c38; }
 :root[data-theme="dark"] .process-code-icon,
 :root[data-theme="dark"] .process-lineage > a > span,
@@ -5242,6 +5344,13 @@ a.metric-source:hover { border-color: #a9cadb; }
 :root[data-theme="dark"] .process-code-block pre { color: #d8e8ef; }
 
 @media (max-width: 850px) {
+  .process-flow-diagram {
+    flex-direction: column;
+  }
+  .process-flow-arrow {
+    flex-basis: 18px;
+    transform: rotate(90deg);
+  }
   .process-lineage,
   .process-formulas { grid-template-columns: 1fr; }
 }
