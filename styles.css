@@ -4872,6 +4872,11 @@ a.metric-source:hover { border-color: #a9cadb; }
   border-bottom: 1px solid var(--line);
   background: #f8fafb;
 }
+.metric-processes {
+  margin-top: 14px;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+}
 .embedded-process-heading {
   display: flex;
   align-items: center;
