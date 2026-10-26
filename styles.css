@@ -1885,37 +1885,52 @@ footer {
   font-size: 9px;
   line-height: 1.6;
 }
-.membership-name-grid {
+.membership-catalog-list {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 7px;
+  gap: 6px;
 }
-.membership-name-grid > div {
+.membership-catalog-list article {
   display: grid;
-  grid-template-columns: 27px minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
-  gap: 9px;
-  min-height: 42px;
-  padding: 8px 10px;
+  gap: 12px;
+  min-height: 46px;
+  padding: 8px 11px;
   border: 1px solid var(--line);
   border-radius: 6px;
   background: #f8fafb;
 }
-.membership-name-grid span {
-  display: grid;
-  place-items: center;
-  width: 27px;
-  height: 27px;
-  border-radius: 6px;
-  background: #e9f3f8;
-  color: var(--primary);
+.membership-catalog-list article > div:last-child {
+  text-align: right;
+}
+.membership-catalog-list strong {
+  display: block;
+  color: var(--ink);
+  font-size: 9px;
+  line-height: 1.35;
+}
+.membership-catalog-list small,
+.membership-catalog-list b {
+  display: block;
+  margin-top: 3px;
+  color: var(--muted);
+  font-size: 7px;
+  font-weight: 550;
+  white-space: nowrap;
+}
+.membership-status {
+  display: inline-flex;
+  padding: 3px 6px;
+  border-radius: 4px;
+  background: #eaf5e3;
+  color: #4f7e27;
   font-size: 7px;
   font-weight: 750;
 }
-.membership-name-grid strong {
-  color: var(--ink);
-  font-size: 9px;
-  line-height: 1.45;
+.membership-catalog-list .retired .membership-status {
+  background: #edf0f2;
+  color: #71818a;
 }
 .column-dictionary {
   margin-top: 18px;
@@ -1963,6 +1978,13 @@ footer {
 .estimate-note svg {
   width: 13px;
   flex-shrink: 0;
+}
+.membership-query-guide .estimate-note {
+  min-height: 54px;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  text-align: center;
 }
 .column-profile-grid {
   padding: 12px;
@@ -3307,12 +3329,17 @@ footer {
 :root[data-theme="dark"] .interpretation-pending-grid p {
   color: #d1c58f;
 }
-:root[data-theme="dark"] .membership-name-grid > div,
+:root[data-theme="dark"] .membership-catalog-list article,
 :root[data-theme="dark"] .column-data-type code {
   background: #162d38;
 }
-:root[data-theme="dark"] .membership-name-grid span {
-  background: #173a4d;
+:root[data-theme="dark"] .membership-status {
+  background: #203b2d;
+  color: #a7d57f;
+}
+:root[data-theme="dark"] .membership-catalog-list .retired .membership-status {
+  background: #253946;
+  color: #9cb0ba;
 }
 :root[data-theme="dark"] .frequent-values-empty {
   border-color: #29414f;
@@ -3946,7 +3973,7 @@ footer {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
   .interpretation-pending-grid,
-  .membership-name-grid {
+  .membership-catalog-list {
     grid-template-columns: 1fr;
   }
   .active-timeline {
