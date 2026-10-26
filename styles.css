@@ -1782,6 +1782,9 @@ footer {
   border-collapse: collapse;
   text-align: left;
 }
+.membership-sample-table .sample-data-table {
+  min-width: 1500px;
+}
 .sample-data-table th {
   padding: 10px;
   border-right: 1px solid #dce5e9;
