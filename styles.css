@@ -5044,7 +5044,7 @@ a.metric-source:hover { border-color: #a9cadb; }
   overflow: hidden;
   border: 1px solid var(--line);
   border-radius: 7px;
-  background: #102530;
+  background: #f4f7f8;
 }
 .process-code-block > div {
   display: flex;
@@ -5052,12 +5052,13 @@ a.metric-source:hover { border-color: #a9cadb; }
   justify-content: space-between;
   gap: 12px;
   padding: 9px 13px;
-  border-bottom: 1px solid #2a4654;
-  color: #a8bfca;
+  border-bottom: 1px solid #dce6ea;
+  background: #eef3f5;
+  color: #667e8b;
   font-size: 8px;
 }
 .process-code-block > div span {
-  color: #7fc4e8;
+  color: var(--primary);
   font-weight: 750;
   letter-spacing: 0.8px;
 }
@@ -5066,7 +5067,7 @@ a.metric-source:hover { border-color: #a9cadb; }
   margin: 0;
   overflow: auto;
   padding: 15px;
-  color: #d8e8ef;
+  color: #314e5e;
   font-size: 10px;
   line-height: 1.65;
   tab-size: 4;
@@ -5098,8 +5099,10 @@ a.metric-source:hover { border-color: #a9cadb; }
 
 :root[data-theme="dark"] .document-process-card { background: #122631; }
 :root[data-theme="dark"] .embedded-processes { background: #162c38; }
+:root[data-theme="dark"] .process-lineage-item { background: #162c38; }
 :root[data-theme="dark"] .process-code-icon,
 :root[data-theme="dark"] .process-lineage > a > span,
+:root[data-theme="dark"] .process-lineage-item > span,
 :root[data-theme="dark"] .process-formulas > div { background: #193744; }
 :root[data-theme="dark"] .process-lineage > a { background: #162c38; }
 :root[data-theme="dark"] .process-pending {
@@ -5107,6 +5110,14 @@ a.metric-source:hover { border-color: #a9cadb; }
   background: #29291e;
   color: #ead784;
 }
+:root[data-theme="dark"] .process-code-block { background: #0e222d; }
+:root[data-theme="dark"] .process-code-block > div {
+  border-bottom-color: #2a4654;
+  background: #102a36;
+  color: #a8bfca;
+}
+:root[data-theme="dark"] .process-code-block > div span { color: #7fc4e8; }
+:root[data-theme="dark"] .process-code-block pre { color: #d8e8ef; }
 
 @media (max-width: 850px) {
   .process-lineage,
