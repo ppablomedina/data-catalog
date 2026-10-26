@@ -4578,6 +4578,71 @@ footer {
 .metric-data-flow .process-flow-diagram {
   margin-bottom: 0;
 }
+.process-flow-steps {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+  margin: 14px 0 0;
+  padding: 14px 0 0;
+  border-top: 1px solid var(--line);
+  list-style: none;
+}
+.process-flow-steps li {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: start;
+  gap: 9px;
+  padding: 10px;
+  border-radius: 7px;
+  background: #fff;
+}
+.process-flow-steps li > span {
+  display: grid;
+  place-items: center;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: #e7f2f7;
+  color: var(--primary);
+  font-size: 7px;
+  font-weight: 800;
+}
+.process-flow-steps strong {
+  color: var(--ink);
+  font-size: 9px;
+}
+.process-flow-steps p {
+  margin-top: 5px;
+  color: var(--muted);
+  font-size: 8px;
+  line-height: 1.55;
+}
+.process-step-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 8px;
+}
+.process-step-links a,
+.process-step-links button {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 5px 7px;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  background: #f6fafc;
+  color: var(--primary);
+  font: inherit;
+  font-size: 7px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.process-step-links svg {
+  width: 10px;
+  height: 10px;
+}
 .metric-sources { margin-top: 18px; }
 .metric-sources h4 {
   margin: 0 0 9px;
@@ -5354,6 +5419,14 @@ a.metric-source:hover { border-color: #a9cadb; }
 :root[data-theme="dark"] .document-process-card { background: #122631; }
 :root[data-theme="dark"] .embedded-processes { background: #162c38; }
 :root[data-theme="dark"] .metric-data-flow { background: #122b37; }
+:root[data-theme="dark"] .process-flow-steps li,
+:root[data-theme="dark"] .process-step-links a,
+:root[data-theme="dark"] .process-step-links button {
+  background: #162c38;
+}
+:root[data-theme="dark"] .process-flow-steps li > span {
+  background: #193744;
+}
 :root[data-theme="dark"] .process-flow-node {
   background: #162c38;
 }
@@ -5385,6 +5458,9 @@ a.metric-source:hover { border-color: #a9cadb; }
 :root[data-theme="dark"] .process-code-block pre { color: #d8e8ef; }
 
 @media (max-width: 850px) {
+  .process-flow-steps {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
   .process-calculation-layout {
     grid-template-columns: 1fr;
   }
@@ -5399,6 +5475,9 @@ a.metric-source:hover { border-color: #a9cadb; }
   .process-formulas { grid-template-columns: 1fr; }
 }
 @media (max-width: 600px) {
+  .process-flow-steps {
+    grid-template-columns: 1fr;
+  }
   .embedded-processes { padding: 16px; }
   .embedded-process-heading { align-items: flex-start; }
   .process-card-heading { grid-template-columns: auto minmax(0, 1fr); }

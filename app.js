@@ -966,8 +966,25 @@
     if (!processes.length) return "";
     return processes
       .map(
-        (process) =>
-          `<section class="metric-data-flow"><div class="metric-data-flow-heading"><div><span class="eyebrow">LINAJE INTERACTIVO</span><h4>Flujo de datos</h4></div><small>Selecciona un elemento para abrir su detalle</small></div>${renderProcessFlow(process.flow)}</section>`,
+        (process) => {
+          const steps = process.flowSteps?.length
+            ? `<ol class="process-flow-steps">${process.flowSteps
+                .map((step, index) => {
+                  const links = (step.links || [])
+                    .map((link) => {
+                      const external = /^https?:\/\//i.test(link.href || "");
+                      return `<a href="${esc(link.href)}"${external ? ' target="_blank" rel="noopener noreferrer"' : ""}>${esc(link.label)}${icon(external ? "external" : "arrow")}</a>`;
+                    })
+                    .join("");
+                  const target = step.targetId
+                    ? `<button type="button" data-scroll-target="${esc(step.targetId)}">${esc(step.targetLabel || "Ver detalle")}${icon("arrow")}</button>`
+                    : "";
+                  return `<li><span>${String(index + 1).padStart(2, "0")}</span><div><strong>${esc(step.title)}</strong><p>${esc(step.description)}</p><div class="process-step-links">${links}${target}</div></div></li>`;
+                })
+                .join("")}</ol>`
+            : "";
+          return `<section class="metric-data-flow"><div class="metric-data-flow-heading"><div><span class="eyebrow">LINAJE INTERACTIVO</span><h4>Flujo de datos</h4></div><small>Selecciona un elemento para abrir su detalle</small></div>${renderProcessFlow(process.flow)}${steps}</section>`;
+        },
       )
       .join("");
   }

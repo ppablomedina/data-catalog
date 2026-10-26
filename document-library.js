@@ -300,6 +300,52 @@ IF(
               ],
             },
           ],
+          flowSteps: [
+            {
+              title: "Extracción mensual",
+              description:
+                "Cada mes se descarga una nueva extracción de Clientes con membresías por marca desde la consulta 8 de Nextbike.",
+              links: [
+                {
+                  label: "Abrir consulta 8",
+                  href: "#/moxsi/fuente/nextbike/consulta/8",
+                },
+              ],
+            },
+            {
+              title: "Preparación y vigencia",
+              description:
+                "El proceso conserva los registros con status = active y genera la columna validity aplicando las reglas de vigencia correspondientes a la fecha de compra.",
+              links: [
+                {
+                  label: "Ver proceso",
+                  href: "https://github.com/ppablomedina/moxsi-stats-pipeline/blob/main/processes/membership_purchases.py",
+                },
+              ],
+            },
+            {
+              title: "Carga en BigQuery",
+              description:
+                "Los datos procesados se cargan en membership_purchases y el catálogo normalizado de productos se mantiene en memberships.",
+              links: [
+                {
+                  label: "membership_purchases",
+                  href: "https://console.cloud.google.com/bigquery?inv=1&invt=Abwmsw&project=bigdata-fase2&ws=!1m16!1m4!3m2!1sbigdata-fase2!2sparkings_datamart!23sWS_URL_PARAM!1m4!3m2!1sbigdata-fase2!2smoxsi_datamart!23sWS_URL_PARAM!1m5!4m3!1sbigdata-fase2!2smoxsi_datamart!3smembership_purchases!23sRESOURCE_LIST",
+                },
+                {
+                  label: "memberships",
+                  href: "https://console.cloud.google.com/bigquery?inv=1&invt=Abwmsw&project=bigdata-fase2&ws=!1m16!1m4!3m2!1sbigdata-fase2!2sparkings_datamart!23sWS_URL_PARAM!1m4!3m2!1sbigdata-fase2!2smoxsi_datamart!23sWS_URL_PARAM!1m5!4m3!1sbigdata-fase2!2smoxsi_datamart!3smemberships!23sTREE_NODE_SELECTION",
+                },
+              ],
+            },
+            {
+              title: "Cálculo mensual en Power BI",
+              description:
+                "La medida DAX evalúa cada mes y cuenta las compras cuya fecha es anterior al final del mes y cuya vigencia alcanza su fecha de inicio.",
+              targetId: "dax-suscripciones-activas",
+              targetLabel: "Ver medida DAX",
+            },
+          ],
           formulas: [
             {
               name: "Agrupación temporal",
