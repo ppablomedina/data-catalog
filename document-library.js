@@ -155,21 +155,36 @@
           formulas: [
             {
               name: "Última fecha con datos",
-              expression: "MAX(rentals[start_date]) sin filtros",
-            },
-            {
-              name: "Fin de la ventana",
               expression:
-                "MIN(fecha seleccionada, última fecha con datos)",
+                "MAX(rentals[start_date]) eliminando filtros de rentals y _DimFecha",
             },
             {
-              name: "Inicio de la ventana",
-              expression: "EDATE(fecha fin, -12) + 1",
+              name: "Último mes completo",
+              expression: "EOMONTH(MaxFechaConDatos, -1)",
+            },
+            {
+              name: "Contexto seleccionado",
+              expression:
+                "MIN(_DimFecha[Date]) → MAX(_DimFecha[Date])",
+            },
+            {
+              name: "Fin del cálculo",
+              expression:
+                "MIN(FechaFinContexto, UltimoMesCompleto)",
+            },
+            {
+              name: "Inicio del cálculo",
+              expression: "EDATE(FechaFinCalculo, -12) + 1",
+            },
+            {
+              name: "Disponibilidad del periodo",
+              expression:
+                "COUNTROWS(rentals) entre FechaInicioContexto y FechaFinCalculo",
             },
             {
               name: "Resultado",
               expression:
-                "DISTINCTCOUNT(rentals[user_id]) dentro de la ventana",
+                "DISTINCTCOUNT(rentals[user_id]) entre FechaInicioCalculo y FechaFinCalculo",
             },
           ],
           codeLanguage: "DAX",
@@ -177,28 +192,46 @@
 VAR MaxFechaConDatos =
     CALCULATE(
         MAX(rentals[start_date]),
-        REMOVEFILTERS()
+        REMOVEFILTERS(rentals),
+        REMOVEFILTERS(_DimFecha)
     )
 
-VAR FechaSeleccionada =
+VAR UltimoMesCompleto =
+    EOMONTH(MaxFechaConDatos, -1)
+
+VAR FechaInicioContexto =
+    MIN(_DimFecha[Date])
+
+VAR FechaFinContexto =
     MAX(_DimFecha[Date])
 
-VAR FechaFin =
-    MIN(FechaSeleccionada, MaxFechaConDatos)
+VAR FechaFinCalculo =
+    MIN(FechaFinContexto, UltimoMesCompleto)
 
-VAR FechaInicio =
-    EDATE(FechaFin, -12) + 1
+VAR FechaInicioCalculo =
+    EDATE(FechaFinCalculo, -12) + 1
+
+VAR HayDatosEnPeriodo =
+    CALCULATE(
+        COUNTROWS(rentals),
+        REMOVEFILTERS(_DimFecha),
+        REMOVEFILTERS(rentals[start_date]),
+        rentals[start_date] >= FechaInicioContexto,
+        rentals[start_date] < FechaFinCalculo + 1
+    )
 
 RETURN
 IF(
-    MIN(_DimFecha[Date]) > MaxFechaConDatos,
+    ISBLANK(MaxFechaConDatos)
+        || FechaInicioContexto > UltimoMesCompleto
+        || HayDatosEnPeriodo = 0,
     BLANK(),
     CALCULATE(
         DISTINCTCOUNT(rentals[user_id]),
-        FILTER(
-            ALL(_DimFecha),
-            _DimFecha[Date] >= FechaInicio &&
-            _DimFecha[Date] <= FechaFin
+        DATESBETWEEN(
+            _DimFecha[Date],
+            FechaInicioCalculo,
+            FechaFinCalculo
         )
     )
 )`,
@@ -238,7 +271,7 @@ IF(
         {
           title: "Usuarios/as",
           metrics: [
-            metric("Usuarios/as únicos", "DISTINCTCOUNT de rentals[user_id] en una ventana móvil de 12 meses", "Últimos 12 meses", [confirmed("Nextbike · Consulta 2", "#/moxsi/fuente/nextbike/consultas", "Alquileres con datos de clientes por ciudad; fuente utilizada actualmente en Power BI")], { description: "Definición de ATUC: usuarios diferentes que en los últimos 12 meses han pagado una tarifa en el sistema.", note: "La medida toma como fecha final la menor entre la fecha seleccionada y la última fecha con alquileres, y devuelve vacío cuando el periodo seleccionado queda después de los datos disponibles.", pending: ["Preguntar a Fer si la fuente de alquileres es válida: un usuario puede haber pagado una tarifa sin haber alquilado nunca.", "Confirmar qué fuente registra el pago de tarifas para cubrir literalmente la definición de ATUC."], processIds: ["usuarios-unicos-12m"] }),
+            metric("Usuarios/as únicos", "DISTINCTCOUNT de rentals[user_id] en una ventana móvil de 12 meses cerrada en el último mes completo", "Últimos 12 meses", [confirmed("Nextbike · Consulta 2", "#/moxsi/fuente/nextbike/consultas", "Alquileres con datos de clientes por ciudad; fuente utilizada actualmente en Power BI")], { description: "Definición de ATUC: usuarios diferentes que en los últimos 12 meses han pagado una tarifa en el sistema.", note: "La medida limita el cálculo al último mes completo disponible, respeta el contexto temporal seleccionado y devuelve vacío cuando no existen datos válidos en el periodo.", pending: ["Preguntar a Fer si la fuente de alquileres es válida: un usuario puede haber pagado una tarifa sin haber alquilado nunca.", "Confirmar qué fuente registra el pago de tarifas para cubrir literalmente la definición de ATUC."], processIds: ["usuarios-unicos-12m"] }),
             metric("Abonados/as", "Media de usuarios con abono o suscripción vigente", "Media anual", [nextbike("Clientes, suscripciones y último alquiler", 5), nextbike("Membresías por marca", 8)], { pending: ["Definir fechas de corte y qué productos cuentan como abono."] }),
             metric("Usuarios/as activos", "Media de cuentas con active = 1 en cada fecha de corte", "Media anual", [nextbike("Estado active calculado al ejecutar la consulta", 11)], { pending: ["Definir la periodicidad de las consultas que formarán la media anual."] }),
             metric("Usuarios/as bloqueados", "Conteo de cuentas bloqueadas", "A 31/12", [pending("Nextbike · estado de cliente", "Bloqueos de cuenta en la fecha de corte")], { pending: ["Identificar el campo o endpoint que representa el bloqueo."] }),
