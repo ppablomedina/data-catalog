@@ -4399,7 +4399,8 @@ footer {
   display: grid;
   grid-template-columns: 92px minmax(0, 1fr);
   gap: 12px;
-  align-items: start;
+  align-items: center;
+  min-height: 64px;
   padding: 13px 15px;
   border-radius: 7px;
   background: #edf5f9;
@@ -4865,6 +4866,29 @@ a.metric-source:hover { border-color: #a9cadb; }
 }
 
 /* Procesos documentados de cálculo */
+.embedded-processes {
+  scroll-margin-top: 28px;
+  padding: 20px 22px 24px;
+  border-bottom: 1px solid var(--line);
+  background: #f8fafb;
+}
+.embedded-process-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 14px;
+}
+.embedded-process-heading h4 {
+  margin: 0;
+  font-family: Manrope, sans-serif;
+  font-size: 13px;
+}
+.embedded-process-heading p {
+  margin-top: 5px;
+  color: var(--muted);
+  font-size: 9px;
+}
 .document-process-list {
   display: grid;
   gap: 16px;
@@ -5005,6 +5029,7 @@ a.metric-source:hover { border-color: #a9cadb; }
 .process-pending p { font-size: 9px; line-height: 1.6; }
 
 :root[data-theme="dark"] .document-process-card { background: #122631; }
+:root[data-theme="dark"] .embedded-processes { background: #162c38; }
 :root[data-theme="dark"] .process-code-icon,
 :root[data-theme="dark"] .process-lineage > a > span,
 :root[data-theme="dark"] .process-formulas > div { background: #193744; }
@@ -5020,6 +5045,8 @@ a.metric-source:hover { border-color: #a9cadb; }
   .process-formulas { grid-template-columns: 1fr; }
 }
 @media (max-width: 600px) {
+  .embedded-processes { padding: 16px; }
+  .embedded-process-heading { align-items: flex-start; }
   .process-card-heading { grid-template-columns: auto minmax(0, 1fr); }
   .process-card-heading > a { grid-column: 1 / -1; justify-content: center; }
 }
