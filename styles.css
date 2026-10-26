@@ -4882,7 +4882,22 @@ a.metric-source:hover { border-color: #a9cadb; }
   align-items: center;
   justify-content: space-between;
   gap: 18px;
-  margin-bottom: 14px;
+  margin: 0;
+  list-style: none;
+  cursor: pointer;
+}
+.embedded-process-heading::-webkit-details-marker { display: none; }
+.metric-processes[open] > .embedded-process-heading { margin-bottom: 14px; }
+.process-summary-meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+.process-summary-meta .endpoint-chevron {
+  transition: transform 0.18s ease;
+}
+.metric-processes[open] .process-summary-meta .endpoint-chevron {
+  transform: rotate(180deg);
 }
 .embedded-process-heading h4 {
   margin: 0;
