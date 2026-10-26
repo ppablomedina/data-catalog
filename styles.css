@@ -4550,6 +4550,34 @@ footer {
   line-height: 1.65;
 }
 .metric-note svg { width: 14px; height: 14px; }
+.metric-data-flow {
+  margin-top: 12px;
+  padding: 15px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #f8fafb;
+}
+.metric-data-flow-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+.metric-data-flow-heading .eyebrow {
+  margin-bottom: 4px;
+}
+.metric-data-flow-heading h4 {
+  font-family: Manrope, sans-serif;
+  font-size: 12px;
+}
+.metric-data-flow-heading > small {
+  color: var(--muted);
+  font-size: 8px;
+}
+.metric-data-flow .process-flow-diagram {
+  margin-bottom: 0;
+}
 .metric-sources { margin-top: 18px; }
 .metric-sources h4 {
   margin: 0 0 9px;
@@ -5253,6 +5281,18 @@ a.metric-source:hover { border-color: #a9cadb; }
   overflow-wrap: anywhere;
   white-space: normal;
 }
+.process-calculation-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: start;
+  gap: 12px;
+}
+.process-calculation-layout > .process-formulas {
+  grid-template-columns: 1fr;
+}
+.process-calculation-layout > .process-code-block {
+  margin-top: 0;
+}
 .process-code-block {
   margin-top: 12px;
   overflow: hidden;
@@ -5313,6 +5353,7 @@ a.metric-source:hover { border-color: #a9cadb; }
 
 :root[data-theme="dark"] .document-process-card { background: #122631; }
 :root[data-theme="dark"] .embedded-processes { background: #162c38; }
+:root[data-theme="dark"] .metric-data-flow { background: #122b37; }
 :root[data-theme="dark"] .process-flow-node {
   background: #162c38;
 }
@@ -5344,6 +5385,9 @@ a.metric-source:hover { border-color: #a9cadb; }
 :root[data-theme="dark"] .process-code-block pre { color: #d8e8ef; }
 
 @media (max-width: 850px) {
+  .process-calculation-layout {
+    grid-template-columns: 1fr;
+  }
   .process-flow-diagram {
     flex-direction: column;
   }
