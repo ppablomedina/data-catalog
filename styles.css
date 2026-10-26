@@ -4938,6 +4938,19 @@ a.metric-source:hover { border-color: #a9cadb; }
   white-space: nowrap;
 }
 .process-card-heading > a svg { width: 13px; height: 13px; }
+.process-location {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 11px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  color: var(--muted);
+  font-size: 9px;
+  font-weight: 650;
+  white-space: nowrap;
+}
+.process-location svg { width: 13px; height: 13px; }
 .document-process-card > p {
   margin: 18px 0;
   color: var(--muted);
@@ -4950,7 +4963,8 @@ a.metric-source:hover { border-color: #a9cadb; }
   gap: 10px;
   margin-bottom: 15px;
 }
-.process-lineage > a {
+.process-lineage > a,
+.process-lineage-item {
   display: grid;
   grid-template-columns: auto minmax(0, 1fr) auto;
   align-items: center;
@@ -4961,7 +4975,8 @@ a.metric-source:hover { border-color: #a9cadb; }
   background: #f8fafb;
 }
 .process-lineage > a:hover { border-color: #a9cadb; }
-.process-lineage > a > span {
+.process-lineage > a > span,
+.process-lineage-item > span {
   display: grid;
   place-items: center;
   width: 29px;
@@ -5009,6 +5024,39 @@ a.metric-source:hover { border-color: #a9cadb; }
   overflow-wrap: anywhere;
   white-space: normal;
 }
+.process-code-block {
+  margin-top: 12px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  background: #102530;
+}
+.process-code-block > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 9px 13px;
+  border-bottom: 1px solid #2a4654;
+  color: #a8bfca;
+  font-size: 8px;
+}
+.process-code-block > div span {
+  color: #7fc4e8;
+  font-weight: 750;
+  letter-spacing: 0.8px;
+}
+.process-code-block pre {
+  max-height: 420px;
+  margin: 0;
+  overflow: auto;
+  padding: 15px;
+  color: #d8e8ef;
+  font-size: 10px;
+  line-height: 1.65;
+  tab-size: 4;
+}
+.process-code-block code { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; }
 .process-pending {
   display: flex;
   align-items: flex-start;

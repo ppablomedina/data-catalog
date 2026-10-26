@@ -141,6 +141,71 @@
           pending:
             "Unificar este proceso y el de Flota para consumir directamente Nextbike Consulta 3 como única fuente principal.",
         },
+        {
+          id: "usuarios-unicos-12m",
+          title: "Usuarios únicos de los últimos 12 meses",
+          functionName: "_Usuarios Únicos (Últimos 12 Meses)",
+          repositoryName: "Power BI · medida DAX",
+          repositoryUrl: null,
+          sourceName:
+            "Nextbike · Consulta 2 · Alquileres con datos de clientes por ciudad",
+          sourceUrl: "#/moxsi/fuente/nextbike/consultas",
+          description:
+            "ATUC define el indicador como usuarios diferentes que en los últimos 12 meses han pagado una tarifa en el sistema. La medida actual aproxima esa definición contando usuarios distintos con alquileres dentro de una ventana móvil de 12 meses.",
+          formulas: [
+            {
+              name: "Última fecha con datos",
+              expression: "MAX(rentals[start_date]) sin filtros",
+            },
+            {
+              name: "Fin de la ventana",
+              expression:
+                "MIN(fecha seleccionada, última fecha con datos)",
+            },
+            {
+              name: "Inicio de la ventana",
+              expression: "EDATE(fecha fin, -12) + 1",
+            },
+            {
+              name: "Resultado",
+              expression:
+                "DISTINCTCOUNT(rentals[user_id]) dentro de la ventana",
+            },
+          ],
+          codeLanguage: "DAX",
+          code: `_Usuarios Únicos (Últimos 12 Meses) =
+VAR MaxFechaConDatos =
+    CALCULATE(
+        MAX(rentals[start_date]),
+        REMOVEFILTERS()
+    )
+
+VAR FechaSeleccionada =
+    MAX(_DimFecha[Date])
+
+VAR FechaFin =
+    MIN(FechaSeleccionada, MaxFechaConDatos)
+
+VAR FechaInicio =
+    EDATE(FechaFin, -12) + 1
+
+RETURN
+IF(
+    MIN(_DimFecha[Date]) > MaxFechaConDatos,
+    BLANK(),
+    CALCULATE(
+        DISTINCTCOUNT(rentals[user_id]),
+        FILTER(
+            ALL(_DimFecha),
+            _DimFecha[Date] >= FechaInicio &&
+            _DimFecha[Date] <= FechaFin
+        )
+    )
+)`,
+          pendingTitle: "Validar con Fer",
+          pending:
+            "Confirmar si la fuente de alquileres es válida para la definición de ATUC, ya que un usuario puede haber pagado una tarifa y no haber realizado ningún alquiler.",
+        },
       ],
       sections: [
         {
@@ -173,7 +238,7 @@
         {
           title: "Usuarios/as",
           metrics: [
-            metric("Usuarios/as únicos", "Conteo distinto de usuarios con al menos un uso durante el año", "Total anual", [nextbike("Alquileres con cliente", 2)], { pending: ["Confirmar la clave de usuario que se utilizará para deduplicar."] }),
+            metric("Usuarios/as únicos", "DISTINCTCOUNT de rentals[user_id] en una ventana móvil de 12 meses", "Últimos 12 meses", [confirmed("Nextbike · Consulta 2", "#/moxsi/fuente/nextbike/consultas", "Alquileres con datos de clientes por ciudad; fuente utilizada actualmente en Power BI")], { description: "Definición de ATUC: usuarios diferentes que en los últimos 12 meses han pagado una tarifa en el sistema.", note: "La medida toma como fecha final la menor entre la fecha seleccionada y la última fecha con alquileres, y devuelve vacío cuando el periodo seleccionado queda después de los datos disponibles.", pending: ["Preguntar a Fer si la fuente de alquileres es válida: un usuario puede haber pagado una tarifa sin haber alquilado nunca.", "Confirmar qué fuente registra el pago de tarifas para cubrir literalmente la definición de ATUC."], processIds: ["usuarios-unicos-12m"] }),
             metric("Abonados/as", "Media de usuarios con abono o suscripción vigente", "Media anual", [nextbike("Clientes, suscripciones y último alquiler", 5), nextbike("Membresías por marca", 8)], { pending: ["Definir fechas de corte y qué productos cuentan como abono."] }),
             metric("Usuarios/as activos", "Media de cuentas con active = 1 en cada fecha de corte", "Media anual", [nextbike("Estado active calculado al ejecutar la consulta", 11)], { pending: ["Definir la periodicidad de las consultas que formarán la media anual."] }),
             metric("Usuarios/as bloqueados", "Conteo de cuentas bloqueadas", "A 31/12", [pending("Nextbike · estado de cliente", "Bloqueos de cuenta en la fecha de corte")], { pending: ["Identificar el campo o endpoint que representa el bloqueo."] }),
