@@ -1887,7 +1887,7 @@ footer {
 }
 .membership-catalog-list {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 6px;
 }
 .membership-catalog-list article {
@@ -1982,9 +1982,9 @@ footer {
 .membership-query-guide .estimate-note {
   min-height: 54px;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   box-sizing: border-box;
-  text-align: center;
+  text-align: left;
 }
 .column-profile-grid {
   padding: 12px;
