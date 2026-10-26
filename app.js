@@ -915,6 +915,63 @@
       ? `<a class="metric-source ${esc(source.status)}" href="${esc(source.href)}"${external ? ' target="_blank" rel="noopener noreferrer"' : ""}>${content}${icon(external ? "external" : "arrow")}</a>`
       : `<div class="metric-source ${esc(source.status)}${source.status === "pending" ? " pending-source" : ""}">${content}</div>`;
   }
+  function highlightDax(code) {
+    const keywords = new Set([
+      "VAR",
+      "RETURN",
+      "IF",
+      "IN",
+      "TRUE",
+      "FALSE",
+      "AND",
+      "OR",
+      "NOT",
+    ]);
+    const variables = new Set(
+      [...code.matchAll(/\bVAR\s+([A-Za-z_][A-Za-z0-9_]*)/g)].map(
+        (match) => match[1].toUpperCase(),
+      ),
+    );
+    const measureEnd = code.indexOf("=");
+    const tokens =
+      code.match(
+        /\/\/[^\n]*|--[^\n]*|"(?:[^"]|"")*"|'(?:[^']|'')*'|\[[^\]]+\]|\b\d+(?:\.\d+)?\b|[A-Za-z_ÁÉÍÓÚÜÑáéíóúüñ][A-Za-z0-9_ÁÉÍÓÚÜÑáéíóúüñ]*|<>|>=|<=|&&|\|\||[=<>+\-*/(),]|\s+|./gu,
+      ) || [];
+    let position = 0;
+    return tokens
+      .map((token) => {
+        const start = position;
+        position += token.length;
+        const safe = esc(token);
+        if (/^\s+$/u.test(token)) return safe;
+        if (/^(\/\/|--)/u.test(token))
+          return `<span class="dax-comment">${safe}</span>`;
+        if (/^["']/u.test(token))
+          return `<span class="dax-string">${safe}</span>`;
+        if (/^\[/u.test(token))
+          return `<span class="dax-column">${safe}</span>`;
+        if (/^\d/u.test(token))
+          return `<span class="dax-number">${safe}</span>`;
+        if (/^[A-Za-z_ÁÉÍÓÚÜÑáéíóúüñ]/u.test(token)) {
+          const upper = token.toUpperCase();
+          const rest = code.slice(position);
+          if (measureEnd >= 0 && start < measureEnd)
+            return `<span class="dax-measure">${safe}</span>`;
+          if (keywords.has(upper))
+            return `<span class="dax-keyword">${safe}</span>`;
+          if (/^\s*\(/u.test(rest))
+            return `<span class="dax-function">${safe}</span>`;
+          if (/^\s*\[/u.test(rest))
+            return `<span class="dax-table">${safe}</span>`;
+          if (variables.has(upper))
+            return `<span class="dax-variable">${safe}</span>`;
+        }
+        if (/^(<>|>=|<=|&&|\|\||[=<>+\-*/])$/u.test(token))
+          return `<span class="dax-operator">${safe}</span>`;
+        return safe;
+      })
+      .join("");
+  }
   function renderProcessFlow(flow) {
     return `<div class="process-flow-diagram" aria-label="Flujo de datos">${flow
         .map((stage, stageIndex) => {
@@ -942,8 +999,12 @@
         const transformation = process.repositoryUrl
           ? `<a href="${esc(process.repositoryUrl)}" target="_blank" rel="noopener noreferrer"><span>${icon("code")}</span><div><small>TRANSFORMACIÓN</small><strong>${esc(process.repositoryName)}</strong></div>${icon("external")}</a>`
           : `<div class="process-lineage-item"><span>${icon("code")}</span><div><small>TRANSFORMACIÓN</small><strong>${esc(process.repositoryName)}</strong></div></div>`;
+        const highlightedCode =
+          process.codeLanguage === "DAX"
+            ? highlightDax(process.code || "")
+            : esc(process.code || "");
         const codeBlock = process.code
-          ? `<div${process.codeAnchor ? ` id="${esc(process.codeAnchor)}"` : ""} class="process-code-block"><div><span>${esc(process.codeLanguage || "Código")}</span><strong>Medida completa</strong></div><pre><code>${esc(process.code)}</code></pre></div>`
+          ? `<div${process.codeAnchor ? ` id="${esc(process.codeAnchor)}"` : ""} class="process-code-block${process.codeLanguage === "DAX" ? " dax-code-block" : ""}"><div><span>${esc(process.codeLanguage || "Código")}</span><strong>Medida completa</strong></div><pre><code>${highlightedCode}</code></pre></div>`
           : "";
         const lineage = process.flow
           ? ""

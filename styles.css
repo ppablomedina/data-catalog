@@ -4927,7 +4927,7 @@ a.metric-source:hover { border-color: #a9cadb; }
   margin-top: 1px;
   flex-shrink: 0;
 }
-.query-retention-warning strong {
+.query-retention-warning > div > strong {
   display: block;
   margin-bottom: 4px;
   font-size: 11px;
@@ -5392,6 +5392,16 @@ a.metric-source:hover { border-color: #a9cadb; }
   tab-size: 4;
 }
 .process-code-block code { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; }
+.dax-measure { color: #075f8e; font-weight: 800; }
+.dax-keyword { color: #8750a2; font-weight: 800; }
+.dax-function { color: #08739d; font-weight: 700; }
+.dax-table { color: #a15b13; }
+.dax-column { color: #26765f; }
+.dax-variable { color: #5c63a8; }
+.dax-number { color: #a54c3e; }
+.dax-operator { color: #73508f; font-weight: 700; }
+.dax-string { color: #9b4c62; }
+.dax-comment { color: #7c909b; font-style: italic; }
 .process-pending {
   display: flex;
   align-items: flex-start;
@@ -5456,6 +5466,16 @@ a.metric-source:hover { border-color: #a9cadb; }
 }
 :root[data-theme="dark"] .process-code-block > div span { color: #7fc4e8; }
 :root[data-theme="dark"] .process-code-block pre { color: #d8e8ef; }
+:root[data-theme="dark"] .dax-measure { color: #77d3ff; }
+:root[data-theme="dark"] .dax-keyword { color: #d9a7f2; }
+:root[data-theme="dark"] .dax-function { color: #68c7ef; }
+:root[data-theme="dark"] .dax-table { color: #f2bb72; }
+:root[data-theme="dark"] .dax-column { color: #82d6b5; }
+:root[data-theme="dark"] .dax-variable { color: #b7b9ff; }
+:root[data-theme="dark"] .dax-number { color: #f29a87; }
+:root[data-theme="dark"] .dax-operator { color: #dcb5ef; }
+:root[data-theme="dark"] .dax-string { color: #f1a7bb; }
+:root[data-theme="dark"] .dax-comment { color: #839ca8; }
 
 @media (max-width: 850px) {
   .process-flow-steps {
