@@ -427,7 +427,21 @@
     });
     return output;
   }
+  function renderMembershipQueryGuide(guide, expanded = false) {
+    const formatCount = (value) =>
+      new Intl.NumberFormat("es-ES").format(Number(value));
+    const frequentCounts = (column) => {
+      const values = guide.frequentValues?.[column.key] || [];
+      return values.length
+        ? `<div class="frequent-values membership-frequencies"><em>Valores más repetidos</em><div>${values.map((item) => `<span><b>${esc(item.value)}</b><small>${formatCount(item.count)} registros</small></span>`).join("")}</div></div>`
+        : '<div class="frequent-values-empty">Sin distribución de valores facilitada</div>';
+    };
+    return `<details class="query-guide membership-query-guide"${expanded ? " open" : ""}><summary><span class="query-guide-icon">${icon("database")}</span><span><strong>Diccionario y perfil de membresías</strong><small>Parámetros, ${formatCount(guide.totalRows)} registros analizados, valores frecuentes y campos pendientes de interpretar</small></span><span class="badge available"><i></i>Documentado</span><span class="endpoint-chevron">⌄</span></summary><div class="query-guide-body"><details class="query-guide-section"><summary class="query-guide-section-summary"><div class="query-guide-heading"><span>01</span><div><h3>Parámetros de entrada</h3><p>La consulta delimita el periodo mediante fecha y hora.</p></div></div><span class="section-chevron">⌄</span></summary><div class="query-input-grid">${guide.inputs.map((input) => `<div><span>${icon("clock")}</span><strong>${esc(input.name)}</strong><p>${esc(input.description)}</p></div>`).join("")}</div></details><details class="query-guide-section pending-interpretation-section"><summary class="query-guide-section-summary"><div class="query-guide-heading"><span>02</span><div><h3>Cómo interpretar ${formatFieldReferences("is deleted", guide)} y ${formatFieldReferences("status", guide)}</h3><p>La distribución está documentada; su significado funcional debe validarse.</p></div></div><span class="badge pending"><i></i>Pendiente</span><span class="section-chevron">⌄</span></summary><div class="interpretation-pending-grid">${guide.interpretationPending.map((item) => `<article><div><strong>${formatFieldReferences(item.field, guide)}</strong><span class="badge pending"><i></i>Por confirmar</span></div><code>${esc(item.values)}</code><p>${formatFieldReferences(item.description, guide)}</p></article>`).join("")}</div></details><details class="query-guide-section"><summary class="query-guide-section-summary"><div class="query-guide-heading"><span>03</span><div><h3>Catálogo de ${formatFieldReferences("membership_name", guide)}</h3><p>Todos los tipos de membresía observados en la extracción analizada.</p></div></div><strong class="query-section-count">${guide.membershipNames.length} valores</strong><span class="section-chevron">⌄</span></summary><div class="membership-name-grid">${guide.membershipNames.map((name, index) => `<div><span>${String(index + 1).padStart(2, "0")}</span><strong>${esc(name)}</strong></div>`).join("")}</div></details><details class="column-dictionary"><summary><span>${icon("layers")}Diccionario, tipos y nulos</span><strong>${guide.columns.length} columnas</strong></summary><div class="estimate-note">${icon("info")}Perfil calculado sobre ${formatCount(guide.totalRows)} registros. Los recuentos se muestran tal como fueron facilitados.</div><div class="column-profile-grid membership-column-grid">${guide.columns.map((column) => `<article><div><strong>${esc(column.label)}</strong><span>${Number(column.nullRate).toFixed(2)}% nulos</span></div><div class="column-data-type"><code>${esc(column.dataType)}</code></div><p>${formatFieldReferences(column.note, guide)}</p><div class="coverage-track" title="${(100 - column.nullRate).toFixed(2)}% con dato"><i style="width:${100 - column.nullRate}%"></i></div>${frequentCounts(column)}</article>`).join("")}</div></details></div></details>`;
+  }
   function renderQueryGuide(guide, expanded = false) {
+    if (guide.kind === "memberships") {
+      return renderMembershipQueryGuide(guide, expanded);
+    }
     const roundedPercentage = (value) => Math.round(Number(value));
     const frequentValues = (column) => {
       const values = displayedFrequentValues(guide, column.key);
