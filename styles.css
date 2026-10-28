@@ -4469,6 +4469,24 @@ footer {
   border-bottom: 1px solid var(--line);
 }
 .document-metric:last-child { border-bottom: 0; }
+.document-metric-static {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 14px;
+  min-height: 66px;
+  padding: 11px 21px;
+}
+.document-metric-static strong {
+  display: block;
+  font-size: 12px;
+}
+.document-metric-static small {
+  display: block;
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: 9px;
+}
 .document-metric > summary {
   list-style: none;
   display: grid;
