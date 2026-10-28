@@ -48,6 +48,7 @@
     );
   const { departments, sources: catalogSources } = window.CATALOG;
   const sources = [...catalogSources, ...(window.DATA_INVENTORY || [])];
+  const nextbikeLogo = catalogSources.find((source) => source.id === "nextbike")?.logo;
   const inventoryMeta = window.INVENTORY_META || {
     useCases: [],
     gaps: [],
@@ -911,7 +912,9 @@
           ? "Origen pendiente"
           : "Relación propuesta";
     const sourceIcon = isNextbike
-      ? icon("bike")
+      ? nextbikeLogo
+        ? `<img src="${esc(nextbikeLogo)}" alt="">`
+        : icon("bike")
       : source.status === "pending"
         ? "?"
         : icon(source.status === "confirmed" ? "check" : "link");
