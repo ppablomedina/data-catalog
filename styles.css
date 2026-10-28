@@ -4538,11 +4538,15 @@ footer {
 .metric-primary-grid {
   display: grid;
   grid-template-columns: minmax(0, 7fr) minmax(260px, 3fr);
-  align-items: start;
+  align-items: stretch;
   gap: 16px;
 }
 .metric-calculation,
-.metric-sources { min-width: 0; }
+.metric-sources {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+}
 .metric-primary-grid h4 {
   margin: 0 0 9px;
   color: var(--muted);
@@ -4553,6 +4557,7 @@ footer {
 .metric-formula {
   display: flex;
   align-items: center;
+  flex: 1;
   min-height: 64px;
   padding: 13px 15px;
   border-radius: 7px;
@@ -4681,12 +4686,14 @@ footer {
   grid-template-columns: 26px minmax(0, 1fr) auto auto;
   align-items: center;
   gap: 10px;
-  margin-top: 7px;
+  flex: 1;
+  margin-top: 0;
   padding: 10px 12px;
   border: 1px solid var(--line);
   border-radius: 7px;
   background: #fff;
 }
+.metric-source + .metric-source { margin-top: 7px; }
 a.metric-source:hover { border-color: #a9cadb; }
 .metric-source > span:first-child {
   display: grid;
