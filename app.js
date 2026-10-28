@@ -909,7 +909,7 @@
         : source.status === "pending"
           ? "Origen pendiente"
           : "Relación propuesta";
-    const content = `<span>${source.status === "pending" ? "?" : icon(source.status === "confirmed" ? "check" : "link")}</span><span><strong>${esc(source.name)}</strong><small>${esc(source.relation)}</small></span><em>${statusLabel}</em>`;
+    const content = `<span>${source.status === "pending" ? "?" : icon(source.status === "confirmed" ? "check" : "link")}</span><span><strong>${esc(source.name)}</strong></span><em>${statusLabel}</em>`;
     const external = /^https?:\/\//i.test(source.href || "");
     return source.href
       ? `<a class="metric-source ${esc(source.status)}" href="${esc(source.href)}"${external ? ' target="_blank" rel="noopener noreferrer"' : ""}>${content}${icon(external ? "external" : "arrow")}</a>`
@@ -1054,8 +1054,11 @@
     if (section.title === "Información del servicio") {
       return `<div class="document-metric document-metric-static"><span class="metric-number">${number}</span><span><strong>${esc(metric.name)}</strong><small>${esc(metric.period)}</small></span><span class="metric-value-preview">${esc(metric.value)}</span></div>`;
     }
+    const firstProcessIndex = section.metrics.findIndex(
+      (item) => item.processIds?.length && item.showProcess,
+    );
     const processMarkup = metric.processIds?.length && metric.showProcess
-      ? `<details${section.title === "Indisponibilidad" && index === 0 ? ' id="document-processes"' : ""} class="embedded-processes metric-processes"><summary class="embedded-process-heading"><div><h4>Proceso de cálculo</h4><p>Función y fórmulas de esta métrica.</p></div><span class="process-summary-meta"><span class="section-kicker">CÓDIGO Y REGLAS</span><span class="endpoint-chevron">⌄</span></span></summary>${renderDocumentProcessList((document.processes || []).filter((process) => metric.processIds.includes(process.id)))}</details>`
+      ? `<details${section.title === "Indisponibilidad" && index === firstProcessIndex ? ' id="document-processes"' : ""} class="embedded-processes metric-processes"><summary class="embedded-process-heading"><div><h4>Proceso de cálculo</h4><p>Función y fórmulas de esta métrica.</p></div><span class="process-summary-meta"><span class="section-kicker">CÓDIGO Y REGLAS</span><span class="endpoint-chevron">⌄</span></span></summary>${renderDocumentProcessList((document.processes || []).filter((process) => metric.processIds.includes(process.id)))}</details>`
       : "";
     return `<details class="document-metric"><summary><span class="metric-number">${number}</span><span><strong>${esc(metric.name)}</strong><small>${esc(metric.period)}</small></span>${metric.value ? `<span class="metric-value-preview">${esc(metric.value)}</span>` : `<span class="metric-source-count">${metric.sources.length} ${metric.sources.length === 1 ? "fuente" : "fuentes"}</span>`}<span class="endpoint-chevron">⌄</span></summary><div class="document-metric-body">${metric.description ? `<p>${esc(metric.description)}</p>` : ""}${metric.value ? `<div class="metric-result"><span>Dato de la encuesta</span><strong>${esc(metric.value)}</strong></div>` : ""}<div class="metric-primary-grid"><div class="metric-calculation"><h4>🧮 Cálculo</h4><div class="metric-formula"><strong>${esc(metric.formula)}</strong></div></div><div class="metric-sources"><h4>Fuentes relacionadas</h4>${metric.sources.map(renderMetricSource).join("")}</div></div>${renderMetricFlows(document, metric)}${metric.note ? `<div class="metric-note">${icon("info")}<span>${esc(metric.note)}</span></div>` : ""}${processMarkup}${metric.pending.length ? `<div class="metric-pending"><strong>${icon("clock")}Pendiente de validar</strong><ul>${metric.pending.map((item) => `<li>${esc(item)}</li>`).join("")}</ul></div>` : ""}</div></details>`;
   }
