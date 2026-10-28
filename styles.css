@@ -4541,6 +4541,7 @@ footer {
   align-items: stretch;
   gap: 16px;
 }
+.metric-primary-grid.single-column { grid-template-columns: 1fr; }
 .metric-calculation,
 .metric-sources {
   display: flex;
