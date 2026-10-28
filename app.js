@@ -1058,6 +1058,13 @@
       )
       .join("");
   }
+  function renderMetricFormula(formula) {
+    const terms = String(formula).split(/\s+\+\s+/u);
+    if (terms.length < 2) return `<strong>${esc(formula)}</strong>`;
+    return `<span class="metric-formula-expression">${terms
+      .map((term) => `<code>${esc(term)}</code>`)
+      .join('<span class="metric-formula-operator">+</span>')}</span>`;
+  }
   function renderDocumentMetric(document, section, metric, index) {
     const number = String(index + 1).padStart(2, "0");
     if (section.title === "Información del servicio") {
@@ -1075,7 +1082,7 @@
     const sourcesMarkup = metric.showSources
       ? `<div class="metric-sources"><h4>Fuentes relacionadas</h4>${metric.sources.map(renderMetricSource).join("")}</div>`
       : "";
-    return `<details class="document-metric"><summary><span class="metric-number">${number}</span><span><strong>${esc(metric.name)}</strong><small>${esc(metric.period)}</small></span>${metric.value ? `<span class="metric-value-preview">${esc(metric.value)}</span>` : sourceSummary}<span class="endpoint-chevron">⌄</span></summary><div class="document-metric-body">${metric.description ? `<p>${esc(metric.description)}</p>` : ""}${metric.value ? `<div class="metric-result"><span>Dato de la encuesta</span><strong>${esc(metric.value)}</strong></div>` : ""}<div class="metric-primary-grid${metric.showSources ? "" : " single-column"}"><div class="metric-calculation"><h4>🧮 Cálculo</h4><div class="metric-formula"><strong>${esc(metric.formula)}</strong></div></div>${sourcesMarkup}</div>${renderMetricFlows(document, metric)}${metric.note ? `<div class="metric-note">${icon("info")}<span>${esc(metric.note)}</span></div>` : ""}${processMarkup}${metric.pending.length ? `<div class="metric-pending"><strong>${icon("clock")}Pendiente de validar</strong><ul>${metric.pending.map((item) => `<li>${esc(item)}</li>`).join("")}</ul></div>` : ""}</div></details>`;
+    return `<details class="document-metric"><summary><span class="metric-number">${number}</span><span><strong>${esc(metric.name)}</strong><small>${esc(metric.period)}</small></span>${metric.value ? `<span class="metric-value-preview">${esc(metric.value)}</span>` : sourceSummary}<span class="endpoint-chevron">⌄</span></summary><div class="document-metric-body">${metric.description ? `<p>${esc(metric.description)}</p>` : ""}${metric.value ? `<div class="metric-result"><span>Dato de la encuesta</span><strong>${esc(metric.value)}</strong></div>` : ""}<div class="metric-primary-grid${metric.showSources ? "" : " single-column"}"><div class="metric-calculation"><h4>🧮 Cálculo</h4><div class="metric-formula">${renderMetricFormula(metric.formula)}</div></div>${sourcesMarkup}</div>${renderMetricFlows(document, metric)}${metric.note ? `<div class="metric-note">${icon("info")}<span>${esc(metric.note)}</span></div>` : ""}${processMarkup}${metric.pending.length ? `<div class="metric-pending"><strong>${icon("clock")}Pendiente de validar</strong><ul>${metric.pending.map((item) => `<li>${esc(item)}</li>`).join("")}</ul></div>` : ""}</div></details>`;
   }
   function renderDocumentDetail(document) {
     setDocumentNavigation(true);

@@ -4569,6 +4569,29 @@ footer {
   font-size: 11px;
   line-height: 1.55;
 }
+.metric-formula-expression {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+.metric-formula-expression code {
+  padding: 6px 8px;
+  border: 1px solid #c3d9e4;
+  border-radius: 5px;
+  background: #dbeaf1;
+  color: #173d50;
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 9px;
+  font-weight: 650;
+  line-height: 1.4;
+}
+.metric-formula-operator {
+  color: var(--primary);
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 12px;
+  font-weight: 800;
+}
 .metric-note {
   display: flex;
   gap: 8px;
@@ -4903,6 +4926,11 @@ a.metric-source:hover { border-color: #a9cadb; }
 :root[data-theme="dark"] .annual-year,
 :root[data-theme="dark"] .metric-formula {
   background: #193744;
+}
+:root[data-theme="dark"] .metric-formula-expression code {
+  border-color: #315466;
+  background: #0d2733;
+  color: #c9e2ee;
 }
 :root[data-theme="dark"] .document-card-tags .pending-tag,
 :root[data-theme="dark"] .pending-source,
