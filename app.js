@@ -903,13 +903,19 @@
     );
   }
   function renderMetricSource(source) {
+    const isNextbike = /nextbike/i.test(source.name || "");
     const statusLabel =
       source.status === "confirmed"
         ? "Fuente confirmada"
         : source.status === "pending"
           ? "Origen pendiente"
           : "Relación propuesta";
-    const content = `<span>${source.status === "pending" ? "?" : icon(source.status === "confirmed" ? "check" : "link")}</span><span><strong>${esc(source.name)}</strong></span><em>${statusLabel}</em>`;
+    const sourceIcon = isNextbike
+      ? icon("bike")
+      : source.status === "pending"
+        ? "?"
+        : icon(source.status === "confirmed" ? "check" : "link");
+    const content = `<span${isNextbike ? ' class="nextbike-source-mark"' : ""}>${sourceIcon}</span><span><strong>${esc(source.name)}</strong></span><em>${statusLabel}</em>`;
     const external = /^https?:\/\//i.test(source.href || "");
     return source.href
       ? `<a class="metric-source ${esc(source.status)}" href="${esc(source.href)}"${external ? ' target="_blank" rel="noopener noreferrer"' : ""}>${content}${icon(external ? "external" : "arrow")}</a>`
@@ -1071,6 +1077,11 @@
         section.metrics.flatMap((metric) => metric.sources.map((source) => source.name)),
       ),
     ).size;
+    const hasVisibleProcesses = document.sections.some((section) =>
+      section.metrics.some(
+        (metric) => metric.processIds?.length && metric.showProcess,
+      ),
+    );
     const templateAction = document.template.actionLabel || "Abrir plantilla";
     const templateEyebrow =
       document.template.eyebrow || "PLANTILLA DE TRABAJO";
@@ -1085,7 +1096,7 @@
       <div class="document-detail-heading"><span class="document-hero-icon ${esc(document.color)}">${esc(document.icon)}</span><div><div class="eyebrow">${esc(document.organization)} · ${esc(document.type)} · ${esc(document.areaName)}</div><h1>${esc(document.title)}<span class="heading-dot">.</span></h1><p>${esc(document.description)}</p></div><a class="primary-document-link" href="${esc(document.template.url)}" target="_blank" rel="noopener">${icon("sheet")}${esc(templateAction)}</a></div>
       ${document.confidentialityNote ? `<div class="document-confidentiality">🔐 <span>${esc(document.confidentialityNote)}</span></div>` : ""}
       <div class="document-facts"><div><span>📅 Periodo</span><strong>${esc(document.referencePeriod)}</strong></div><div><span>🔁 Frecuencia</span><strong>${esc(document.frequency)}</strong></div><div><span>👤 Responsable</span>${document.owner ? `<strong>${esc(document.owner)}</strong>` : '<strong class="field-pending">Por completar</strong>'}</div><div><span>🔐 Clasificación</span>${document.classification ? `<strong>${esc(document.classification)}</strong>` : '<strong class="field-pending">Por completar</strong>'}</div></div>
-      <div class="document-jump-nav">${document.exampleView ? `<button type="button" data-scroll-target="document-example">${icon("database")}Vista de ejemplo</button>` : ""}${document.processes?.length ? `<button type="button" data-scroll-target="document-processes">${icon("code")}Procesos de cálculo</button>` : ""}<button type="button" data-scroll-target="document-metrics">${icon("chart")}${metricCount} métricas y cálculos</button><button type="button" data-scroll-target="document-archive">${icon("folder")}Histórico anual</button><a href="${esc(document.template.url)}" target="_blank" rel="noopener">${icon("sheet")}${esc(templateAction)}</a></div>
+      <div class="document-jump-nav">${document.exampleView ? `<button type="button" data-scroll-target="document-example">${icon("database")}Vista de ejemplo</button>` : ""}${hasVisibleProcesses ? `<button type="button" data-scroll-target="document-processes">${icon("code")}Procesos de cálculo</button>` : ""}<button type="button" data-scroll-target="document-metrics">${icon("chart")}${metricCount} métricas y cálculos</button><button type="button" data-scroll-target="document-archive">${icon("folder")}Histórico anual</button><a href="${esc(document.template.url)}" target="_blank" rel="noopener">${icon("sheet")}${esc(templateAction)}</a></div>
       ${exampleMarkup}
       <section id="document-metrics" class="document-detail-section"><div class="section-heading"><div><h2>Métricas, cálculos y fuentes <span class="count-pill">${metricCount}</span></h2><p>Cada indicador conserva la fórmula documentada y muestra de dónde debe obtenerse.</p></div><span class="section-kicker">${sourceCount} FUENTES RELACIONADAS</span></div><div class="metric-legend"><span><i class="legend-dot confirmed"></i>Fuente confirmada</span><span><i class="legend-dot proposed"></i>Relación propuesta para validar</span><span><i class="legend-dot missing"></i>Origen todavía sin identificar</span></div>${document.sections.map((section) => `<section class="document-metric-group"><div class="document-metric-group-heading"><div><h3>${esc(section.title)}</h3>${section.note ? `<p>${esc(section.note)}</p>` : ""}</div><span>${section.metrics.length} ${section.metrics.length === 1 ? "campo" : "campos"}</span></div><div class="document-metric-list">${section.metrics.map((metric, index) => renderDocumentMetric(document, section, metric, index)).join("")}</div></section>`).join("")}</section>
       <section id="document-archive" class="document-detail-section"><div class="section-heading"><div><h2>Histórico anual</h2><p>Acceso al documento de trabajo y a los archivos cumplimentados o conservados por año.</p></div><span class="section-kicker">ARCHIVO DOCUMENTAL</span></div><div class="document-archive-layout"><article class="template-archive-card"><span class="archive-icon">${icon("sheet")}</span><div><span class="eyebrow">${esc(templateEyebrow)}</span><h3>${esc(document.template.name)}</h3><p>${esc(templateDescription)}</p></div><a href="${esc(document.template.url)}" target="_blank" rel="noopener">${esc(templateAction)} ${icon("external")}</a></article><div class="annual-file-list">${document.archive.map((file) => `<article class="annual-file-card ${file.url ? "available" : "pending"}"><div class="annual-year">${esc(file.year)}</div><div><span class="eyebrow">ENTREGA ANUAL</span><h3>${esc(file.label)}</h3><p>${esc(file.note)}</p></div>${file.url ? `<a class="annual-file-link" href="${esc(file.url)}" target="_blank" rel="noopener">Abrir documento ${icon("external")}</a>` : `<span class="cloud-pending">${icon("clock")}Ruta de Cloud Storage por completar</span>`}</article>`).join("")}</div></div></section>

@@ -421,9 +421,9 @@ AVERAGEX(
           title: "Indisponibilidad",
           note: "La plantilla indica que no debe incluirse la flota en stock ni los vehículos robados.",
           metrics: [
-            metric("Indisponibilidad media mensual máxima", "Máximo de las medias mensuales del porcentaje diario de indisponibilidad total", "Máxima media/mes del año", [confirmed("Nextbike · Consulta 3", "#/moxsi/fuente/nextbike/consultas", "Bloqueos de cuadro y ordenadores de bicicleta por ciudad")], { note: "Porcentaje diario = redondear(total indisponible ÷ (flota física total + total indisponible) × 100, 2).", processIds: ["calculo-indisponibilidad"], showProcess: false }),
-            metric("Indisponibilidad media mensual mínima", "Mínimo de las medias mensuales del porcentaje diario de indisponibilidad total", "Mínima media/mes del año", [confirmed("Nextbike · Consulta 3", "#/moxsi/fuente/nextbike/consultas", "Bloqueos de cuadro y ordenadores de bicicleta por ciudad")], { note: "Porcentaje diario = redondear(total indisponible ÷ (flota física total + total indisponible) × 100, 2).", processIds: ["calculo-indisponibilidad"] }),
-            metric("Indisponibilidad media anual", "Media anual del porcentaje diario de indisponibilidad total", "Media anual", [confirmed("Nextbike · Consulta 3", "#/moxsi/fuente/nextbike/consultas", "Bloqueos de cuadro y ordenadores de bicicleta por ciudad")], { note: "La función suma almacén, para reparar, arregladas y robadas; después divide el total indisponible entre la flota física más la indisponible.", processIds: ["calculo-indisponibilidad"] }),
+            metric("Indisponibilidad media mensual máxima", "Máximo de las medias mensuales del porcentaje diario de indisponibilidad total", "Máxima media/mes del año", [confirmed("Nextbike · Consulta 3", "#/moxsi/fuente/nextbike/consultas", "Bloqueos de cuadro y ordenadores de bicicleta por ciudad")]),
+            metric("Indisponibilidad media mensual mínima", "Mínimo de las medias mensuales del porcentaje diario de indisponibilidad total", "Mínima media/mes del año", [confirmed("Nextbike · Consulta 3", "#/moxsi/fuente/nextbike/consultas", "Bloqueos de cuadro y ordenadores de bicicleta por ciudad")]),
+            metric("Indisponibilidad media anual", "Media anual del porcentaje diario de indisponibilidad total", "Media anual", [confirmed("Nextbike · Consulta 3", "#/moxsi/fuente/nextbike/consultas", "Bloqueos de cuadro y ordenadores de bicicleta por ciudad")]),
           ],
         },
         {
