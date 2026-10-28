@@ -443,8 +443,8 @@ AVERAGEX(
         {
           title: "Viajes",
           metrics: [
-            metric("Viajes realizados por bicicletas eléctricas", "Conteo de alquileres finalizados de bicicletas eléctricas", "Total anual", [nextbike("Alquileres del periodo", 2), inventory("Tipo de vehículo")], { pending: ["Confirmar el campo que identifica el tipo de bicicleta y estados de alquiler válidos."] }),
-            metric("Viajes realizados por bicicletas mecánicas", "Conteo de alquileres finalizados de bicicletas mecánicas", "Total anual", [nextbike("Alquileres del periodo", 2), inventory("Tipo de vehículo")], { pending: ["Confirmar el campo que identifica el tipo de bicicleta y estados de alquiler válidos."] }),
+            metric("Viajes realizados por bicicletas eléctricas", "Conteo de alquileres finalizados de bicicletas eléctricas", "Total anual", [confirmed("Nextbike · Consulta 2", "#/moxsi/fuente/nextbike/consultas", "Alquileres con datos de clientes por ciudad")], { pending: ["Confirmar el campo que identifica el tipo de bicicleta y estados de alquiler válidos."] }),
+            metric("Viajes realizados por bicicletas mecánicas", "Conteo de alquileres finalizados de bicicletas mecánicas", "Total anual", [confirmed("Nextbike · Consulta 2", "#/moxsi/fuente/nextbike/consultas", "Alquileres con datos de clientes por ciudad")], { pending: ["Confirmar el campo que identifica el tipo de bicicleta y estados de alquiler válidos."] }),
           ],
         },
         {
