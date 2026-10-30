@@ -1160,6 +1160,14 @@ window.CATALOG = {
               "Estudiar una regla de resolución de identidades para detectar cuentas que comparten Last name, First name, address, zip, email, language, birthday o gender, pero utilizan valores distintos en mobile. El campo mobile no debe deduplicarse automáticamente sin validar antes los casos legítimos.",
           },
         },
+        {
+          queryNumber: 12,
+          name: "Customers with negative balance",
+          description:
+            "Lista los clientes con saldo negativo e indica mediante el campo unlocked si el acceso permanece bloqueado o desbloqueado.",
+          icon: "tasks",
+          url: "https://my.nextbike.net/office/queries/view/884",
+        },
       ],
       api: {
         status: "available",
