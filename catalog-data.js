@@ -263,12 +263,20 @@ window.CATALOG = {
       category: "Bicicleta compartida",
       icon: "bike",
       description:
-        "Consultas operativas de estaciones, vehículos, alquileres, clientes, membresías y transacciones para los tres subtipos de Moxsi.",
-      itemLabel: "consultas",
-      contentTitle: "Consultas disponibles",
+        "Consultas y fuentes operativas de estaciones, vehículos, alquileres, clientes, membresías y transacciones para los tres subtipos de Moxsi.",
+      itemLabel: "recursos",
+      contentTitle: "Consultas y fuentes disponibles",
       contentDescription:
-        "Consultas del portal de Nextbike traducidas al español. El acceso puede requerir iniciar sesión con una cuenta autorizada.",
+        "Recursos del portal de Nextbike documentados en español. El acceso puede requerir iniciar sesión con una cuenta autorizada.",
       datasets: [
+        {
+          name: "Estaciones",
+          description:
+            "Listado operativo de estaciones y anclajes gestionados en Nextbike Office.",
+          icon: "pin",
+          url: "https://my.nextbike.net/office/places/",
+          linkLabel: "Abrir estaciones",
+        },
         {
           queryNumber: 1,
           name: "Estaciones: bicicletas disponibles",

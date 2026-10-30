@@ -450,8 +450,8 @@ AVERAGEX(
         {
           title: "Otros ratios",
           metrics: [
-            metric("Estaciones", "Conteo distinto de estaciones activas", "A 31/12", [nextbike("Estaciones y bicicletas disponibles", 1), apiNextbike("Detalle de estaciones")], { pending: ["Definir si se excluyen estaciones temporales o fuera de servicio."] }),
-            metric("Anclajes", "Suma de anclajes disponibles en estaciones activas", "A 31/12", [apiNextbike("Capacidad y detalle de estaciones")], { pending: ["Confirmar el endpoint y el campo de capacidad total."] }),
+            metric("Estaciones", "Conteo distinto de estaciones activas", "A 31/12", [confirmed("Nextbike · Estaciones", "https://my.nextbike.net/office/places/", "Listado operativo de estaciones")]),
+            metric("Anclajes", "Suma de anclajes disponibles en estaciones activas", "A 31/12", [confirmed("Nextbike · Estaciones", "https://my.nextbike.net/office/places/", "Capacidad y anclajes de las estaciones")]),
           ],
         },
       ],
